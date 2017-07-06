@@ -10,11 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+import configparser
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# set directory with outlying configuration files
+CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
+
+CONF_FILE = (os.path.join(CONF_ROOT, 'config.ini'))
+
+config = configparser.ConfigParser()
+config.read(CONF_FILE)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -25,7 +33,7 @@ SECRET_KEY = '9cgl0$gghgsh)dqp%b-onqnrf#lg%!igt0s)4qsefv*oz7=t#6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -73,14 +81,21 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+DB_ENGINE = config['PSQL']['ENGINE']
+DB_NAME = config['PSQL']['NAME']
+DB_USER = config['PSQL']['USER']
+DB_PASSWORD = config['PSQL']['PASSWORD']
+DB_HOST = config['PSQL']['HOST']
+DB_PORT = config['PSQL']['PORT']
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'restaurant',
-        'USER': 'myuser',
-        'PASSWORD': 'qwerty1234',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': DB_ENGINE,
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
