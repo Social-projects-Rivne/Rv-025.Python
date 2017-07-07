@@ -102,3 +102,4 @@ ENV/
 
 *.xml
 *.iml
+#.ini
