@@ -62,15 +62,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         (BANNED, 'banned'),
         (UNAUTHORIZED, 'unauthorized'),
     )
-    name = models.CharField(max_length=50)
-    email = models.EmailField(_('email address'), unique=True, default='mail',
+    name = models.CharField(max_length=50, default='')
+    email = models.EmailField(_('email address'), unique=True, default='',
                               error_messages={
                                   'unique': _("A user with such email already exists."), })
-    password = models.CharField(max_length=128, default='pass')
+    password = models.CharField(max_length=128, default='')
     phone = models.CharField(max_length=12, null=True, unique=True)
     avatar = models.ImageField(upload_to='user_images', blank=True, null=True)
     status = models.IntegerField(choices=USER_STATUSES, default='3')
     is_staff = models.BooleanField(default=False, null=False)
+    is_active = models.BooleanField(default=True, null=False)
 
     objects = UserManager()
 
