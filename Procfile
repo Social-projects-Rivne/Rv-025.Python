@@ -1,1 +1,1 @@
-web: restaurant=web.py python -m run --host=0.0.0.0 --port=$PORT
+web: gunicorn restaurant.wsgi --log-file - --bind="0.0.0.0:$PORT"
