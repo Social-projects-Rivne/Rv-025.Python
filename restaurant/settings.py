@@ -104,8 +104,8 @@ DATABASES = {
 
 
 # https://devcenter.heroku.com/articles/django-app-configuration#database-connection-persistence
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
