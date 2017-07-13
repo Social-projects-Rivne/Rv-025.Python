@@ -1,0 +1,1 @@
+web: restaurant=web.py python -m run --host=0.0.0.0 --port=$PORT
