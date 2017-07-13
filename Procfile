@@ -1,1 +1,1 @@
-python manage.py runserver 0.0.0.0:$PORT
+web: gunicorn restaurant.wsgi --log-file -
