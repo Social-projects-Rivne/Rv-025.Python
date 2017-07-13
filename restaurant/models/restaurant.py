@@ -17,10 +17,7 @@ class RestaurantType(models.Model):
         return u"%s" % (self.rest_type)
 
 class Restaurant(models.Model):
-"""This class describe model of restaurant object,
-    that creates from admin panel.
 
-"""
     ACTIVE = 0
     DELETED = 1
     HIDDEN = 2
@@ -49,3 +46,7 @@ class Restaurant(models.Model):
 
     def __unicode__(self):
         return u"%s %s" % (self.type_id, self.name)
+
+    def delete(self, *args, **kwargs):
+        self.status = 1
+        self.save()
