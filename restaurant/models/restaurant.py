@@ -1,6 +1,10 @@
 from django.db import models
 
 class RestaurantType(models.Model):
+    """This class is using for creating table with types of Restaurants.
+
+        is_deleted check if current type is shown or not.
+    """
     rest_type = models.CharField(max_length=256, blank=False)
     is_deleted = models.BooleanField(default=False)
 
@@ -13,7 +17,10 @@ class RestaurantType(models.Model):
         return u"%s" % (self.rest_type)
 
 class Restaurant(models.Model):
+"""This class describe model of restaurant object,
+    that creates from admin panel.
 
+"""
     ACTIVE = 0
     DELETED = 1
     HIDDEN = 2
