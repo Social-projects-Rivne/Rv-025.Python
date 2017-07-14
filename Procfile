@@ -1,1 +1,1 @@
-web: gunicorn restaurant.wsgi --log-file - --bind="0.0.0.0:$PORT"
+web: gunicorn restaurant.wsgi

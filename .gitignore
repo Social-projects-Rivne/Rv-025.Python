@@ -130,3 +130,6 @@ composer.lock
 .idea/
 /out/
 .idea_modules/
+
+# for Herocu
+local_settings.py
