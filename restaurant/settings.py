@@ -19,12 +19,12 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # set directory with outlying configuration files
-CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
-
-CONF_FILE = (os.path.join(CONF_ROOT, 'config.ini'))
-
-config = ConfigParser.ConfigParser()
-config.read(CONF_FILE)
+# CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
+#
+# CONF_FILE = (os.path.join(CONF_ROOT, 'config.ini'))
+#
+# config = ConfigParser.ConfigParser()
+# config.read(CONF_FILE)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -84,23 +84,23 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_ENGINE = config.get('PSQL', 'ENGINE')
-DB_NAME = config.get('PSQL', 'NAME')
-DB_USER = config.get('PSQL', 'USER')
-DB_PASSWORD = config.get('PSQL', 'PASSWORD')
-DB_HOST = config.get('PSQL', 'HOST')
-DB_PORT = config.get('PSQL', 'PORT')
-
-DATABASES = {
-    'default': {
-        'ENGINE': DB_ENGINE,
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
-    }
-}
+# DB_ENGINE = config.get('PSQL', 'ENGINE')
+# DB_NAME = config.get('PSQL', 'NAME')
+# DB_USER = config.get('PSQL', 'USER')
+# DB_PASSWORD = config.get('PSQL', 'PASSWORD')
+# DB_HOST = config.get('PSQL', 'HOST')
+# DB_PORT = config.get('PSQL', 'PORT')
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': DB_ENGINE,
+#         'NAME': DB_NAME,
+#         'USER': DB_USER,
+#         'PASSWORD': DB_PASSWORD,
+#         'HOST': DB_HOST,
+#         'PORT': DB_PORT,
+#     }
+# }
 
 
 # https://devcenter.heroku.com/articles/django-app-configuration#database-connection-persistence
@@ -151,7 +151,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Heroku settings
 
-DATABASES['default'] = dj_database_url.config()
+
+DATABASES = {
+    'default': dj_database_url.config()
+}
+
+# DATABASES['default'] = dj_database_url.config()
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
