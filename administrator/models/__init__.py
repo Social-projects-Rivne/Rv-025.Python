@@ -1,2 +1,2 @@
-from .user_profile import UserProfile
-from .user_profile import UserManager
+from .user import User
+from .user import UserManager

@@ -148,7 +148,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #User's model
 
-AUTH_USER_MODEL = 'administrator.UserProfile'
+AUTH_USER_MODEL = 'administrator.User'
 
 
 #Files downloaded by the users of the site

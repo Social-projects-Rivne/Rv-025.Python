@@ -19,20 +19,19 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
-
-    """Manages creation of users in a database.
+    """Manage creation of users in a database.
 
     Methods:
     create_user -- for users creation
     create_superuser -- for superuser creation
     """
 
-    def _create_user(self, email, name, password, **extra_fields):
-        """Creates, saves and returns a user.
+    def _create_user(self, email, username, password, **extra_fields):
+        """Create, save and return a user.
 
         Arguments:
         email - user's email
-        name - user's name
+        username - user's name
         password - user's password
         extra_fields - any other fields
         """
@@ -40,31 +39,31 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, name=name, **extra_fields)
+        user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, name, password, **extra_fields):
-        """Creates and saves an ordinary user with the given email,
-        name and password.
+    def create_user(self, email, username, password, **extra_fields):
+        """Create and save an ordinary user with the given email,
+        username and password.
 
         Arguments:
         email - user's email
-        name - user's name
+        username - user's name
         password - user's password
         extra_fields - any other fields
         """
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, name, password, **extra_fields)
+        return self._create_user(email, username, password, **extra_fields)
 
-    def create_superuser(self, email, name, password, **extra_fields):
-        """Creates and saves a superuser with the given email,
-        name and password.
+    def create_superuser(self, email, username, password, **extra_fields):
+        """Create and save a superuser with the given email,
+        username and password.
 
         Arguments:
         email - user's email
-        name - user's name
+        username - user's name
         password - user's password
         extra_fields - any other fields
         """
@@ -74,15 +73,14 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, name, password, **extra_fields)
+        return self._create_user(email, username, password, **extra_fields)
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin):
-
-    """Implements a fully featured User model and handles data about
+class User(AbstractBaseUser, PermissionsMixin):
+    """Implement a fully featured User model and handle data about
     users in DB.
 
-    Extends AbstractBaseUser class with such fields as status and
+    Extend AbstractBaseUser class with such fields as status and
     avatar. Except this the email is used as the username filed when
     users login.
 
@@ -91,7 +89,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def email_to_user - sends a letter to the user
 
     Fields:
-    name - user's name
+    username - user's name
     email - user's email
     password - user's password
     phone - user's phone
@@ -107,7 +105,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-    # set directory with outlying configuration files
+    # Set directory with outlying configuration files
 
     CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
 
@@ -128,40 +126,54 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         (UNAUTHORIZED, 'unauthorized'),
     )
 
-    #Fields
-    name = models.CharField(max_length=50, default='')
+    # Fields
+    username = models.CharField(max_length=50, default='', help_text=
+                             '50 characters or fewer.')
     email = models.EmailField(_('email address'), unique=True, default='',
                               error_messages={'unique': _("A user with such"
                                                           " email already "
                                                           "exists."), })
-    password = models.CharField(max_length=128, blank=True, default='')
+    password = models.CharField(max_length=128, default='', help_text=
+                             'Your password can\'t be too similar to your'
+                             ' other personal information.<br /> Your password'
+                             ' must contain at least 8 characters.<br /> Your '
+                             'password can\'t be a commonly used password.'
+                             '<br /> Your password can\'t be entirely numeric.')
     phone = models.CharField(max_length=12, blank=True, null=True,
-                             unique=True)
+                             unique=True, help_text='Use just numbers: '
+                                                    '''380931234567''')
     avatar = models.ImageField(upload_to='user_images', blank=True, null=True)
     status = models.IntegerField(choices=USER_STATUSES, default='0')
     is_staff = models.BooleanField(default=False, null=False)
-    is_active = models.BooleanField(default=True, null=False)
-    #End fields
+    is_active = models.BooleanField(default=True, null=False, blank=True)
+    # End fields
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
 
-    #A list of the field names that will be prompted for when creating
+    # A list of the field names that will be prompted for when creating
     #  a user via the createsuperuser  management command
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['username']
 
     class Meta():
-        """Gives some options (metadata) attached to the model."""
+        """Give some options (metadata) attached to the model."""
         db_table = "users"
         verbose_name = ('user')
+
+    def set_status_and_is_active(self, status):
+        if status is 0:
+            self.is_active = True
+        else:
+            self.is_active = False
+        self.status = status
 
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
 
     def email_to_user(self, subject, message, sender=None, **kwargs):
-        """Sends an email to the user
+        """Send an email to the user
 
         Arguments:
         subject - a theme of the letter
