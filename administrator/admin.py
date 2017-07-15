@@ -6,7 +6,7 @@ from django.contrib import admin
 from .models import User
 
 class UserAdmin(admin.ModelAdmin):
-    """The UserAdmin class is the representation of a model in the admin interface."""
+    """Represent a model in the admin interface."""
     fields = ['username', 'email', 'password', 'phone', 'is_staff']
 
 # Register your models.
