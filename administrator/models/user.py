@@ -161,13 +161,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = "users"
         verbose_name = ('user')
 
-    def set_status_and_is_active(self, status):
-        if status is 0:
-            self.is_active = True
-        else:
-            self.is_active = False
-        self.status = status
-
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
