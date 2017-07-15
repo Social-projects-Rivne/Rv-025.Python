@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Allows to create a user in a database.
+Allow to create a user in a database.
 
-Contains a model class for users and a manager for this model.
+Contain a model class for users and a manager for this model.
 
 :copyright: (c) 2017 by Ol'ha Leskovs'ka
 """
