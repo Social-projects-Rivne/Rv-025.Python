@@ -41,6 +41,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
+        user.set_is_active(extra_fields.get('status'))
         user.save(using=self._db)
         return user
 
@@ -161,12 +162,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = "users"
         verbose_name = ('user')
 
-    def set_status_and_is_active(self, status):
-        if status is 0:
+    def set_is_active(self, status):
+        if status == 0:
             self.is_active = True
         else:
             self.is_active = False
-        self.status = status
 
     def get_short_name(self):
         # The user is identified by their email address
