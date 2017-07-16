@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/login.css">
+  <head>
+  <body>
+    <div class="container">
+
+      {% block content %}
+        {% if login_errors %}
+          <p>Your username and password didn't match. Please try again.</p>
+          {% elif user_status %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+        {% endif %}
+      {% endblock %}
+
+      <h2>Login</h2>
+      <form method="post" id="login_form">
+        {% csrf_token %}
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email">
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="email" name="password">
+        </div>
+        <div>
+          <input type="submit" value="Login">
+        </div>
+      </form>
+      <a href="{% url 'password_reset' %}" >Forgot password?</a>
+    </div>
+  </body>
+</html>
+
