@@ -4,8 +4,18 @@
   <head>
   <body>
     <div class="container">
+
+      {% block content %}
+        {% if login_errors %}
+          <p>Your username and password didn't match. Please try again.</p>
+          {% elif user_status %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+        {% endif %}
+      {% endblock %}
+
       <h2>Login</h2>
-      <form method="post" action="/account/login/">
+      <form method="post" id="login_form">
         {% csrf_token %}
         <div>
           <label for="email">Email</label>
