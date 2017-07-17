@@ -2,21 +2,21 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 from restaurant.models import Restaurant
-# Register your models here.
 
 def soft_delete(modeladmin, request, queryset):
-    """Soft delete function for selected restaurants in list"""
+
+    """Soft delete function for selected restaurants in QuerySet list"""
 
     for obj in queryset:
         obj.delete()
 soft_delete.short_description = "Delete selected items"
 
 class PageAdmin(admin.ModelAdmin):
-    #fields for restaurant list.
+
+    """Overriding of default displaying settings in restaurant's list """
+
     list_display = ('name', '_type_id', 'status', 'tables_count')
-    #restaurants per page.
     list_per_page = 15
-    #overriding of Admin actions.
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
 
