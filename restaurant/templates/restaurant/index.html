@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <h2>Home</h2>
+    {% block content %}
+      {% if user and user.is_authenticated %}
+        <h2>Hello, {{user.username}}</h2>
+        <a href="#">Logout</a>
+      {% else %}
+        <h2>Hello</h2>
+      {% endif %}
+    {% endblock %}
+  </body>
+</html>
+
