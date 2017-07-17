@@ -4,23 +4,26 @@ from django.shortcuts import render
 
 
 def login_view(request):
+"""Checks whether user exists in database and has permissions to login.
+"""
     if request.method == "POST":
         username = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        message = None
         if user is not None:
             if user.status == 0:
                 login(request, user)
                 return HttpResponseRedirect('/index/')
             else:
-                user_status = {'user_status': True}
-                return render(request, './registration/login.html',
-                              context=user_status)
+                message = ("Your account doesn't have access to this page."
+                           "To proceed, please login with an account "
+                           "that has access.")
         else:
-            #return HttpResponse("Invalid login details supplied.")
-            login_failed = {'login_errors': True}
-            return render(request, './registration/login.html',
-                          context=login_failed)
+            message = ("Your username and password didn't match. "
+                       "Please try again.")
+            context = { "message": message }
+        return render(request, './registration/login.html', context=context)
     else:
         return render(request, './registration/login.html')
 
