@@ -18,24 +18,12 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# set directory with outlying configuration files
-# CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
-#
-# CONF_FILE = (os.path.join(CONF_ROOT, 'config.ini'))
-#
-# config = ConfigParser.ConfigParser()
-# config.read(CONF_FILE)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 's52!oswee$y1h6zkf10wb0!v4-u5sk18$-+=@e@3x96yxqd6&4'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -81,28 +69,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurant.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-# DB_ENGINE = config.get('PSQL', 'ENGINE')
-# DB_NAME = config.get('PSQL', 'NAME')
-# DB_USER = config.get('PSQL', 'USER')
-# DB_PASSWORD = config.get('PSQL', 'PASSWORD')
-# DB_HOST = config.get('PSQL', 'HOST')
-# DB_PORT = config.get('PSQL', 'PORT')
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': DB_ENGINE,
-#         'NAME': DB_NAME,
-#         'USER': DB_USER,
-#         'PASSWORD': DB_PASSWORD,
-#         'HOST': DB_HOST,
-#         'PORT': DB_PORT,
-#     }
-# }
-
-
 # https://devcenter.heroku.com/articles/django-app-configuration#database-connection-persistence
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES['default'].update(db_from_env)
@@ -143,7 +109,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Static files (CSS, JavaScript, Images)
@@ -157,20 +122,18 @@ STATICFILES_DIRS = (
 )
 
 
-# Heroku settings
-
+# PRODUCTION: Heroku settings:
 
 DATABASES = {
     'default': dj_database_url.config()
 }
-
-# DATABASES['default'] = dj_database_url.config()
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ALLOWED_HOSTS = ['*']
 
 DEBUG = False
+TEMPLATE_DEBUG = False
 
 try:
     from .local_settings import *
