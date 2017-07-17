@@ -6,13 +6,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as Admin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
+from django.utils.translation import ugettext_lazy as _
 
 from .models import User
 
 
 class RegistrationForm(UserCreationForm):
 
-    """A form for user creation.
+    """A form for users creation.
 
     Email, username, password and role are given.
     """
@@ -38,11 +39,45 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
+class UserChangeForm(forms.ModelForm):
+
+    """A form for users modification."""
+
+    class Meta:
+
+        """Give some options (metadata) attached to the form."""
+
+        model = User
+        fields = ('username', 'email', 'phone', 'role', 'status',)
+
+    def save(self, commit=True):
+        """Save the provided password in a hashed format and put
+        is_active into an appropriate value (according to the
+        user's status)
+        """
+        user = super(UserChangeForm, self).save(commit=False)
+        user.set_is_active(user.status)
+        user.set_is_staff(user.role)
+        if commit:
+            user.save()
+        return user
+
+
 class UserAdmin(Admin):
 
     """Represent a model in the admin interface."""
 
+    form = UserChangeForm
     add_form = RegistrationForm
+
+    list_display = ('username', 'email', 'phone', 'role', 'status')
+
+    fieldsets = (
+        (None, {'fields': ('username', 'email',)}),
+        (_('Personal info'), {'fields': ('phone',)}),
+        (_('Status'), {'fields': ('status',)}),
+        (_('Permissions'), {'fields': ('role', 'user_permissions')}),
+    )
 
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
