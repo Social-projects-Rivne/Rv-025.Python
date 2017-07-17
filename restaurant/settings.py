@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-                           'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
 #AUTH_USER_MODEL = 'administrator.User'
