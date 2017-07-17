@@ -6,11 +6,8 @@
     <div class="container">
 
       {% block content %}
-        {% if login_errors %}
-          <p>Your username and password didn't match. Please try again.</p>
-          {% elif user_status %}
-            <p>Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
+        {% if message %}
+          <p>{{ message }}</p>
         {% endif %}
       {% endblock %}
 
