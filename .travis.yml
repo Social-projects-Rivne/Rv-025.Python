@@ -8,3 +8,5 @@ before_script:
   - flake8 .
 script:
   - python ./manage.py test
+notifications:
+    slack: rv-025lamp:t8bhwuryQcH8AdBDbDOoiwMQ
