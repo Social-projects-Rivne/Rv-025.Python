@@ -30,6 +30,10 @@ class RegistrationForm(UserCreationForm):
 
 
     def save(self, commit=True):
+        """Save a new user.
+
+        Return a User object.
+        """
         user = super(RegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         user.role = self.cleaned_data['role']
@@ -54,6 +58,8 @@ class UserChangeForm(forms.ModelForm):
         """Save the provided password in a hashed format and put
         is_active into an appropriate value (according to the
         user's status)
+
+        Return a User object.
         """
         user = super(UserChangeForm, self).save(commit=False)
         user.set_is_active(user.status)
@@ -70,7 +76,7 @@ class UserAdmin(Admin):
     form = UserChangeForm
     add_form = RegistrationForm
 
-    list_display = ('username', 'email', 'phone', 'role', 'status')
+    list_display = ('username', 'email', 'phone', 'role', 'status', 'is_staff', 'is_active')
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),

@@ -87,12 +87,12 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_ENGINE = config.get('PSQL', 'ENGINE')
-DB_NAME = config.get('PSQL', 'NAME')
-DB_USER = config.get('PSQL', 'USER')
-DB_PASSWORD = config.get('PSQL', 'PASSWORD')
-DB_HOST = config.get('PSQL', 'HOST')
-DB_PORT = config.get('PSQL', 'PORT')
+DB_ENGINE = config.get('RDB', 'ENGINE')
+DB_NAME = config.get('RDB', 'NAME')
+DB_USER = config.get('RDB', 'USER')
+DB_PASSWORD = config.get('RDB', 'PASSWORD')
+DB_HOST = config.get('RDB', 'HOST')
+DB_PORT = config.get('RDB', 'PORT')
 
 DATABASES = {
     'default': {
