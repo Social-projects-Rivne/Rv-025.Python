@@ -23,6 +23,8 @@ urlpatterns = [
    url(r'^admin/', admin.site.urls),
    url(r'^index/', index, name='index'),
    url(r'^account/login/$', login_view, name='login'),
+   url(r'^account/logout/$', auth_views.logout, {'next_page': '/account/login'},
+       name='logout'),
    url(r'^account/password_reset/$', auth_views.password_reset,
        name='password_reset'),
    url(r'^account/password_reset/done/$',
