@@ -6,6 +6,7 @@ from administrator.models import User, UserManager
 
 
 class UserManagerTestCase(TestCase):
+
     """Test UserManager class."""
 
     valid_email = 'example@example.com'
@@ -34,7 +35,7 @@ class UserManagerTestCase(TestCase):
             )
 
     def test_user_is_not_created_with_not_only_numbers_in_phone(self):
-        """Test if user is not created with not numeric password."""
+        """Test if user is not created with not only numeric phone."""
         wrong_phone = "0234hfk^&"
 
         with self.assertRaises(ValueError):
@@ -111,7 +112,7 @@ class UserManagerTestCase(TestCase):
 
     def test_superuser_is_created(self):
         """Test if superuser is created with valid data."""
-        superuser = self.user_manager.create_user(
+        superuser = self.user_manager.create_superuser(
             self.valid_email,
             self.valid_username,
             self.valid_password
@@ -120,6 +121,7 @@ class UserManagerTestCase(TestCase):
 
 
 class UserTestCase(TestCase):
+
     """Test User model."""
 
     def setUp(self):
@@ -147,7 +149,7 @@ class UserTestCase(TestCase):
     def test_user_cannot_be_set_to_admin(self):
         """Test if user cannot be set to admin."""
         self.user.set_is_staff(0)
-        self.assertEqual(self.user.is_staff, True)
+        self.assertEqual(self.user.is_staff, False)
 
     def test_user_has_email_as_his_short_name(self):
         """Test if user has email as his short name."""
