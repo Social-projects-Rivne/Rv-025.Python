@@ -37,14 +37,12 @@ class Restaurant(models.Model):
     )
 
     name = models.CharField(max_length=256, blank=False)
-    #logo = models.ImageField(upload_to='restaurant_images/', default='restaurant-images/none/none.jpg')
     logo = models.CharField(max_length=256, default="Logo_added")
     location = models.CharField(max_length=256, blank=False)
     type_id = models.ForeignKey(RestaurantType, blank=True, null=True)
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators = [MinValueValidator(0)])
     description = models.TextField(max_length=256)
-    #owner_id = model.ForeignKey(Users)
 
     class Meta(object):
 
