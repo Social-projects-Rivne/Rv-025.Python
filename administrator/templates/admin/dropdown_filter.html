@@ -1,0 +1,16 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dropdown_filter.css' %}">
+
+{% load i18n %}
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+
+<select class="dropdown-filter">
+  {% for choice in choices %}
+    <option {% if choice.selected %} selected="selected"{% endif %}
+            value="{{ choice.query_string|iriencode }}">
+      {{ choice.display }}
+    </option>
+  {% endfor %}
+</select>
+
+<script src="{% static 'js/dropdown_filter.js' %}"></script>
