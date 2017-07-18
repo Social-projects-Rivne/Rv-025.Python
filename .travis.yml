@@ -1,11 +1,15 @@
-language: "python"
-python: "2.7"
-install: "pip install -r requirements.txt"
+language: python
+python:
+  - "2.7"
+cache:
+  directories:
+    - $HOME/.pip-cache/
+    - /home/travis/virtualenv/python2.7
+install:
+  - pip install flake8 --download-cache $HOME/.pip-cache
+  - pip install -r requirements.txt --download-cache $HOME/.pip-cache
 before_script:
-  - cp .env.example .env
-  - python manage.py migrate
+  - flake8 .
+  - psql -c 'create database PROJECT_PACKAGE;’ -U postgres
 script:
-  - flake8 cmdbox
-  - coverage run manage.py test --settings=cmdbox.tests_settings
-after_success:
-  - coveralls
+  - ./manage.py test
