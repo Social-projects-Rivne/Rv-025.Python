@@ -17,6 +17,10 @@ class RestaurantType(models.Model):
 
         verbose_name=u"Restaurant type"
 
+        permissions = (
+             ('read_restaurant', 'Can read information about restaurant'),
+         )
+
     rest_type = models.CharField(max_length=256, blank=False)
 
     def __unicode__(self):
@@ -53,10 +57,14 @@ class Restaurant(models.Model):
 
         verbose_name=u"Restaurant"
 
+        permissions = (
+             ('read_restaurant', 'Can read information about restaurant'),
+         )
+
     name = models.CharField(max_length=256, blank=False)
 
     def __unicode__(self):
-        """Display custom labels in restaurant list"""
+        """Display custom labels in restaurant's list"""
         return u"%s %s" % (self.type_id, self.name)
 
     def delete(self, *args, **kwargs):
