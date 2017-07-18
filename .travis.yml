@@ -5,9 +5,6 @@ install:
   - pip install flake8
   - pip install -r requirements.txt
 before_script:
-  - python manage.py migrate
+  - flake8 .
 script:
-  - flake8 cmdbox
-  - coverage run manage.py test --settings=cmdbox.tests_settings
-after_success:
-  - coveralls
+  - python ./manage.py test
