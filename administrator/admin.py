@@ -5,7 +5,6 @@ from restaurant.models import Restaurant
 
 def soft_delete(modeladmin, request, queryset):
     """Soft delete function for selected restaurants in QuerySet list"""
-
     for obj in queryset:
         obj.delete()
 soft_delete.short_description = "Delete selected items"

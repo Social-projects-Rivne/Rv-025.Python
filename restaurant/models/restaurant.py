@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
+
 from django.db import models
+
 
 class RestaurantType(models.Model):
 
@@ -43,6 +45,7 @@ class Restaurant(models.Model):
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators = [MinValueValidator(0)])
     description = models.TextField(max_length=256)
+    owner_id = model.ForeignKey(User)
 
     class Meta(object):
 
@@ -53,11 +56,10 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=256, blank=False)
 
     def __unicode__(self):
+        """Display custom labels in restaurant list"""
         return u"%s %s" % (self.type_id, self.name)
 
     def delete(self, *args, **kwargs):
-
         """Function for restaurant soft-deleting"""
-
         self.status = 1
         self.save()
