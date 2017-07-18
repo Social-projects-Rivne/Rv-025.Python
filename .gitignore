@@ -130,5 +130,5 @@ composer.lock
 /out/
 .idea_modules/
 
-# for Herocu
+# for Heroku
 restaurant/local_settings.py
