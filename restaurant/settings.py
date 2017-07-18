@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import ConfigParser  # nopep8
+import ConfigParser  # noqa
 import os
 
 import dj_database_url
@@ -141,6 +141,6 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 try:
-    from .local_settings import *  # nopep8
+    from .local_settings import *  # noqa
 except ImportError:
     pass
