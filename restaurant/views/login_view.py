@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 def login_view(request):
-"""Checks whether user exists in database and has permissions to login."""
+    """Checks whether user exists in database and has permissions to login."""
     if request.method == "POST":
         username = request.POST.get('email')
         password = request.POST.get('password')
