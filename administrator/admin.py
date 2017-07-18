@@ -6,6 +6,7 @@ from django.contrib.auth.admin import UserAdmin as Admin
 
 from .filters import ChoiceDropdownFilter
 from .models import User
+from restaurant.models import Restaurant
 
 
 class UserAdmin(Admin):
@@ -15,4 +16,12 @@ class UserAdmin(Admin):
     list_display = ('username', 'email', 'phone', 'role', 'status')
     list_filter = [('status', ChoiceDropdownFilter), 'role']
 
+
+class RestaurantAdmin(admin):
+
+    """Represent a Restaurant model in the admin interface."""
+
+    list_filter = ['status', ('owner_id', ChoiceDropdownFilter)]
+
 admin.site.register(User, UserAdmin)
+admin.site.register(Restaurant, RestaurantAdmin)
