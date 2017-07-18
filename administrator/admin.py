@@ -76,7 +76,10 @@ class UserAdmin(Admin):
     form = UserChangeForm
     add_form = RegistrationForm
 
-    list_display = ('username', 'email', 'phone', 'role', 'status', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'phone')
+    list_display = ('username', 'email', 'phone', 'role', 'status')
+    ordering = ['username']
+    list_per_page = 10
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),
