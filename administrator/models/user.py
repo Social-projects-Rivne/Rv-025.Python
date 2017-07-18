@@ -176,3 +176,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         **kwargs - other arguments
         """
         send_mail(subject, message, sender, [self.email], **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """Block the user instead of dropping.
+
+        Put is_active into False and change status.
+        """
+        self.is_active = False
+        self.status = 1
+        self.save()
