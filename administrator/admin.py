@@ -8,7 +8,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
+from .filters import ChoiceDropdownFilter
 from .models import User
+from restaurant.models import Restaurant
 
 
 class RegistrationForm(UserCreationForm):
@@ -87,6 +89,7 @@ class UserAdmin(Admin):
     list_display = ('username', 'email', 'phone', 'role', 'status')
     ordering = ['username']
     list_per_page = 10
+    list_filter = [('status', ChoiceDropdownFilter), 'role']
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),
@@ -106,7 +109,16 @@ class UserAdmin(Admin):
     actions = [delete_selected_users]
 
 
+class RestaurantAdmin(admin):
+
+    """Represent a Restaurant model in the admin interface."""
+
+    list_filter = ['status', ('owner_id', ChoiceDropdownFilter)]
+
 admin.site.disable_action('delete_selected')
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.unregister(Group)
+
+
