@@ -7,14 +7,14 @@ from restaurant.models import Restaurant
 
 
 def soft_delete(modeladmin, request, queryset):
-    """Soft delete function for selected restaurants in QuerySet list"""
+    """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
 soft_delete.short_description = "Delete selected items"
 
 class PageAdmin(admin.ModelAdmin):
 
-    """Overriding of default displaying settings in restaurant's list"""
+    """Custom display in restaurant's list."""
 
     list_display = ('name', '_type_id', 'status', 'tables_count')
     list_per_page = 15
