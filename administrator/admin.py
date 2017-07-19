@@ -69,6 +69,13 @@ class UserChangeForm(forms.ModelForm):
         return user
 
 
+def delete_selected_users(modeladmin, request, queryset):
+    """Block selected users instead of dropping them."""
+    for obj in queryset:
+        obj.delete()
+delete_selected_users.short_description = "Delete selested users"
+
+
 class UserAdmin(Admin):
 
     """Represent a model in the admin interface."""
@@ -76,7 +83,10 @@ class UserAdmin(Admin):
     form = UserChangeForm
     add_form = RegistrationForm
 
-    list_display = ('username', 'email', 'phone', 'role', 'status', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'phone')
+    list_display = ('username', 'email', 'phone', 'role', 'status')
+    ordering = ['username']
+    list_per_page = 10
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),
@@ -93,6 +103,10 @@ class UserAdmin(Admin):
          ),
     )
 
+    actions = [delete_selected_users]
+
+
+admin.site.disable_action('delete_selected')
 
 admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
