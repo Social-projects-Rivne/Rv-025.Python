@@ -13,16 +13,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import ConfigParser
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# set directory with outlying configuration files
-CONF_ROOT = os.path.join(BASE_DIR, 'configurations')
-
-CONF_FILE = (os.path.join(CONF_ROOT, 'config.ini'))
-
 config = ConfigParser.ConfigParser()
-config.read(CONF_FILE)
+config.read(os.path.join(os.path.join(BASE_DIR, 'configurations'), 'config.ini'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -82,12 +77,12 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_ENGINE = config.get('PSQL', 'ENGINE')
-DB_NAME = config.get('PSQL', 'NAME')
-DB_USER = config.get('PSQL', 'USER')
-DB_PASSWORD = config.get('PSQL', 'PASSWORD')
-DB_HOST = config.get('PSQL', 'HOST')
-DB_PORT = config.get('PSQL', 'PORT')
+DB_ENGINE = config.get('RDB', 'ENGINE')
+DB_NAME = config.get('RDB', 'NAME')
+DB_USER = config.get('RDB', 'USER')
+DB_PASSWORD = config.get('RDB', 'PASSWORD')
+DB_HOST = config.get('RDB', 'HOST')
+DB_PORT = config.get('RDB', 'PORT')
 
 DATABASES = {
     'default': {
@@ -139,3 +134,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+#User's model
+
+AUTH_USER_MODEL = 'administrator.User'
+
+
+#Files downloaded by the users of the site
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
