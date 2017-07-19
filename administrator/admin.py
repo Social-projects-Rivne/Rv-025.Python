@@ -109,24 +109,12 @@ class UserAdmin(Admin):
     actions = [delete_selected_users]
 
 
-class RestaurantAdmin(admin):
-
-    """Represent a Restaurant model in the admin interface."""
-
-    list_filter = ['status', ('owner_id', ChoiceDropdownFilter)]
-
-admin.site.disable_action('delete_selected')
-
-admin.site.register(User, UserAdmin)
-admin.site.register(Restaurant, RestaurantAdmin)
-admin.site.unregister(Group)
-
-
 def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
 soft_delete.short_description = "Delete selected items"
+
 
 class PageAdmin(admin.ModelAdmin):
 
@@ -136,9 +124,12 @@ class PageAdmin(admin.ModelAdmin):
     list_per_page = 15
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
+    list_filter = ['status']
 
     def _type_id(self, obj):
         return obj.type_id
     _type_id.short_description = 'restaurant type'
 
+admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
+admin.site.unregister(Group)
