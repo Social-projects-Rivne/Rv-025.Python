@@ -3,6 +3,8 @@ from django.core.validators import MinValueValidator
 
 from django.db import models
 
+from administrator.models import User
+
 
 class RestaurantType(models.Model):
 
@@ -26,6 +28,7 @@ class RestaurantType(models.Model):
     def __unicode__(self):
         return u"%s" % (self.rest_type)
 
+
 class Restaurant(models.Model):
 
     """Model of restaurant object, creates from admin panel."""
@@ -47,7 +50,7 @@ class Restaurant(models.Model):
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
-    owner_id = model.ForeignKey(User)
+    # owner_id = models.ForeignKey(User)
 
     class Meta(object):
 

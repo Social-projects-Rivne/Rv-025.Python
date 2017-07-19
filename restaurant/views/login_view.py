@@ -21,7 +21,7 @@ def login_view(request):
         else:
             message = ("Your username and password didn't match. "
                        "Please try again.")
-            context = { "message": message }
+        context = { "message": message }
         return render(request, './registration/login.html', context=context)
     else:
         return render(request, './registration/login.html')
