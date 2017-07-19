@@ -1,4 +1,4 @@
-[PSQL]
+[RDB]
 ENGINE = django.db.backends.postgresql
 NAME =
 USER =
