@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Allow to create a user in a database.
-
 Contain a model class for users and a manager for this model.
-
 :copyright: (c) 2017 by Ol'ha Leskovs'ka
 """
 
@@ -27,7 +25,6 @@ class UserManager(BaseUserManager):
         username - user's name
         password - user's password
         extra_fields - any other fields
-
         Return a User object.
         """
         if not email:
