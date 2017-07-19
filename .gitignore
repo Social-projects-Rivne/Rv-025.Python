@@ -52,7 +52,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-local_settings.py
 
 # Flask stuff:
 instance/
@@ -103,3 +102,33 @@ ENV/
 *.xml
 *.iml
 *.ini
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE files
+nbproject
+.~lock.*
+.buildpath
+.idea
+.project
+.settings
+composer.lock
+*.sublime-project
+*.sublime-workspace
+
+# JetBrains template
+*.iml
+.idea/
+/out/
+.idea_modules/
+
+# for Heroku
+restaurant/local_settings.py
