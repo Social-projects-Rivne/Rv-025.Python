@@ -22,12 +22,15 @@ from views.login_view import login_view
 urlpatterns = [
    url(r'^admin/', admin.site.urls),
    url(r'^index/', index, name='index'),
-   url(r'^account/login/$', login_view, name='login'),
-   url(r'^account/logout/$', auth_views.logout, {'next_page': '/account/login'},
+   url(r'^accounts/login/$', login_view, name='login'),
+   url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/accounts/login'},
        name='logout'),
-   url(r'^account/password_reset/$', auth_views.password_reset,
+   url(r'^accounts/password_reset/$', auth_views.password_reset,
        name='password_reset'),
-   url(r'^account/password_reset/done/$',
+   url(r'^accounts/password_reset/done/$',
        auth_views.password_reset_done,
        name='password_reset_done'),
+       url(r'^accounts/password_reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+           auth_views.password_reset_confirm, name='password_reset_confirm'),
+
 ]
