@@ -4,7 +4,7 @@
     {% block content %}
       {% if user and user.is_authenticated %}
         <h2>Hello, {{user.username}}</h2>
-        <a href="/account/logout">Logout</a>
+        <a href="/accounts/logout">Logout</a>
       {% else %}
         <h2>Hello</h2>
       {% endif %}
