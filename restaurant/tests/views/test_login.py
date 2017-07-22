@@ -12,20 +12,22 @@ class LogInTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.users_credentials = {
-            "correct_user": {'email':'valid@email.com',
-                             'password':'gfhjkm12',
-                             'username':'CorrectUser',
-                             'status' : User.ACTIVE
+            "correct_user": {
+                'email': 'valid@email.com',
+                'password': 'gfhjkm12',
+                'username': 'CorrectUser',
+                'status': User.ACTIVE
             },
-            "banned_user": {'email':'banned@email.com',
-                            'password':'gfhjkm12',
-                            'username':'BannedUser',
-                            'status': User.BANNED
+            "banned_user": {
+                'email': 'banned@email.com',
+                'password': 'gfhjkm12',
+                'username': 'BannedUser',
+                'status': User.BANNED
             },
-            "unregistered_user": {'email': 'unregistered@email.com',
-                                  'password': 'gfhjkm12',
-            }
-        }
+            "unregistered_user": {
+                'email': 'unregistered@email.com',
+                'password': 'gfhjkm12',
+            }}
         User.objects.create_user(**self.users_credentials["correct_user"])
         User.objects.create_user(**self.users_credentials["banned_user"])
 
@@ -33,8 +35,7 @@ class LogInTest(TestCase):
         """Test whether user can login with correct data."""
         response = self.client.post('/account/login/',
                                     self.users_credentials["correct_user"],
-                                    follow=True
-        )
+                                    follow=True)
         self.assertContains(response, "Logout")
 
     def test_login_banned_user(self):
@@ -42,9 +43,8 @@ class LogInTest(TestCase):
         context = ("To proceed, please login with an account "
                    "that has access.")
         response = self.client.post('/account/login/',
-                                     self.users_credentials["banned_user"],
-                                     follow=True
-        )
+                                    self.users_credentials["banned_user"],
+                                    follow=True)
         self.assertContains(response, context)
 
     def test_login_unregistered_user(self):
@@ -52,7 +52,5 @@ class LogInTest(TestCase):
         context = "Please try again."
         response = self.client.post('/account/login/',
                                     self.users_credentials["unregistered_user"],
-                                    follow=True
-        )
+                                    follow=True)
         self.assertContains(response, context)
-

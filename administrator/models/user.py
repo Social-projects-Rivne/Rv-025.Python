@@ -134,7 +134,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     # a user via the createsuperuser management command
     REQUIRED_FIELDS = ['username']
 
-
     class Meta():
 
         """Give some options (metadata) attached to the model."""
@@ -143,7 +142,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         permissions = (
             ('read_user', 'Can read information about user'),
         )
-
 
     def set_is_active(self, status):
         """Set is_active according to user's status.

@@ -1,9 +1,6 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 
 from django.db import models
-
-from administrator.models import User
 
 
 class RestaurantType(models.Model):
@@ -20,8 +17,8 @@ class RestaurantType(models.Model):
         verbose_name = u"Restaurant type"
 
         permissions = (
-             ('read_restaurant', 'Can read information about restaurant'),
-         )
+            ('read_restaurant', 'Can read information about restaurant'),
+        )
 
     rest_type = models.CharField(max_length=256, blank=False)
 
@@ -59,8 +56,8 @@ class Restaurant(models.Model):
         verbose_name = u"Restaurant"
 
         permissions = (
-             ('read_restaurant', 'Can read information about restaurant'),
-         )
+            ('read_restaurant', 'Can read information about restaurant'),
+        )
 
     name = models.CharField(max_length=256, blank=False)
 
