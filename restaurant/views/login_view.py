@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 
@@ -21,8 +21,7 @@ def login_view(request):
         else:
             message = ("Your username and password didn't match. "
                        "Please try again.")
-        context = { "message": message }
+        context = {"message": message}
         return render(request, './registration/login.html', context=context)
     else:
         return render(request, './registration/login.html')
-

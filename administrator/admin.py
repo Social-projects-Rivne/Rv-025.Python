@@ -22,14 +22,12 @@ class RegistrationForm(UserCreationForm):
 
     email = forms.EmailField(required=True)
 
-
     class Meta:
 
         """Give some options (metadata) attached to the form."""
 
         model = User
         fields = ('role',)
-
 
     def save(self, commit=True):
         """Save a new user.
@@ -75,6 +73,8 @@ def delete_selected_users(modeladmin, request, queryset):
     """Block selected users instead of dropping them."""
     for obj in queryset:
         obj.delete()
+
+
 delete_selected_users.short_description = "Delete selested users"
 
 
@@ -113,6 +113,8 @@ def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
+
+
 soft_delete.short_description = "Delete selected items"
 
 
@@ -129,6 +131,7 @@ class PageAdmin(admin.ModelAdmin):
     def _type_id(self, obj):
         return obj.type_id
     _type_id.short_description = 'restaurant type'
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
