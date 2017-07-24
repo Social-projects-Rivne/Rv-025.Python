@@ -89,7 +89,7 @@ class UserAdmin(Admin):
     list_display = ('username', 'email', 'phone', 'role', 'status')
     ordering = ['username']
     list_per_page = 10
-    list_filter = [('status', ChoiceDropdownFilter), 'role']
+    list_filter = [('status', ChoiceDropdownFilter), ('role', ChoiceDropdownFilter)]
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),
@@ -126,7 +126,7 @@ class PageAdmin(admin.ModelAdmin):
     list_per_page = 15
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
-    list_filter = ['status']
+    list_filter = [('status', ChoiceDropdownFilter)]
 
     def _type_id(self, obj):
         return obj.type_id
