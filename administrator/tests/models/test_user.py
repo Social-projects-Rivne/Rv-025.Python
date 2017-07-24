@@ -9,9 +9,9 @@ class UserManagerTestCase(TestCase):
 
     """Test UserManager class."""
 
-    valid_email = 'example@example.com'
-    valid_username = 'foobar'
-    valid_password = 'aprjvnsotmv890326sdH'
+    valid_email = "example@example.com"
+    valid_username = "foobar"
+    valid_password = "aprjvnsotmv890326sdH"
 
     def setUp(self):
         """Prepare the test fixture."""
@@ -21,7 +21,7 @@ class UserManagerTestCase(TestCase):
     def test_user_is_not_created_without_email(self):
         """Test if user is not created without email."""
         with self.assertRaises(ValueError):
-            self.user_manager.create_user('', '', '')
+            self.user_manager.create_user("", "", "")
 
     def test_user_is_not_created_without_at_symbol_in_email(self):
         """Test if user is not created without @ in email."""
@@ -34,21 +34,10 @@ class UserManagerTestCase(TestCase):
                 self.valid_password
             )
 
-    def test_user_is_not_created_with_not_only_numbers_in_phone(self):
-        """Test if user is not created with not only numeric phone."""
-        wrong_phone = "0234hfk^&"
-
-        with self.assertRaises(ValueError):
-            self.user_manager.create_user(
-                self.valid_email,
-                self.valid_username,
-                self.valid_password,
-                phone=wrong_phone
-            )
-
-    def test_user_is_not_created_with_password_similar_to_personal_information(self):
-        """Test if user is not created with password similar to personal information."""
-        valid_email = 'example@example.com'
+    def test_user_is_not_created_with_password_similar_to_personal_info(self):
+        """Test if user is not created with password
+        similar to personal information."""
+        valid_email = "example@example.com"
         wrong_password = "example"
 
         with self.assertRaises(ValueError):
@@ -100,8 +89,9 @@ class UserManagerTestCase(TestCase):
         )
         self.assertEqual(user.is_superuser, False)
 
-    def test_superuser_is_not_created_with_is_superuser_field_set_to_false(self):
-        """Test if superuser is not created with is_superuser field set to false."""
+    def test_superuser_is_not_created_with_false_is_superuser_field(self):
+        """Test if superuser is not created with
+        is_superuser field set to false."""
         with self.assertRaises(ValueError):
             self.user_manager.create_superuser(
                 self.valid_email,
@@ -126,7 +116,7 @@ class UserTestCase(TestCase):
 
     def setUp(self):
         """Prepare the test fixture."""
-        valid_email = 'example@example.com'
+        valid_email = "example@example.com"
 
         self.user = User()
         self.user.email = valid_email
