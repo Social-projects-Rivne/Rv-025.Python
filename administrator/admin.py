@@ -74,6 +74,8 @@ def delete_selected_users(modeladmin, request, queryset):
     """Block selected users instead of dropping them."""
     for obj in queryset:
         obj.delete()
+
+
 delete_selected_users.short_description = "Delete selested users"
 
 
@@ -88,7 +90,7 @@ class UserAdmin(Admin):
     list_display = ('username', 'email', 'phone', 'role', 'status')
     ordering = ['username']
     list_per_page = 10
-    list_filter = [('status', ChoiceDropdownFilter), 'role']
+    list_filter = [('status', ChoiceDropdownFilter), ('role', ChoiceDropdownFilter)]
 
     fieldsets = (
         (None, {'fields': ('username', 'email',)}),
@@ -112,6 +114,8 @@ def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
+
+
 soft_delete.short_description = "Delete selected items"
 
 
@@ -123,7 +127,7 @@ class PageAdmin(admin.ModelAdmin):
     list_per_page = 15
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
-    list_filter = ['status']
+    list_filter = [('status', ChoiceDropdownFilter)]
 
     def _type_id(self, obj):
         return obj.type_id
@@ -136,7 +140,6 @@ class DishCategoryCustom(admin.ModelAdmin):
 
     list_display = ('name', 'id', 'is_delete')
     list_per_page = 15
-
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
