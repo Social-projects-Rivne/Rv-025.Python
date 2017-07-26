@@ -86,8 +86,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
-#AUTH_USER_MODEL = 'administrator.User'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -130,7 +129,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 AUTH_USER_MODEL = 'administrator.User'
 
 
-#Files downloaded by the users of the site
+# Files downloaded by the users of the site
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -147,6 +146,8 @@ FIXTURE_DIRS = (
 DATABASES = {
     'default': dj_database_url.config()
 }
+
+DATABASES['default'] = {'ENGINE': 'django.db.backends.postgresql'}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

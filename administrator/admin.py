@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
+from .models import DishCategory
 from .models import Role
 from .models import User
 from restaurant.models import Restaurant
@@ -23,14 +24,12 @@ class RegistrationForm(UserCreationForm):
 
     email = forms.EmailField(required=True)
 
-
     class Meta:
 
         """Give some options (metadata) attached to the form."""
 
         model = User
         fields = ('role',)
-
 
     def save(self, commit=True):
         """Save a new user.
@@ -76,6 +75,8 @@ def delete_selected_users(modeladmin, request, queryset):
     """Block selected users instead of dropping them."""
     for obj in queryset:
         obj.delete()
+
+
 delete_selected_users.short_description = "Delete selested users"
 
 
@@ -90,7 +91,7 @@ class UserAdmin(Admin):
     list_display = ('name', 'email', 'phone', 'role', 'status')
     ordering = ['name']
     list_per_page = 10
-    list_filter = [('status', ChoiceDropdownFilter), 'role']
+    list_filter = [('status', ChoiceDropdownFilter), ('role', ChoiceDropdownFilter)]
 
     fieldsets = (
         (None, {'fields': ('name', 'email',)}),
@@ -114,6 +115,8 @@ def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
+
+
 soft_delete.short_description = "Delete selected items"
 
 
@@ -136,7 +139,7 @@ class RestaurantForm(forms.ModelForm):
         self.fields['manager'].choices = [(user.pk, user.get_full_name())
                                           for user in users
                                           if user.status != 1 and user.role
-                                          != Role.objects.get(id=1)]
+                                          == Role.objects.get(id=2)]
 
     def save(self, commit=True):
         """Save the restaurant.
@@ -160,13 +163,22 @@ class RestaurantAdmin(admin.ModelAdmin):
     list_per_page = 15
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
-    list_filter = ['status']
+    list_filter = [('status', ChoiceDropdownFilter)]
 
     def _type_id(self, obj):
         return obj.type_id
     _type_id.short_description = 'restaurant type'
 
 
+class DishCategoryAdmin(admin.ModelAdmin):
+
+    """Custom display dishes categories list."""
+
+    list_display = ('name', 'id', 'is_delete')
+    list_per_page = 15
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
+admin.site.register(DishCategory, DishCategoryCustom)
 admin.site.unregister(Group)
