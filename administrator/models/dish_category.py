@@ -22,7 +22,7 @@ class DishCategory(models.Model):
         db_table = 'dish_category'
         verbose_name = u"Dish Categories"
         permissions = (
-             ('read_restaurant', 'Can read information about restaurant'),
+             ('read_dishcategory', 'Can read information about Dish Categories'),
          )
 
     def _save(self, name, **extra_fields):
