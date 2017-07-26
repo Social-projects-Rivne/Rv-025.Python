@@ -49,6 +49,9 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+!**/migrations
+!**/migrations/__init__.py
+administrator/migrations
 
 # Django stuff:
 *.log
