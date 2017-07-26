@@ -87,7 +87,7 @@ class UserAdmin(Admin):
     add_form = RegistrationForm
 
     search_fields = ('name', 'email', 'phone')
-    list_display = ('name', 'email', 'phone', 'role', 'status', 'is_active', 'is_staff')
+    list_display = ('name', 'email', 'phone', 'role', 'status')
     ordering = ['name']
     list_per_page = 10
     list_filter = [('status', ChoiceDropdownFilter), 'role']
@@ -127,8 +127,16 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ('name', 'logo', 'location', 'type', 'tables_count', 'description', 'status', 'manager')
+        fields = ('name', 'logo', 'location', 'type', 'tables_count',
+                  'description', 'status', 'manager')
 
+    def __init__(self, *args, **kwargs):
+        super(RestaurantForm, self).__init__(*args, **kwargs)
+        users = User.objects.all()
+        self.fields['manager'].choices = [(user.pk, user.get_full_name())
+                                          for user in users
+                                          if user.status != 1 and user.role
+                                          != Role.objects.get(id=1)]
 
     def save(self, commit=True):
         """Save the restaurant.
@@ -142,7 +150,7 @@ class RestaurantForm(forms.ModelForm):
         return restaurant
 
 
-class PageAdmin(admin.ModelAdmin):
+class RestaurantAdmin(admin.ModelAdmin):
 
     """Custom display in restaurant's list."""
 
@@ -162,4 +170,3 @@ class PageAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
 admin.site.unregister(Group)
-admin.site.register(Role)

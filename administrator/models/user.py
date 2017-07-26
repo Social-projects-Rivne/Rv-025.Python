@@ -5,12 +5,12 @@ Contain a model class for users and a manager for this model.
 :copyright: (c) 2017 by Ol'ha Leskovs'ka
 """
 
+from django.contrib import messages
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
-from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 
 from role import Role
@@ -84,26 +84,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     ACTIVE = 0
     DELETED = 1
-    BANNED = 3
-    UNAUTHORIZED = 4
+    BANNED = 2
+    UNAUTHORIZED = 3
 
     USER_STATUSES = (
         (ACTIVE, 'active'),
         (DELETED, 'deleted'),
         (BANNED, 'banned'),
         (UNAUTHORIZED, 'unauthorized'),
-    )
-
-    USER = 0
-    ADMIN = 1
-    MANAGER = 3
-    SUBMANAGER = 4
-
-    USER_ROLES = (
-        (USER, 'user'),
-        (ADMIN, 'admin'),
-        (MANAGER, 'manager'),
-        (SUBMANAGER, 'submanager'),
     )
 
     name = models.CharField(max_length=50, default='',
@@ -169,6 +157,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Set is_staff according to user's role.
 
         Argument:
+        Argument:
         role - user's role
         """
         self.is_staff = (role == Role.objects.get(id=1) or role == Role.objects.get(id=3))
@@ -177,6 +166,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Return the user's email"""
         # The user is identified by the email address
         return self.email
+
+    def get_full_name(self):
+        return self.name + " " + self.email
 
     def email_to_user(self, subject, message, sender=None, **kwargs):
         """Send an email to the user
