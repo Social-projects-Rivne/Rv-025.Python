@@ -1,6 +1,7 @@
 """Test UserManager class and User model."""
 
 from django.test import TestCase
+from django.core.validators import ValidationError
 
 from administrator.models import User, UserManager
 
@@ -27,7 +28,7 @@ class UserManagerTestCase(TestCase):
         """Test if user is not created without @ in email."""
         wrong_email = "example"
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValidationError):
             self.user_manager.create_user(
                 wrong_email,
                 self.valid_username,
@@ -51,7 +52,7 @@ class UserManagerTestCase(TestCase):
         valid_email = 'example@example.com'
         wrong_password = "example"
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValidationError):
             self.user_manager.create_user(
                 valid_email,
                 self.valid_username,
@@ -62,7 +63,7 @@ class UserManagerTestCase(TestCase):
         """Test if user is not created with too short password."""
         wrong_password = "qwerty1"
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValidationError):
             self.user_manager.create_user(
                 self.valid_email,
                 self.valid_username,
@@ -73,7 +74,7 @@ class UserManagerTestCase(TestCase):
         """Test if user is not created with only numeric password."""
         wrong_password = "123456789"
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValidationError):
             self.user_manager.create_user(
                 self.valid_email,
                 self.valid_username,
@@ -84,7 +85,7 @@ class UserManagerTestCase(TestCase):
         """Test if user is not created with commonly used password."""
         wrong_password = "password"
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValidationError):
             self.user_manager.create_user(
                 self.valid_email,
                 self.valid_username,

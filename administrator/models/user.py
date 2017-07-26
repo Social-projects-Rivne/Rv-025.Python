@@ -5,9 +5,13 @@ Contain a model class for users and a manager for this model.
 :copyright: (c) 2017 by Ol'ha Leskovs'ka
 """
 
+import re
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.password_validation import validate_password
+from django.core.validators import validate_email
 from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -29,12 +33,19 @@ class UserManager(BaseUserManager):
         """
         if not email:
             raise ValueError('Users must have an email address')
-
+        validate_password(password=password)
+        self._validate_phone(phone=extra_fields.get('phone'))
+        validate_email(email)
         email = self.normalize_email(email)
+
         user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
+
+    def _validate_phone(self, phone):
+        if (not (phone is None)) and (not re.match(r'\A\d{9,12}\b', phone)):
+            raise ValueError('Not correct format of mobile phone')
 
     def create_user(self, email, username, password, **extra_fields):
         """Create and save an ordinary user with the given email,
