@@ -9,9 +9,9 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
+from .models import DishCategory
 from .models import User
 from restaurant.models import Restaurant
-from .models import DishCategory
 
 
 class RegistrationForm(UserCreationForm):
