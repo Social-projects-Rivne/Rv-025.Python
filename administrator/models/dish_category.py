@@ -20,7 +20,7 @@ class DishCategory(models.Model):
         """Display correct field in dish_categories table."""
 
         db_table = 'dish_category'
-        verbose_name = u"Dish Categories"
+        verbose_name_plural = u"Dish Categories"
         permissions = (
              ('read_dishcategory', 'Can read information about Dish Categories'),
          )
