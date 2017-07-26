@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
 from .models import DishCategory
+from .models import Role
 from .models import User
 from restaurant.models import Restaurant
 
@@ -18,7 +19,7 @@ class RegistrationForm(UserCreationForm):
 
     """A form for users creation.
 
-    Email, username, password and role are given.
+    Email, name, password and role are given.
     """
 
     email = forms.EmailField(required=True)
@@ -53,7 +54,7 @@ class UserChangeForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = User
-        fields = ('username', 'email', 'phone', 'role', 'status',)
+        fields = ('name', 'email', 'phone', 'role', 'status',)
 
     def save(self, commit=True):
         """Save the provided password in a hashed format and put
@@ -86,24 +87,24 @@ class UserAdmin(Admin):
     form = UserChangeForm
     add_form = RegistrationForm
 
-    search_fields = ('username', 'email', 'phone')
-    list_display = ('username', 'email', 'phone', 'role', 'status')
-    ordering = ['username']
+    search_fields = ('name', 'email', 'phone')
+    list_display = ('name', 'email', 'phone', 'role', 'status')
+    ordering = ['name']
     list_per_page = 10
     list_filter = [('status', ChoiceDropdownFilter), ('role', ChoiceDropdownFilter)]
 
     fieldsets = (
-        (None, {'fields': ('username', 'email',)}),
+        (None, {'fields': ('name', 'email',)}),
         (_('Personal info'), {'fields': ('phone',)}),
         (_('Status'), {'fields': ('status',)}),
-        (_('Permissions'), {'fields': ('role', 'user_permissions')}),
+        (_('Permissions'), {'fields': ('role',)}),
     )
 
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
-            'fields': ('email', 'username', 'password1', 'password2', 'role')}
+            'fields': ('email', 'name', 'password1', 'password2', 'role')}
          ),
     )
 
@@ -119,11 +120,46 @@ def soft_delete(modeladmin, request, queryset):
 soft_delete.short_description = "Delete selected items"
 
 
-class PageAdmin(admin.ModelAdmin):
+class RestaurantForm(forms.ModelForm):
+
+    """A form for restaurants modifications."""
+
+
+    class Meta:
+
+        """Give some options (metadata) attached to the form."""
+
+        model = Restaurant
+        fields = ('name', 'logo', 'location', 'type', 'tables_count',
+                  'description', 'status', 'manager')
+
+    def __init__(self, *args, **kwargs):
+        super(RestaurantForm, self).__init__(*args, **kwargs)
+        users = User.objects.all()
+        self.fields['manager'].choices = [(user.pk, user.get_full_name())
+                                          for user in users
+                                          if user.status != 1 and user.role
+                                          == Role.objects.get(id=2)]
+
+    def save(self, commit=True):
+        """Save the restaurant.
+
+        Return a Restaurant object.
+        """
+        restaurant = super(RestaurantForm, self).save(commit=False)
+        restaurant.set_manager(restaurant.manager)
+        if commit:
+            restaurant.save()
+        return restaurant
+
+
+class RestaurantAdmin(admin.ModelAdmin):
 
     """Custom display in restaurant's list."""
 
-    list_display = ('name', '_type_id', 'status', 'tables_count')
+    form = RestaurantForm
+
+    list_display = ('name', 'type', 'status', 'tables_count', 'manager')
     list_per_page = 15
     actions = [soft_delete]
     admin.site.disable_action('delete_selected')
@@ -134,12 +170,13 @@ class PageAdmin(admin.ModelAdmin):
     _type_id.short_description = 'restaurant type'
 
 
-class DishCategoryCustom(admin.ModelAdmin):
+class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
 
     list_display = ('name', 'id', 'is_delete')
     list_per_page = 15
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)

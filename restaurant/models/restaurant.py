@@ -2,6 +2,9 @@ from django.core.validators import MinValueValidator
 
 from django.db import models
 
+from administrator.models import User
+from administrator.models import Role
+
 
 class RestaurantType(models.Model):
 
@@ -43,11 +46,11 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=256, blank=False)
     logo = models.CharField(max_length=256, default="Logo_added")
     location = models.CharField(max_length=256, blank=False)
-    type_id = models.ForeignKey(RestaurantType, blank=True, null=True)
+    type = models.ForeignKey(RestaurantType, blank=True, null=True)
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
-    # owner_id = models.ForeignKey(User)
+    manager = models.ForeignKey(User, null=True)
 
     class Meta(object):
 
@@ -63,9 +66,21 @@ class Restaurant(models.Model):
 
     def __unicode__(self):
         """Display custom labels in restaurant's list"""
-        return u"%s %s" % (self.type_id, self.name)
+        return u"%s %s" % (self.type, self.name)
 
     def delete(self, *args, **kwargs):
         """Function for restaurant soft-deleting"""
         self.status = 1
         self.save()
+
+    def set_manager(self, user):
+        """Set manager to a restaurant."""
+        if user.role == Role.objects.get(id=1):
+            if not User.last_active_admin(user):
+                role = Role.objects.get(id=3)
+            else:
+                role = Role.objects.get(id=1)
+        else:
+            role = Role.objects.get(id=3)
+        user.role = role
+        user.save()
