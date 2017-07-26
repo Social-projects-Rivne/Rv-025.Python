@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
+from .models import DishCategory
 from .models import User
 from restaurant.models import Restaurant
 
@@ -133,6 +134,14 @@ class PageAdmin(admin.ModelAdmin):
     _type_id.short_description = 'restaurant type'
 
 
+class DishCategoryCustom(admin.ModelAdmin):
+
+    """Custom display dishes categories list."""
+
+    list_display = ('name', 'id', 'is_delete')
+    list_per_page = 15
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, PageAdmin)
+admin.site.register(DishCategory, DishCategoryCustom)
 admin.site.unregister(Group)
