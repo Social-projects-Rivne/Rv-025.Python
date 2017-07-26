@@ -125,8 +125,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-
-#User's model
+# User's model
 
 AUTH_USER_MODEL = 'administrator.User'
 
@@ -136,6 +135,12 @@ AUTH_USER_MODEL = 'administrator.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+# Fixtures
+
+FIXTURE_DIRS = (
+   os.path.join(BASE_DIR, 'fixtures'),
+)
 
 # PRODUCTION: Heroku settings:
 

@@ -10,19 +10,22 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
+
+from role import Role
 
 
 class UserManager(BaseUserManager):
 
     """Manage creation of users in a database."""
 
-    def _create_user(self, email, username, password, **extra_fields):
+    def _create_user(self, email, name, password, **extra_fields):
         """Create, save and return a user.
 
         Arguments:
         email - user's email
-        username - user's name
+        name - user's name
         password - user's password
         extra_fields - any other fields
         Return a User object.
@@ -31,42 +34,43 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username, **extra_fields)
+        user = self.model(email=email, name=name, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, username, password, **extra_fields):
+    def create_user(self, email, name, password, **extra_fields):
         """Create and save an ordinary user with the given email,
-        username and password.
+        name and password.
 
         Arguments:
         email - user's email
-        username - user's name
+        name - user's name
         password - user's password
         extra_fields - any other fields
         """
+        #extra_fields.setdefault('role', Role.objects.get(id=2))
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, username, password, **extra_fields)
+        return self._create_user(email, name, password, **extra_fields)
 
-    def create_superuser(self, email, username, password, **extra_fields):
+    def create_superuser(self, email, name, password, **extra_fields):
         """Create and save a superuser with the given email,
-        username and password.
+        name and password.
 
         Arguments:
         email - user's email
-        username - user's name
+        name - user's name
         password - user's password
         extra_fields - any other fields
         """
-        extra_fields.setdefault('role', 1)
+        extra_fields.setdefault('role', Role.objects.get(id=1))
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
 
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, username, password, **extra_fields)
+        return self._create_user(email, name, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -75,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     in DB.
 
     Extend AbstractBaseUser class with such fields as status and
-    avatar. The email is used as the username when users login.
+    avatar. The email is used as the name when users login.
     """
 
     ACTIVE = 0
@@ -102,8 +106,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         (SUBMANAGER, 'submanager'),
     )
 
-    username = models.CharField(max_length=50, default='',
-                                help_text=_('50 characters or fewer.'))
+    name = models.CharField(max_length=50, default='',
+                            help_text=_('50 characters or fewer.'))
     email = models.EmailField(_('email address'), unique=True, default='',
                               error_messages={'unique': _('A user with such '
                                                           'email already '
@@ -121,7 +125,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                              unique=True, help_text=_('Use just numbers: '
                                                       ''''380931234567'''))
     avatar = models.ImageField(upload_to='user_images', blank=True, null=True)
-    role = models.IntegerField(choices=USER_ROLES, default=0)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE,
+                             related_name='roles', null=True)
     status = models.IntegerField(choices=USER_STATUSES, default=0, null=False)
     is_staff = models.BooleanField(default=False,)
     is_active = models.BooleanField(default=True, blank=True)
@@ -132,7 +137,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # A list of the field names that will be prompted for when creating
     # a user via the createsuperuser management command
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['name']
 
 
     class Meta():
@@ -151,7 +156,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         status - user's status
         """
-        self.is_active = (status == 0)
+        if self.role == Role.objects.get(id=1):
+            if not self.last_active_admin():
+                self.is_active = (status == 0)
+            else:
+                self.is_active = True
+                self.status = 0
+        else:
+            self.is_active = (status == 0)
 
     def set_is_staff(self, role):
         """Set is_staff according to user's role.
@@ -159,7 +171,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         role - user's role
         """
-        self.is_staff = (role == 1)
+        self.is_staff = (role == Role.objects.get(id=1) or role == Role.objects.get(id=3))
 
     def get_short_name(self):
         """Return the user's email"""
@@ -181,7 +193,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Block the user instead of dropping.
 
         Put is_active into False and change status.
+        Don't delete the last admin
         """
-        self.is_active = False
-        self.status = 1
-        self.save()
+        if self.role == Role.objects.get(id=1):
+            if not self.last_active_admin():
+                self.is_active = False
+                self.status = 1
+                self.save()
+        else:
+            self.is_active = False
+            self.status = 1
+            self.save()
+
+    def last_active_admin(self):
+        """Return True if it is the last active admin."""
+        number = User.objects.filter(role=1, is_active=True).count()
+        if number > 1:
+            return False
+        else:
+            return True
