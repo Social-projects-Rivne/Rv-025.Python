@@ -49,7 +49,7 @@ class UserManager(BaseUserManager):
         password - user's password
         extra_fields - any other fields
         """
-        #extra_fields.setdefault('role', Role.objects.get(id=2))
+        extra_fields.setdefault('role', Role.objects.get(id=2))
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, name, password, **extra_fields)
 
@@ -166,6 +166,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
+        """Return the user's name and email"""
         return self.name + " " + self.email
 
     def email_to_user(self, subject, message, sender=None, **kwargs):

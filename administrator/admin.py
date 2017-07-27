@@ -179,6 +179,6 @@ class DishCategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Restaurant, PageAdmin)
-admin.site.register(DishCategory, DishCategoryCustom)
+admin.site.register(Restaurant, RestaurantAdmin)
+admin.site.register(DishCategory, DishCategoryAdmin)
 admin.site.unregister(Group)

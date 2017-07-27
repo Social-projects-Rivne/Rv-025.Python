@@ -20,14 +20,10 @@ class DishCategory(models.Model):
         """Display correct field in dish_categories table."""
 
         db_table = 'dish_category'
-        verbose_name = u"Dish Categories"
+        verbose_name_plural = u"Dish Categories"
         permissions = (
-             ('read_restaurant', 'Can read information about restaurant'),
+             ('read_dishcategory', 'Can read information about Dish Categories'),
          )
-
-    def _save(self, name, **extra_fields):
-        """Create and save dish_categories with the given name."""
-        return self._save(name, **extra_fields)
 
     def delete(self, *args, **kwargs):
         """Soft-deleting category"""
