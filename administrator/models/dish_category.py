@@ -25,10 +25,6 @@ class DishCategory(models.Model):
              ('read_dishcategory', 'Can read information about Dish Categories'),
          )
 
-    def _save(self, name, **extra_fields):
-        """Create and save dish_categories with the given name."""
-        return self._save(name, **extra_fields)
-
     def delete(self, *args, **kwargs):
         """Soft-deleting category"""
         self.is_delete = True
