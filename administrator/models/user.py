@@ -5,7 +5,6 @@ Contain a model class for users and a manager for this model.
 :copyright: (c) 2017 by Ol'ha Leskovs'ka
 """
 
-from django.contrib import messages
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -37,6 +36,7 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, name=name, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+        user.set_permissions(extra_fields.get('role'))
         return user
 
     def create_user(self, email, name, password, **extra_fields):
@@ -203,3 +203,12 @@ class User(AbstractBaseUser, PermissionsMixin):
             return False
         else:
             return True
+
+    def set_permissions(self, role):
+        """Set user_permissions according to user's role.
+
+        Argument:
+        role - user's role
+        """
+        for perm in role.permissions.all():
+            self.user_permissions.add(perm)

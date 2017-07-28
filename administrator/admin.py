@@ -66,6 +66,7 @@ class UserChangeForm(forms.ModelForm):
         user = super(UserChangeForm, self).save(commit=False)
         user.set_is_active(user.status)
         user.set_is_staff(user.role)
+        user.set_permissions(user.role)
         if commit:
             user.save()
         return user
@@ -84,6 +85,15 @@ class UserAdmin(Admin):
 
     """Represent a model in the admin interface."""
 
+    """def queryset(self, request):
+        qs = super(UserAdmin, self).queryset(request)
+
+        # If super-user, show all comments
+        if request.user.role == Role.objects.get(id=1):
+            return qs
+
+        return qs.filter(added_by=request.user)"""
+
     form = UserChangeForm
     add_form = RegistrationForm
 
@@ -99,6 +109,7 @@ class UserAdmin(Admin):
         (_('Status'), {'fields': ('status',)}),
         (_('Permissions'), {'fields': ('role',)}),
     )
+
 
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -156,6 +167,17 @@ class RestaurantForm(forms.ModelForm):
 class RestaurantAdmin(admin.ModelAdmin):
 
     """Custom display in restaurant's list."""
+
+    def get_queryset(self, request):
+        """ Represent the objects.
+
+        Return a QuerySet of all model instances that can be edited
+        by the admin site.
+        """
+        qs = super(RestaurantAdmin, self).get_queryset(request)
+        if request.user.role == Role.objects.get(id=1):
+            return qs
+        return qs.filter(manager=request.user.id)
 
     form = RestaurantForm
 

@@ -83,4 +83,6 @@ class Restaurant(models.Model):
         else:
             role = Role.objects.get(id=3)
         user.role = role
+        user.set_permissions(role)
+        user.set_is_staff(role)
         user.save()
