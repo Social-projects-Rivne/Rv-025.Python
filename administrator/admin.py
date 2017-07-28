@@ -40,6 +40,7 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         user.role = self.cleaned_data['role']
         user.set_is_staff(user.role)
+        user.set_permissions(user.role)
         if commit:
             user.save()
         return user
@@ -66,6 +67,7 @@ class UserChangeForm(forms.ModelForm):
         user = super(UserChangeForm, self).save(commit=False)
         user.set_is_active(user.status)
         user.set_is_staff(user.role)
+        user.set_permissions(user.role)
         if commit:
             user.save()
         return user
@@ -156,6 +158,17 @@ class RestaurantForm(forms.ModelForm):
 class RestaurantAdmin(admin.ModelAdmin):
 
     """Custom display in restaurant's list."""
+
+    def get_queryset(self, request):
+        """ Represent the objects.
+
+        Return a QuerySet of all model instances that can be edited
+        by the admin site.
+        """
+        qs = super(RestaurantAdmin, self).get_queryset(request)
+        if request.user.role == Role.objects.get(id=1):
+            return qs
+        return qs.filter(manager=request.user.id)
 
     form = RestaurantForm
 

@@ -9,9 +9,5 @@ class Role(Group):
     """
 
     class Meta:
-        db_table = 'roles'
-        ordering = ['name']
         proxy = True
         verbose_name = _('role')
-        verbose_name_plural = _('roles')
-

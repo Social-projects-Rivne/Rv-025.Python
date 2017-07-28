@@ -216,6 +216,21 @@
                 "user"
             ],
             [
+                "add_restaurant",
+                "restaurant",
+                "restaurant"
+            ],
+            [
+                "change_restaurant",
+                "restaurant",
+                "restaurant"
+            ],
+            [
+                "delete_restaurant",
+                "restaurant",
+                "restaurant"
+            ],
+            [
                 "read_restaurant",
                 "restaurant",
                 "restaurant"
@@ -224,6 +239,11 @@
                 "read_restaurant",
                 "restaurant",
                 "restauranttype"
+            ],
+            [
+                "add_user",
+                "administrator",
+                "user"
             ]
         ]
     }
