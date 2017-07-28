@@ -182,7 +182,6 @@
     "fields": {
         "name": "User",
         "permissions": [
-
             [
                 "read_dishcategory",
                 "administrator",
