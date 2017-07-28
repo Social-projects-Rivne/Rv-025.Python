@@ -40,6 +40,7 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         user.role = self.cleaned_data['role']
         user.set_is_staff(user.role)
+        user.set_permissions(user.role)
         if commit:
             user.save()
         return user
@@ -84,15 +85,6 @@ delete_selected_users.short_description = "Delete selested users"
 class UserAdmin(Admin):
 
     """Represent a model in the admin interface."""
-
-    """def queryset(self, request):
-        qs = super(UserAdmin, self).queryset(request)
-
-        # If super-user, show all comments
-        if request.user.role == Role.objects.get(id=1):
-            return qs
-
-        return qs.filter(added_by=request.user)"""
 
     form = UserChangeForm
     add_form = RegistrationForm
