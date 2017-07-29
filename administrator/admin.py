@@ -40,6 +40,7 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         user.role = self.cleaned_data['role']
         user.set_is_staff(user.role)
+        user.save()
         user.set_permissions(user.role)
         if commit:
             user.save()
