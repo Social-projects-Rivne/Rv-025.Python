@@ -20,7 +20,7 @@ class RestaurantType(models.Model):
         verbose_name = u"Restaurant type"
 
         permissions = (
-            ('read_restaurant', 'Can read information about restaurant'),
+            ("read_restaurant", "Can read information about restaurant"),
         )
 
     def __unicode__(self):
@@ -36,9 +36,9 @@ class Restaurant(models.Model):
     HIDDEN = 2
 
     RESTAURANT_STATUSES = (
-        (ACTIVE, 'active'),
-        (DELETED, 'deleted'),
-        (HIDDEN, 'hidden'),
+        (ACTIVE, "active"),
+        (DELETED, "deleted"),
+        (HIDDEN, "hidden"),
     )
 
     name = models.CharField(max_length=256, blank=False)
@@ -49,6 +49,7 @@ class Restaurant(models.Model):
     tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
     manager = models.ForeignKey(User, null=True, blank=True)
+    parent_restaurant = models.ForeignKey("self", null=True, blank=True)
 
     class Meta(object):
 
@@ -57,7 +58,7 @@ class Restaurant(models.Model):
         verbose_name = u"Restaurant"
 
         permissions = (
-            ('read_restaurant', 'Can read information about restaurant'),
+            ("read_restaurant", "Can read information about restaurant"),
         )
 
     def __unicode__(self):

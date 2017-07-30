@@ -29,7 +29,7 @@ class RegistrationForm(UserCreationForm):
         """Give some options (metadata) attached to the form."""
 
         model = User
-        fields = ('role',)
+        fields = ("role",)
 
     def save(self, commit=True):
         """Save a new user.
@@ -37,8 +37,8 @@ class RegistrationForm(UserCreationForm):
         Return a User object.
         """
         user = super(RegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.role = self.cleaned_data['role']
+        user.email = self.cleaned_data["email"]
+        user.role = self.cleaned_data["role"]
         user.set_is_staff(user.role)
         user.set_permissions(user.role)
         if commit:
@@ -55,7 +55,7 @@ class UserChangeForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = User
-        fields = ('name', 'email', 'phone', 'role', 'status',)
+        fields = ("name", "email", "phone", "role", "status",)
 
     def save(self, commit=True):
         """Save the provided password in a hashed format and put
@@ -89,24 +89,24 @@ class UserAdmin(Admin):
     form = UserChangeForm
     add_form = RegistrationForm
 
-    search_fields = ('name', 'email', 'phone')
-    list_display = ('name', 'email', 'phone', 'role', 'status')
-    ordering = ['name']
+    search_fields = ("name", "email", "phone")
+    list_display = ("name", "email", "phone", "role", "status")
+    ordering = ["name"]
     list_per_page = 10
-    list_filter = [('status', ChoiceDropdownFilter), ('role', ChoiceDropdownFilter)]
+    list_filter = [("status", ChoiceDropdownFilter), ("role", ChoiceDropdownFilter)]
 
     fieldsets = (
-        (None, {'fields': ('name', 'email',)}),
-        (_('Personal info'), {'fields': ('phone',)}),
-        (_('Status'), {'fields': ('status',)}),
-        (_('Permissions'), {'fields': ('role',)}),
+        (None, {"fields": ("name", "email",)}),
+        (_("Personal info"), {"fields": ("phone",)}),
+        (_("Status"), {"fields": ("status",)}),
+        (_("Permissions"), {"fields": ("role",)}),
     )
 
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
-            'fields': ('email', 'name', 'password1', 'password2', 'role')}
+            "fields": ("email", "name", "password1", "password2", "role")}
          ),
     )
 
@@ -132,16 +132,38 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ('name', 'logo', 'location', 'type', 'tables_count',
-                  'description', 'status', 'manager')
+        fields = ("name", "logo", "location", "type", "tables_count",
+                  "description", "status", "manager", "parent_restaurant")
 
     def __init__(self, *args, **kwargs):
         super(RestaurantForm, self).__init__(*args, **kwargs)
         users = User.objects.all()
-        self.fields['manager'].choices = [(user.pk, user.get_full_name())
-                                          for user in users
-                                          if user.status != 1 and user.role
-                                          == Role.objects.get(id=2)]
+        restaurants = Restaurant.objects.all()
+
+        manager_choices = [(None, "---------")]
+
+        for user in users:
+            if user.status != 1 and user.role == Role.objects.get(id=3):
+                manager_choices.append((user.pk, user.get_full_name()))
+
+        self.fields["manager"].choices = manager_choices
+
+        parent_restaurant_choices = [(None, "---------")]
+
+        if self.current_user.role != Role.objects.get(id=1):
+            for restaurant in restaurants:
+                if restaurant.status != 1 \
+                        and restaurant.manager_id == self.current_user.id:
+                    parent_restaurant_choices.append(
+                        (restaurant.id, restaurant.name)
+                    )
+        else:
+            for restaurant in restaurants:
+                parent_restaurant_choices.append(
+                    (restaurant.id, restaurant.name)
+                )
+
+        self.fields["parent_restaurant"].choices = parent_restaurant_choices
 
     def save(self, commit=True):
         """Save the restaurant.
@@ -173,24 +195,30 @@ class RestaurantAdmin(admin.ModelAdmin):
             return qs
         return qs.filter(manager=request.user.id)
 
-    form = RestaurantForm
+    def get_form(self, request, *args, **kwargs):
+        """Return a ModelForm class with current user id for using in the
+        admin"""
+        form = super(RestaurantAdmin, self).get_form(request, *args, **kwargs)
+        form.current_user = request.user
+        return form
 
-    list_display = ('name', 'type', 'status', 'tables_count', 'manager')
+    form = RestaurantForm
+    list_display = ("name", "type", "status", "tables_count", "manager")
     list_per_page = 15
     actions = [soft_delete]
-    admin.site.disable_action('delete_selected')
-    list_filter = [('status', ChoiceDropdownFilter)]
+    admin.site.disable_action("delete_selected")
+    list_filter = [("status", ChoiceDropdownFilter)]
 
     def _type_id(self, obj):
         return obj.type_id
-    _type_id.short_description = 'restaurant type'
+    _type_id.short_description = "restaurant type"
 
 
 class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
 
-    list_display = ('name', 'id', 'is_delete')
+    list_display = ("name", "id", "is_delete")
     list_per_page = 15
 
 
