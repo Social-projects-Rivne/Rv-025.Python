@@ -149,7 +149,10 @@ class RestaurantForm(forms.ModelForm):
         Return a Restaurant object.
         """
         restaurant = super(RestaurantForm, self).save(commit=False)
-        restaurant.set_manager(restaurant.manager)
+
+        if restaurant.manager:
+            restaurant.set_manager(restaurant.manager)
+
         if commit:
             restaurant.save()
         return restaurant

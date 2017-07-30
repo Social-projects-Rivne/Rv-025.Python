@@ -23,8 +23,6 @@ class RestaurantType(models.Model):
             ('read_restaurant', 'Can read information about restaurant'),
         )
 
-    rest_type = models.CharField(max_length=256, blank=False)
-
     def __unicode__(self):
         return u"%s" % (self.rest_type)
 
@@ -50,7 +48,7 @@ class Restaurant(models.Model):
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
-    manager = models.ForeignKey(User, null=True)
+    manager = models.ForeignKey(User, null=True, blank=True)
 
     class Meta(object):
 
@@ -61,8 +59,6 @@ class Restaurant(models.Model):
         permissions = (
             ('read_restaurant', 'Can read information about restaurant'),
         )
-
-    name = models.CharField(max_length=256, blank=False)
 
     def __unicode__(self):
         """Display custom labels in restaurant's list"""
