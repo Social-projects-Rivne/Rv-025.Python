@@ -2,10 +2,12 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as Admin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
@@ -78,8 +80,6 @@ def delete_selected_users(modeladmin, request, queryset):
     """Block selected users instead of dropping them."""
     for obj in queryset:
         obj.delete()
-
-
 delete_selected_users.short_description = "Delete selested users"
 
 
@@ -118,9 +118,15 @@ def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
-
-
 soft_delete.short_description = "Delete selected items"
+
+
+def clone(modeladmin, queryset):
+    """Clone instance"""
+    for object in queryset:
+        object.id = None
+        object.save()
+clone.short_description = "Clone"
 
 
 class RestaurantForm(forms.ModelForm):
@@ -206,9 +212,44 @@ class RestaurantAdmin(admin.ModelAdmin):
     form = RestaurantForm
     list_display = ("name", "type", "status", "tables_count", "manager")
     list_per_page = 15
-    actions = [soft_delete]
-    admin.site.disable_action("delete_selected")
-    list_filter = [("status", ChoiceDropdownFilter)]
+    actions = [soft_delete, clone]
+    admin.site.disable_action('delete_selected')
+    list_filter = [('status', ChoiceDropdownFilter)]
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        """View for the model instance editing page."""
+        extra_context = {
+            "clone_url": request.path.replace("change/", "clone/")
+        }
+
+        return super(RestaurantAdmin, self).change_view(
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context,
+        )
+
+    def get_urls(self):
+        """Return the URLs to be used for that ModelAdmin."""
+        urls = super(RestaurantAdmin, self).get_urls()
+
+        custom_urls = [
+            url(
+                r'^(?P<restaurant>.+)/clone/$',
+                self.admin_site.admin_view(self.clone_view),
+                name='clone',
+            )
+        ]
+
+        return custom_urls + urls
+
+    def clone_view(self, request, *args, **kwargs):
+        """View for cloning instance."""
+        new_restaurant = Restaurant.objects.get(id=kwargs["restaurant"])
+        new_restaurant.id = None
+        new_restaurant.save()
+
+        return HttpResponseRedirect("/admin/restaurant/restaurant/")
 
     def _type_id(self, obj):
         return obj.type_id
