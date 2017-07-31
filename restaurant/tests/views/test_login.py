@@ -33,7 +33,7 @@ class LogInTest(TestCase):
 
     def test_login_correct_user(self):
         """Test whether user can login with correct data."""
-        response = self.client.post('/account/login/',
+        response = self.client.post('/accounts/login/',
                                     self.users_credentials["correct_user"],
                                     follow=True)
         self.assertContains(response, "Logout")
@@ -42,7 +42,7 @@ class LogInTest(TestCase):
         """Test whether banned user can't login."""
         context = ("To proceed, please login with an account "
                    "that has access.")
-        response = self.client.post('/account/login/',
+        response = self.client.post('/accounts/login/',
                                     self.users_credentials["banned_user"],
                                     follow=True)
         self.assertContains(response, context)
@@ -50,7 +50,7 @@ class LogInTest(TestCase):
     def test_login_unregistered_user(self):
         """Test whether user that isn't in database can't login."""
         context = "Please try again."
-        response = self.client.post('/account/login/',
+        response = self.client.post('/accounts/login/',
                                     self.users_credentials["unregistered_user"],
                                     follow=True)
         self.assertContains(response, context)
