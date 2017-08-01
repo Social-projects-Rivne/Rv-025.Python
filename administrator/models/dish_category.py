@@ -29,3 +29,6 @@ class DishCategory(models.Model):
         """Soft-deleting category"""
         self.is_delete = True
         self.save()
+
+    def __str__(self):
+        return self.name

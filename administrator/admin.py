@@ -14,8 +14,8 @@ from .filters import ChoiceDropdownFilter
 from .models import DishCategory
 from .models import Role
 from .models import User
+from restaurant.models import Dish
 from restaurant.models import Restaurant
-
 
 class RegistrationForm(UserCreationForm):
 
@@ -264,7 +264,24 @@ class DishCategoryAdmin(admin.ModelAdmin):
     list_per_page = 15
 
 
+class DishAdmin(admin.ModelAdmin):
+
+    """Custom display dishes list."""
+
+    list_display = ("name", "category", "price", "weight", "available")
+
+    def has_add_permission(self, request):
+        return request.user.role == Role.objects.get(name='Manager')
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Manager')
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Manager')
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(DishCategory, DishCategoryAdmin)
+admin.site.register(Dish, DishAdmin)
 admin.site.unregister(Group)
