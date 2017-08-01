@@ -11,15 +11,14 @@ class DishCategoryTestCase(TestCase):
 
     def setUp(self):
         """Prepare the test fixture."""
-        name = "juice"
 
         self.dish_category = DishCategory()
-        self.dish_category.name = name
+        self.dish_category.name = "juice"
+        self.dish_category.is_delete = False
 
-    def test_dish_category_is_not_created_without_name(self):
-        """Test if dish category is not created without name."""
-        with self.assertRaises(ValueError):
-            self.dish_category._save("")
+    def test_create_dish_category(self):
+        """Test if dish category is instance of DishCategory."""
+        assert isinstance(self.dish_category, DishCategory)
 
     def test_dish_category_can_be_set_to_deleted(self):
         """Test if dish category can be set to deleted."""
