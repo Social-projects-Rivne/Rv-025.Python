@@ -139,7 +139,7 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ("name", "logo", "location", "type", "tables_count",
+        fields = ("name", "logo", "location", "restaurant_type", "tables_count",
                   "description", "status", "manager", "parent_restaurant")
 
     def __init__(self, *args, **kwargs):
@@ -150,14 +150,14 @@ class RestaurantForm(forms.ModelForm):
         manager_choices = [(None, "---------")]
 
         for user in users:
-            if user.status != 1 and user.role == Role.objects.get(id=3):
+            if user.status != 1 and user.role == Role.objects.get(name="Manager"):
                 manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
 
         parent_restaurant_choices = [(None, "---------")]
 
-        if self.current_user.role != Role.objects.get(id=1):
+        if self.current_user.role != Role.objects.get(name="Admin"):
             for restaurant in restaurants:
                 if restaurant.status != 1 \
                         and restaurant.manager_id == self.current_user.id:
@@ -198,7 +198,7 @@ class RestaurantAdmin(admin.ModelAdmin):
         by the admin site.
         """
         qs = super(RestaurantAdmin, self).get_queryset(request)
-        if request.user.role == Role.objects.get(id=1):
+        if request.user.role == Role.objects.get(name="Admin"):
             return qs
         return qs.filter(manager=request.user.id)
 
@@ -210,7 +210,7 @@ class RestaurantAdmin(admin.ModelAdmin):
         return form
 
     form = RestaurantForm
-    list_display = ("name", "type", "status", "tables_count", "manager")
+    list_display = ("name", "restaurant_type", "status", "tables_count", "manager")
     list_per_page = 15
     actions = [soft_delete, clone]
     admin.site.disable_action('delete_selected')
