@@ -1,3 +1,9 @@
+"""
+Allow to create a restaurant in a database.
+Contain a model classes for restaurant and restaurant type.
+:copyright: (c) 2017 by Serhii Kryzhanovskyi
+"""
+
 from django.core.validators import MinValueValidator
 
 from django.db import models
@@ -8,9 +14,9 @@ from administrator.models import Role
 
 class RestaurantType(models.Model):
 
-    """Create table with types of Restaurants."""
+    """Restaurants type model."""
 
-    rest_type = models.CharField(max_length=256, blank=False)
+    restaurant_type = models.CharField(max_length=256, blank=False)
     is_deleted = models.BooleanField(default=False)
 
     class Meta(object):
@@ -24,27 +30,27 @@ class RestaurantType(models.Model):
         )
 
     def __unicode__(self):
-        return u"%s" % (self.rest_type)
+        return u"%s" % (self.restaurant_type, )
 
 
 class Restaurant(models.Model):
 
     """Model of restaurant object, creates from admin panel."""
 
-    ACTIVE = 0
-    DELETED = 1
-    HIDDEN = 2
+    STATUS_ACTIVE = 0
+    STATUS_DELETED = 1
+    STATUS_HIDDEN = 2
 
     RESTAURANT_STATUSES = (
-        (ACTIVE, "active"),
-        (DELETED, "deleted"),
-        (HIDDEN, "hidden"),
+        (STATUS_ACTIVE, "active"),
+        (STATUS_DELETED, "deleted"),
+        (STATUS_HIDDEN, "hidden"),
     )
 
     name = models.CharField(max_length=256, blank=False)
     logo = models.CharField(max_length=256, default="Logo_added")
     location = models.CharField(max_length=256, blank=False)
-    type = models.ForeignKey(RestaurantType, blank=True, null=True)
+    restaurant_type = models.ForeignKey(RestaurantType, blank=True, null=True)
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
     tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
@@ -63,7 +69,7 @@ class Restaurant(models.Model):
 
     def __unicode__(self):
         """Display custom labels in restaurant's list"""
-        return u"%s %s" % (self.type, self.name)
+        return u"%s %s" % (self.restaurant_type, self.name)
 
     def delete(self, *args, **kwargs):
         """Function for restaurant soft-deleting"""
@@ -72,13 +78,13 @@ class Restaurant(models.Model):
 
     def set_manager(self, user):
         """Set manager to a restaurant."""
-        if user.role == Role.objects.get(id=1):
+        if user.role == Role.objects.get(name="Admin"):
             if not User.last_active_admin(user):
-                role = Role.objects.get(id=3)
+                role = Role.objects.get(name="Manager")
             else:
-                role = Role.objects.get(id=1)
+                role = Role.objects.get(name="Admin")
         else:
-            role = Role.objects.get(id=3)
+            role = Role.objects.get(name="Admin")
         user.role = role
         user.set_permissions(role)
         user.set_is_staff(role)
