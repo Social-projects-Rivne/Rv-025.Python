@@ -1,0 +1,31 @@
+[
+{
+
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"caffee",
+      "is_deleted": "False"
+      }
+},
+{
+  "model": "restaurant.RestaurantType",
+  "fields": {
+    "restaurant_type":"bar",
+    "is_deleted": "False"
+    }
+},
+{
+  "model": "restaurant.RestaurantType",
+  "fields": {
+    "restaurant_type":"hookah",
+    "is_deleted": "False"
+    }
+},
+{
+  "model": "restaurant.RestaurantType",
+  "fields": {
+    "restaurant_type":"Chineeze",
+    "is_deleted": "False"
+    }
+}
+]
