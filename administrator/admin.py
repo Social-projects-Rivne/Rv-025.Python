@@ -16,7 +16,6 @@ from administrator.models import Role
 from administrator.models import User
 from restaurant.models import Restaurant
 
-
 class RegistrationForm(UserCreationForm):
 
     """A form for users creation.
@@ -264,7 +263,24 @@ class DishCategoryAdmin(admin.ModelAdmin):
     list_per_page = 15
 
 
+class DishAdmin(admin.ModelAdmin):
+
+    """Custom display dishes list."""
+
+    list_display = ("name", "category", "price", "weight", "available")
+
+    def has_add_permission(self, request):
+        return request.user.role == Role.objects.get(name='Manager')
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Manager')
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Manager')
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(DishCategory, DishCategoryAdmin)
+admin.site.register(Dish, DishAdmin)
 admin.site.unregister(Group)
