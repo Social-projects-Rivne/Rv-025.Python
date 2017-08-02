@@ -14,6 +14,7 @@ from .filters import ChoiceDropdownFilter
 from administrator.models import DishCategory
 from administrator.models import Role
 from administrator.models import User
+from restaurant.models import Dish
 from restaurant.models import Restaurant
 
 class RegistrationForm(UserCreationForm):
