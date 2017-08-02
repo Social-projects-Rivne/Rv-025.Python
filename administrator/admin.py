@@ -11,9 +11,9 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
-from .models import DishCategory
-from .models import Role
-from .models import User
+from administrator.models import DishCategory
+from administrator.models import Role
+from administrator.models import User
 from restaurant.models import Restaurant
 
 
