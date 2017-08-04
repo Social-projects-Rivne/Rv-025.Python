@@ -49,15 +49,17 @@ coverage.xml
 # Translations
 *.mo
 *.pot
-!**/migrations
-!**/migrations/__init__.py
-administrator/migrations
 
 # Django stuff:
 *.log
-**/migrations/**
+
+# Migrations
 !**/migrations
 !**/migrations/__init__.py
+administrator/migrations
+**/migrations/**
+administrator/migrations/
+restaurant/migrations/
 
 # Flask stuff:
 instance/
@@ -107,7 +109,6 @@ ENV/
 
 *.xml
 *.iml
-*.ini
 
 # OS generated files
 .DS_Store
@@ -136,5 +137,6 @@ composer.lock
 /out/
 .idea_modules/
 
-# for Heroku
+# Project config files
+config.ini
 restaurant/local_settings.py
