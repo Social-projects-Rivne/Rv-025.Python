@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Allow to create a user in a database.
 Contain a model class for users and a manager for this model.

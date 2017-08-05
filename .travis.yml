@@ -13,3 +13,4 @@ jobs:
 
 notifications:
     slack: rv-025lamp:t8bhwuryQcH8AdBDbDOoiwMQ
+    email: false

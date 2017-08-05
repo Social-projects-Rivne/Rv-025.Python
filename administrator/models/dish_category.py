@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Allow to add category of dishes in database.
 Contain a model class for dish category.
@@ -11,9 +10,8 @@ class DishCategory(models.Model):
 
     """Model of dish categories, creates from admin panel."""
 
-    # id = models.ForeignKey(Dish, on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=False)
-    is_delete = models.BooleanField(default=False, blank=True)
+    is_deleted = models.BooleanField(default=False, blank=True)
 
     class Meta(object):
 
@@ -22,12 +20,12 @@ class DishCategory(models.Model):
         db_table = 'dish_category'
         verbose_name_plural = u"Dish Categories"
         permissions = (
-             ('read_dishcategory', 'Can read information about Dish Categories'),
-         )
+             ('read_dishcategory', 'Can read Dish Categories'),
+        )
 
     def delete(self, *args, **kwargs):
         """Soft-deleting category"""
-        self.is_delete = True
+        self.is_deleted = True
         self.save()
 
     def __str__(self):

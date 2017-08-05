@@ -20,26 +20,6 @@
                 "logentry"
             ],
             [
-                "add_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
-            [
-                "change_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
-            [
-                "delete_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
-            [
-                "read_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
-            [
                 "add_user",
                 "administrator",
                 "user"
@@ -183,11 +163,6 @@
         "name": "User",
         "permissions": [
             [
-                "read_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
-            [
                 "read_user",
                 "administrator",
                 "user"
@@ -205,11 +180,6 @@
     "fields": {
         "name": "Manager",
         "permissions": [
-            [
-                "read_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
             [
                 "read_user",
                 "administrator",
@@ -253,11 +223,6 @@
     "fields": {
         "name": "Sub-manager",
         "permissions": [
-            [
-                "read_dishcategory",
-                "administrator",
-                "dishcategory"
-            ],
             [
                 "read_user",
                 "administrator",

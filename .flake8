@@ -1,2 +1,4 @@
 [flake8]
-exclude = __init__.py, migrations/
+count = True
+exclude = __init__.py, administrator/migrations/, restaurant/migrations/
+statistics = True

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django import forms
@@ -16,6 +15,7 @@ from administrator.models import Role
 from administrator.models import User
 from restaurant.models import Dish
 from restaurant.models import Restaurant
+
 
 class RegistrationForm(UserCreationForm):
 
@@ -132,7 +132,6 @@ clone.short_description = "Clone"
 class RestaurantForm(forms.ModelForm):
 
     """A form for restaurants modifications."""
-
 
     class Meta:
 
@@ -260,8 +259,17 @@ class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
 
-    list_display = ("name", "id", "is_delete")
+    list_display = ("name", "id", "is_deleted")
     list_per_page = 15
+
+    def has_add_permission(self, request):
+        return request.user.role == Role.objects.get(name='Admin')
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Admin')
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.role == Role.objects.get(name='Admin')
 
 
 class DishAdmin(admin.ModelAdmin):
@@ -271,13 +279,16 @@ class DishAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "price", "weight", "available")
 
     def has_add_permission(self, request):
-        return request.user.role == Role.objects.get(name='Manager')
+        return (request.user.role == Role.objects.get(name='Admin') or
+                request.user.role == Role.objects.get(name='Manager'))
 
     def has_change_permission(self, request, obj=None):
-        return request.user.role == Role.objects.get(name='Manager')
+        return (request.user.role == Role.objects.get(name='Admin') or
+                request.user.role == Role.objects.get(name='Manager'))
 
     def has_delete_permission(self, request, obj=None):
-        return request.user.role == Role.objects.get(name='Manager')
+        return (request.user.role == Role.objects.get(name='Admin') or
+                request.user.role == Role.objects.get(name='Manager'))
 
 
 admin.site.register(User, UserAdmin)
