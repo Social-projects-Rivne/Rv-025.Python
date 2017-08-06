@@ -80,6 +80,8 @@ def delete_selected_users(modeladmin, request, queryset):
     """Block selected users instead of dropping them."""
     for obj in queryset:
         obj.delete()
+
+
 delete_selected_users.short_description = "Delete selested users"
 
 
@@ -94,7 +96,10 @@ class UserAdmin(Admin):
     list_display = ("name", "email", "phone", "role", "status")
     ordering = ["name"]
     list_per_page = 10
-    list_filter = [("status", ChoiceDropdownFilter), ("role", ChoiceDropdownFilter)]
+    list_filter = [
+        ("status", ChoiceDropdownFilter),
+        ("role", ChoiceDropdownFilter)
+    ]
 
     fieldsets = (
         (None, {"fields": ("name", "email",)}),
@@ -118,6 +123,8 @@ def soft_delete(modeladmin, request, queryset):
     """Soft delete function for QuerySet list."""
     for obj in queryset:
         obj.delete()
+
+
 soft_delete.short_description = "Delete selected items"
 
 
@@ -126,6 +133,8 @@ def clone(modeladmin, queryset):
     for object in queryset:
         object.id = None
         object.save()
+
+
 clone.short_description = "Clone"
 
 
@@ -138,8 +147,9 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ("name", "logo", "location", "restaurant_type", "tables_count",
-                  "description", "status", "manager", "parent_restaurant")
+        fields = ("name", "logo", "location", "restaurant_type",
+                  "tables_count", "description", "status",
+                  "manager", "parent_restaurant")
 
     def __init__(self, *args, **kwargs):
         super(RestaurantForm, self).__init__(*args, **kwargs)
@@ -149,7 +159,8 @@ class RestaurantForm(forms.ModelForm):
         manager_choices = [(None, "---------")]
 
         for user in users:
-            if user.status != 1 and user.role == Role.objects.get(name="Manager"):
+            if (user.status != 1 and
+                    user.role == Role.objects.get(name="Manager")):
                 manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
@@ -209,7 +220,8 @@ class RestaurantAdmin(admin.ModelAdmin):
         return form
 
     form = RestaurantForm
-    list_display = ("name", "restaurant_type", "status", "tables_count", "manager")
+    list_display = ("name", "restaurant_type", "status",
+                    "tables_count", "manager")
     list_per_page = 15
     actions = [soft_delete, clone]
     admin.site.disable_action('delete_selected')
