@@ -86,6 +86,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
+LOGIN_URL = '/admin/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Internationalization
