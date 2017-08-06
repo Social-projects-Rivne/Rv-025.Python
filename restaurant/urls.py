@@ -22,9 +22,9 @@ from views.login_view import login_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', index, name='index'),
-#    url(r'^accounts/login/$', login_view, name='login'),
-#    url(r'^accounts/logout/$', auth_views.logout,
-#        {'next_page': '/accounts/login'}, name='logout'),
+    url(r'^accounts/login/$', login_view, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout,
+        {'next_page': '/accounts/login'}, name='logout'),
     url(r'^admin/password_reset/$', auth_views.PasswordResetView.as_view(),
         name='admin_password_reset'),
     url(r'^admin/password_reset/done/$',
