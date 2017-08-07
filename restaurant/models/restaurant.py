@@ -52,7 +52,8 @@ class Restaurant(models.Model):
     location = models.CharField(max_length=256, blank=False)
     restaurant_type = models.ForeignKey(RestaurantType, blank=True, null=True)
     status = models.IntegerField(choices=RESTAURANT_STATUSES, default=0)
-    tables_count = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    tables_count = models.IntegerField(default=0,
+                                       validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
     manager = models.ForeignKey(User, null=True, blank=True)
     parent_restaurant = models.ForeignKey("self", null=True, blank=True)

@@ -2,7 +2,7 @@
 
 from django.test import TestCase, Client
 
-from administrator.models import User
+from administrator.models import User, Role
 
 
 class LogInTest(TestCase):
@@ -15,8 +15,11 @@ class LogInTest(TestCase):
             "correct_user": {
                 'email': 'valid@email.com',
                 'password': 'gfhjkm12',
-                'username': 'CorrectUser',
-                'status': User.ACTIVE
+                'name': 'CorrectUser',
+                'extra_fields': {
+                    'status': User.ACTIVE,
+                    'role': Role.objects.get(name='User'),
+                }
             },
             "banned_user": {
                 'email': 'banned@email.com',
@@ -50,7 +53,9 @@ class LogInTest(TestCase):
     def test_login_unregistered_user(self):
         """Test whether user that isn't in database can't login."""
         context = "Please try again."
-        response = self.client.post('/accounts/login/',
-                                    self.users_credentials["unregistered_user"],
-                                    follow=True)
+        response = self.client.post(
+            '/accounts/login/',
+            self.users_credentials["unregistered_user"],
+            follow=True
+        )
         self.assertContains(response, context)
