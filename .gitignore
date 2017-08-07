@@ -54,12 +54,9 @@ coverage.xml
 *.log
 
 # Migrations
+**/migrations/**
 !**/migrations
 !**/migrations/__init__.py
-administrator/migrations
-**/migrations/**
-administrator/migrations/
-restaurant/migrations/
 
 # Flask stuff:
 instance/
