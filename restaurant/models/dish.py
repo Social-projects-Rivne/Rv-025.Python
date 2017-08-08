@@ -11,7 +11,7 @@ class Dish(models.Model):
     """Model of dish, creates from manager panel."""
 
     category = models.ForeignKey(dish_category.DishCategory,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
                                  blank=True, null=True)
     name = models.CharField(max_length=100, unique=True,
                             error_messages={'unique': ('A dish with such name '
