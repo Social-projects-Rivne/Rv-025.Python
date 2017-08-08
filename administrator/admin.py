@@ -109,6 +109,9 @@ class UserAdmin(Admin):
     )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Function, that shows only Manager and Sub-manager roles
+            when Manager adds Sub-manager.
+            """
         if db_field.name == "role":
             if request.user.role == Role.objects.get(name="Manager"):
                 kwargs["queryset"] = Role.objects.filter(name="Manager") \
