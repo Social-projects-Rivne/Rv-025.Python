@@ -1,0 +1,170 @@
+[
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Breads",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Dairy products",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Eggs",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Meat",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Seafood",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Appetizers",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Confectionery",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Convenience foods",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Desserts",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Dips, pastes and spreads",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Dried foods",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Dumplings",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Fast food",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Soups",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Snack foods",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Tea",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Coffee",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Drinks",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Sauces",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Sandwiches",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Salads",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Pies",
+      "is_visible": "False"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Noodles",
+      "is_visible": "True"
+    }
+  },
+  {
+    "model": "administrator.DishCategory",
+    "fields": {
+      "name": "Kosher food",
+      "is_visible": "True"
+    }
+  }
+]

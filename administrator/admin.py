@@ -271,8 +271,9 @@ class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
 
-    list_display = ("name", "id", "is_deleted")
-    list_per_page = 15
+    list_display = ("name", "id", "is_visible")
+    list_per_page = 20
+    ordering = ["name"]
 
     def has_add_permission(self, request):
         return request.user.role == Role.objects.get(name='Admin')
@@ -289,6 +290,7 @@ class DishAdmin(admin.ModelAdmin):
     """Custom display dishes list."""
 
     list_display = ("name", "category", "price", "weight", "available")
+    ordering = ["name"]
 
     def has_add_permission(self, request):
         return (request.user.role == Role.objects.get(name='Admin') or
