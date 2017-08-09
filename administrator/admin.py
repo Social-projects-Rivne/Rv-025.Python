@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
 from administrator.models import DishCategory
-from administrator.models import Role
 from administrator.models import User
 from restaurant.models import Dish
 from restaurant.models import Restaurant
@@ -108,15 +107,16 @@ class UserAdmin(Admin):
         (_("Permissions"), {"fields": ("role",)}),
     )
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
         """Function, that shows only Manager and Sub-manager roles
         when Manager adds Sub-manager.
         """
         if db_field.name == "role":
-            if request.user.role == Role.objects.get(name="Manager"):
-                kwargs["queryset"] = Role.objects.filter(name="Manager") \
-                    | Role.objects.filter(name="Sub-manager")
-        return super(UserAdmin, self).formfield_for_foreignkey(
+            if request.user.role == User.ROLE_MANAGER:
+                kwargs['choices'] = (
+                    (User.ROLE_SUB_MANAGER, "Sub-manager"),
+                )
+        return super(UserAdmin, self).formfield_for_choice_field(
             db_field, request, **kwargs)
 
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -170,18 +170,18 @@ class RestaurantForm(forms.ModelForm):
         manager_choices = [(None, "---------")]
 
         for user in users:
-            if (user.status != 1 and
-                    user.role == Role.objects.get(name="Manager")):
+            if (user.status != User.STATUS_DELETED and
+                    user.role == User.ROLE_MANAGER):
                 manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
 
         parent_restaurant_choices = [(None, "---------")]
 
-        if self.current_user.role != Role.objects.get(name="Admin"):
+        if self.current_user.role != User.ROLE_ADMIN:
             for restaurant in restaurants:
-                if restaurant.status != 1 \
-                        and restaurant.manager_id == self.current_user.id:
+                if (restaurant.status != User.STATUS_DELETED
+                        and restaurant.manager_id == self.current_user.id):
                     parent_restaurant_choices.append(
                         (restaurant.id, restaurant.name)
                     )
@@ -219,7 +219,7 @@ class RestaurantAdmin(admin.ModelAdmin):
         by the admin site.
         """
         qs = super(RestaurantAdmin, self).get_queryset(request)
-        if request.user.role == Role.objects.get(name="Admin"):
+        if request.user.role == User.ROLE_ADMIN:
             return qs
         return qs.filter(manager=request.user.id)
 
@@ -287,13 +287,13 @@ class DishCategoryAdmin(admin.ModelAdmin):
     ordering = ["name"]
 
     def has_add_permission(self, request):
-        return request.user.role == Role.objects.get(name='Admin')
+        return request.user.role == User.ROLE_ADMIN
 
     def has_change_permission(self, request, obj=None):
-        return request.user.role == Role.objects.get(name='Admin')
+        return request.user.role == User.ROLE_ADMIN
 
     def has_delete_permission(self, request, obj=None):
-        return request.user.role == Role.objects.get(name='Admin')
+        return request.user.role == User.ROLE_ADMIN
 
 
 class DishAdmin(admin.ModelAdmin):
@@ -304,16 +304,16 @@ class DishAdmin(admin.ModelAdmin):
     ordering = ["name"]
 
     def has_add_permission(self, request):
-        return (request.user.role == Role.objects.get(name='Admin') or
-                request.user.role == Role.objects.get(name='Manager'))
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
 
     def has_change_permission(self, request, obj=None):
-        return (request.user.role == Role.objects.get(name='Admin') or
-                request.user.role == Role.objects.get(name='Manager'))
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
 
     def has_delete_permission(self, request, obj=None):
-        return (request.user.role == Role.objects.get(name='Admin') or
-                request.user.role == Role.objects.get(name='Manager'))
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
 
 
 admin.site.register(User, UserAdmin)

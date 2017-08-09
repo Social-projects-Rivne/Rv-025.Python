@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from role import Role
+import permissions
 
 
 class UserManager(BaseUserManager):
@@ -48,7 +48,7 @@ class UserManager(BaseUserManager):
         password - user's password
         extra_fields - any other fields
         """
-        extra_fields.setdefault('role', Role.objects.get(id=2))
+        extra_fields.setdefault('role', User.ROLE_USER)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, name, password, **extra_fields)
 
@@ -62,7 +62,7 @@ class UserManager(BaseUserManager):
         password - user's password
         extra_fields - any other fields
         """
-        extra_fields.setdefault('role', Role.objects.get(id=1))
+        extra_fields.setdefault('role', User.ROLE_ADMIN)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
 
@@ -81,16 +81,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar. The email is used as the name when users login.
     """
 
-    ACTIVE = 0
-    DELETED = 1
-    BANNED = 2
-    UNAUTHORIZED = 3
+    STATUS_ACTIVE = 0
+    STATUS_DELETED = 1
+    STATUS_BANNED = 2
+    STATUS_UNAUTHORIZED = 3
 
     USER_STATUSES = (
-        (ACTIVE, 'active'),
-        (DELETED, 'deleted'),
-        (BANNED, 'banned'),
-        (UNAUTHORIZED, 'unauthorized'),
+        (STATUS_ACTIVE, 'active'),
+        (STATUS_DELETED, 'deleted'),
+        (STATUS_BANNED, 'banned'),
+        (STATUS_UNAUTHORIZED, 'unauthorized'),
+    )
+
+    ROLE_ADMIN = 0
+    ROLE_MANAGER = 1
+    ROLE_SUB_MANAGER = 2
+    ROLE_USER = 3
+
+    USER_ROLES = (
+        (ROLE_ADMIN, 'Admin'),
+        (ROLE_MANAGER, 'Manager'),
+        (ROLE_SUB_MANAGER, 'Sub-manager'),
+        (ROLE_USER, 'User'),
     )
 
     name = models.CharField(max_length=50, default='',
@@ -100,21 +112,22 @@ class User(AbstractBaseUser, PermissionsMixin):
                                                           'email already '
                                                           'exists.'), })
     password = models.CharField(max_length=128, default='',
-                                help_text=_('Your password can\'t be too '
+                                help_text=_('Your password cannot be too '
                                             'similar to your other personal '
                                             'information.<br /> Your password'
                                             ' must contain at least 8 '
                                             'characters.<br /> Your password '
-                                            'can\'t be a commonly used '
+                                            'cannot be a commonly used '
                                             'password.<br /> Your password '
-                                            'can\'t be entirely numeric.'))
+                                            'cannot be entirely numeric.'))
     phone = models.CharField(max_length=12, blank=True, null=True,
                              unique=True, help_text=_('Use just numbers: '
                                                       ''''380931234567'''))
     avatar = models.ImageField(upload_to='user_images', blank=True, null=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE,
-                             related_name='role', null=True)
-    status = models.IntegerField(choices=USER_STATUSES, default=0, null=False)
+    role = models.IntegerField(choices=USER_ROLES,
+                               default=ROLE_USER, null=False)
+    status = models.IntegerField(choices=USER_STATUSES,
+                                 default=STATUS_ACTIVE, null=False)
     is_staff = models.BooleanField(default=False,)
     is_active = models.BooleanField(default=True, blank=True)
 
@@ -141,14 +154,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         status - user's status
         """
-        if self.role == Role.objects.get(id=1):
+        if self.role == User.ROLE_ADMIN:
             if not self.last_active_admin():
-                self.is_active = (status == 0)
+                self.is_active = (status == User.STATUS_ACTIVE)
             else:
                 self.is_active = True
-                self.status = 0
+                self.status = User.STATUS_ACTIVE
         else:
-            self.is_active = (status == 0)
+            self.is_active = (status == User.STATUS_ACTIVE)
 
     def set_is_staff(self, role):
         """Set is_staff according to user's role.
@@ -157,8 +170,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         role - user's role
         """
-        self.is_staff = (role == Role.objects.get(id=1) or
-                         role == Role.objects.get(id=3))
+        self.is_staff = (role == User.ROLE_ADMIN or
+                         role == User.ROLE_MANAGER)
 
     def get_short_name(self):
         """Return the user's email"""
@@ -186,19 +199,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         Put is_active into False and change status.
         Don't delete the last admin
         """
-        if self.role == Role.objects.get(id=1):
+        if self.role == User.ROLE_ADMIN:
             if not self.last_active_admin():
                 self.is_active = False
-                self.status = 1
+                self.status = User.STATUS_DELETED
                 self.save()
         else:
             self.is_active = False
-            self.status = 1
+            self.status = User.STATUS_DELETED
             self.save()
 
     def last_active_admin(self):
         """Return True if it is the last active admin."""
-        number = User.objects.filter(role=1, is_active=True).count()
+        number = User.objects.filter(role=User.ROLE_ADMIN,
+                                     is_active=True).count()
         if number > 1:
             return False
         else:
@@ -210,5 +224,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         role - user's role
         """
-        for perm in role.permissions.all():
-            self.user_permissions.add(perm)
+        if role == User.ROLE_ADMIN:
+            for perm in permissions.admin_permissions():
+                self.user_permissions.add(perm)
+        elif role == User.ROLE_MANAGER:
+            for perm in permissions.manager_permissions():
+                self.user_permissions.add(perm)
+        elif role == User.ROLE_SUB_MANAGER:
+            for perm in permissions.sub_manager_permissions():
+                self.user_permissions.add(perm)
+        else:
+            for perm in permissions.user_permissions():
+                self.user_permissions.add(perm)

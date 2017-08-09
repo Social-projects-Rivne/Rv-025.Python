@@ -2,7 +2,7 @@
 
 from django.test import TestCase, Client
 
-from administrator.models import User, Role
+from administrator.models import User
 
 
 class LogInTest(TestCase):
@@ -16,16 +16,15 @@ class LogInTest(TestCase):
                 'email': 'valid@email.com',
                 'password': 'gfhjkm12',
                 'name': 'CorrectUser',
-                'extra_fields': {
-                    'status': User.ACTIVE,
-                    'role': Role.objects.get(name='User'),
-                }
+                'status': User.STATUS_ACTIVE,
+                'role': User.ROLE_USER,
             },
             "banned_user": {
                 'email': 'banned@email.com',
                 'password': 'gfhjkm12',
                 'username': 'BannedUser',
-                'status': User.BANNED
+                'status': User.STATUS_BANNED,
+                'role': User.ROLE_USER,
             },
             "unregistered_user": {
                 'email': 'unregistered@email.com',
