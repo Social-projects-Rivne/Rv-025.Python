@@ -108,6 +108,17 @@ class UserAdmin(Admin):
         (_("Permissions"), {"fields": ("role",)}),
     )
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Function, that shows only Manager and Sub-manager roles
+        when Manager adds Sub-manager.
+        """
+        if db_field.name == "role":
+            if request.user.role == Role.objects.get(name="Manager"):
+                kwargs["queryset"] = Role.objects.filter(name="Manager") \
+                    | Role.objects.filter(name="Sub-manager")
+        return super(UserAdmin, self).formfield_for_foreignkey(
+            db_field, request, **kwargs)
+
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (

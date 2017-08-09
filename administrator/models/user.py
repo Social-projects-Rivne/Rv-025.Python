@@ -113,7 +113,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                                                       ''''380931234567'''))
     avatar = models.ImageField(upload_to='user_images', blank=True, null=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE,
-                             related_name='roles', null=True)
+                             related_name='role', null=True)
     status = models.IntegerField(choices=USER_STATUSES, default=0, null=False)
     is_staff = models.BooleanField(default=False,)
     is_active = models.BooleanField(default=True, blank=True)
