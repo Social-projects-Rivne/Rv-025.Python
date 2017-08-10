@@ -85,7 +85,7 @@ class Restaurant(models.Model):
             else:
                 role = User.ROLE_ADMIN
         else:
-            role = User.ROLE_ADMIN
+            role = User.ROLE_MANAGER
         user.role = role
         user.set_permissions(role)
         user.set_is_staff(role)

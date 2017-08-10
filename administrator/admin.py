@@ -107,6 +107,17 @@ class UserAdmin(Admin):
         (_("Permissions"), {"fields": ("role",)}),
     )
 
+    def get_queryset(self, request):
+        """ Represent the objects.
+
+        Return a QuerySet of all model instances that can be edited
+        by the admin site.
+        """
+        qs = super(UserAdmin, self).get_queryset(request)
+        if request.user.role == User.ROLE_ADMIN:
+            return qs
+        return qs.filter(role=User.ROLE_SUB_MANAGER)
+
     def formfield_for_choice_field(self, db_field, request, **kwargs):
         """Shows only Sub-manager roles when Manager adds Sub-manager."""
         if db_field.name == "role":
@@ -169,7 +180,7 @@ class RestaurantForm(forms.ModelForm):
 
         for user in users:
             if (user.status != User.STATUS_DELETED and
-                    user.role == User.ROLE_MANAGER):
+                    user.role == User.ROLE_SUB_MANAGER):
                 manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
