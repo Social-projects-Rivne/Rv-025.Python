@@ -9,7 +9,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from administrator.models import User
-from administrator.models import Role
 
 
 class RestaurantType(models.Model):
@@ -26,7 +25,8 @@ class RestaurantType(models.Model):
         verbose_name = u"Restaurant type"
 
         permissions = (
-            ("read_restaurant", "Can read information about restaurant"),
+            ("read_restauranttype",
+             "Can read information about restaurant type"),
         )
 
     def __unicode__(self):
@@ -74,18 +74,18 @@ class Restaurant(models.Model):
 
     def delete(self, *args, **kwargs):
         """Function for restaurant soft-deleting"""
-        self.status = 1
+        self.status = Restaurant.STATUS_DELETED
         self.save()
 
     def set_manager(self, user):
         """Set manager to a restaurant."""
-        if user.role == Role.objects.get(name="Admin"):
+        if user.role == User.ROLE_ADMIN:
             if not User.last_active_admin(user):
-                role = Role.objects.get(name="Manager")
+                role = User.ROLE_MANAGER
             else:
-                role = Role.objects.get(name="Admin")
+                role = User.ROLE_ADMIN
         else:
-            role = Role.objects.get(name="Admin")
+            role = User.ROLE_ADMIN
         user.role = role
         user.set_permissions(role)
         user.set_is_staff(role)
