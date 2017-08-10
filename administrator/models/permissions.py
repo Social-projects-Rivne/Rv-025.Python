@@ -6,6 +6,11 @@ from django.contrib.auth.models import Permission
 
 
 def get_permission(codename):
+    """Get permission from db by codename.
+
+    Argument:
+    codename (str) - codename of permission
+    """
     return Permission.objects.get(codename=codename)
 
 

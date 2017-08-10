@@ -108,9 +108,7 @@ class UserAdmin(Admin):
     )
 
     def formfield_for_choice_field(self, db_field, request, **kwargs):
-        """Function, that shows only Manager and Sub-manager roles
-        when Manager adds Sub-manager.
-        """
+        """Shows only Sub-manager roles when Manager adds Sub-manager."""
         if db_field.name == "role":
             if request.user.role == User.ROLE_MANAGER:
                 kwargs['choices'] = (
