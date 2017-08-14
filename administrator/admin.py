@@ -107,6 +107,7 @@ class UserAdmin(Admin):
         (_("Permissions"), {"fields": ("role",)}),
     )
 
+
     def get_queryset(self, request):
         """ Represent the objects.
 
