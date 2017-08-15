@@ -14,6 +14,7 @@ from administrator.models import DishCategory
 from administrator.models import User
 from restaurant.models import Dish
 from restaurant.models import Restaurant
+from restaurant.models import RestaurantType
 
 
 class RegistrationForm(UserCreationForm):
@@ -107,7 +108,6 @@ class UserAdmin(Admin):
         (_("Permissions"), {"fields": ("role",)}),
     )
 
-
     def get_queryset(self, request):
         """ Represent the objects.
 
@@ -157,6 +157,23 @@ def clone(modeladmin, queryset):
 
 
 clone.short_description = "Clone"
+
+
+class RestaurantTypeAdmin(admin.ModelAdmin):
+
+    list_display = ("restaurant_type", )
+
+    def has_add_permission(self, request):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
+
+    def has_change_permission(self, request, obj=None):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
+
+    def has_delete_permission(self, request, obj=None):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
 
 
 class RestaurantForm(forms.ModelForm):
@@ -328,6 +345,7 @@ class DishAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
+admin.site.register(RestaurantType, RestaurantTypeAdmin)
 admin.site.register(DishCategory, DishCategoryAdmin)
 admin.site.register(Dish, DishAdmin)
 admin.site.unregister(Group)
