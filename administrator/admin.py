@@ -180,7 +180,8 @@ class RestaurantForm(forms.ModelForm):
 
         for user in users:
             if (user.status != User.STATUS_DELETED and
-                    user.role == User.ROLE_SUB_MANAGER):
+                    (user.role == User.ROLE_MANAGER or
+                        user.role == User.ROLE_SUB_MANAGER)):
                 manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
