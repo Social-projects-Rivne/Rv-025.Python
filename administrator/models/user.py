@@ -130,6 +130,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                                  default=STATUS_ACTIVE, null=False)
     is_staff = models.BooleanField(default=False,)
     is_active = models.BooleanField(default=True, blank=True)
+    parent = models.ForeignKey("self", null=True, blank=True)
 
     objects = UserManager()
 
