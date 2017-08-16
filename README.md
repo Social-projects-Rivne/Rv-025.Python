@@ -14,9 +14,9 @@ Copy and rename file `restaurant/local_settings.py.example` to `restaurant/local
 
 Copy and rename file `config.ini.example` to `config.ini`. Write in `config.ini` your credentials.
 
-Load fixtures data (example):
+Load fixtures data:
 ```
-python manage.py loaddata fixtures/roles.json
+python manage.py loaddata fixtures/**
 ```
 
 Then you have to let Django make its migrations
