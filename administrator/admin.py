@@ -23,7 +23,6 @@ class RegistrationForm(UserCreationForm):
     Email, name, password and role are given.
     """
 
-
     email = forms.EmailField(required=True)
 
     class Meta:
@@ -137,7 +136,7 @@ class UserAdmin(Admin):
             if request.user.role == User.ROLE_MANAGER:
                 kwargs['queryset'] = User.objects.filter(id=request.user.id)
             if request.user.role == User.ROLE_ADMIN:
-               kwargs['queryset'] = User.objects.exclude(role=User.ROLE_ADMIN)
+                kwargs['queryset'] = User.objects.exclude(role=User.ROLE_ADMIN)
         return super(UserAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs)
 
@@ -227,7 +226,6 @@ class RestaurantForm(forms.ModelForm):
                     sub_manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["sub_manager"].choices = sub_manager_choices
-
 
     def save(self, commit=True):
         """Save the restaurant.
