@@ -55,8 +55,10 @@ class Restaurant(models.Model):
     tables_count = models.IntegerField(default=0,
                                        validators=[MinValueValidator(0)])
     description = models.TextField(max_length=256)
-    manager = models.ForeignKey(User, null=True, blank=True)
-    parent_restaurant = models.ForeignKey("self", null=True, blank=True)
+    manager = models.ForeignKey(User, null=True, blank=True,
+                                related_name='manager')
+    sub_manager = models.ForeignKey(User, null=True, blank=True,
+                                    related_name='sub_manager')
 
     class Meta(object):
 
@@ -86,6 +88,20 @@ class Restaurant(models.Model):
                 role = User.ROLE_ADMIN
         else:
             role = User.ROLE_MANAGER
+        user.role = role
+        user.set_permissions(role)
+        user.set_is_staff(role)
+        user.save()
+
+    def set_sub_manager(self, user):
+        """Set manager to a restaurant."""
+        if user.role == User.ROLE_ADMIN:
+            if not User.last_active_admin(user):
+                role = User.ROLE_SUB_MANAGER
+            else:
+                role = User.ROLE_ADMIN
+        else:
+            role = User.ROLE_SUB_MANAGER
         user.role = role
         user.set_permissions(role)
         user.set_is_staff(role)
