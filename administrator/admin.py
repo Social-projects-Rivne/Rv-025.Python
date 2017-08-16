@@ -58,7 +58,7 @@ class UserChangeForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = User
-        fields = ("name", "email", "phone", "role", "status",)
+        fields = ("name", "email", "phone", "role", "status", "parent")
 
     def save(self, commit=True):
         """Save the provided password in a hashed format and put
@@ -93,7 +93,7 @@ class UserAdmin(Admin):
     add_form = RegistrationForm
 
     search_fields = ("name", "email", "phone")
-    list_display = ("name", "email", "phone", "role", "status")
+    list_display = ("name", "email", "phone", "role", "status", "parent")
     ordering = ["name"]
     list_per_page = 10
     list_filter = [
@@ -105,7 +105,7 @@ class UserAdmin(Admin):
         (None, {"fields": ("name", "email",)}),
         (_("Personal info"), {"fields": ("phone",)}),
         (_("Status"), {"fields": ("status",)}),
-        (_("Permissions"), {"fields": ("role",)}),
+        (_("Permissions"), {"fields": ("role", "parent",)}),
     )
 
     def get_queryset(self, request):
@@ -117,7 +117,7 @@ class UserAdmin(Admin):
         qs = super(UserAdmin, self).get_queryset(request)
         if request.user.role == User.ROLE_ADMIN:
             return qs
-        return qs.filter(role=User.ROLE_SUB_MANAGER)
+        return qs.filter(parent=request.user.id)
 
     def formfield_for_choice_field(self, db_field, request, **kwargs):
         """Shows only Sub-manager roles when Manager adds Sub-manager."""
@@ -129,12 +129,32 @@ class UserAdmin(Admin):
         return super(UserAdmin, self).formfield_for_choice_field(
             db_field, request, **kwargs)
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Shows only current manager in parent field when
+        Manager adds Sub-manager.
+        """
+        if db_field.name == "parent":
+            if request.user.role == User.ROLE_MANAGER:
+                kwargs['queryset'] = User.objects.filter(id=request.user.id)
+            if request.user.role == User.ROLE_ADMIN:
+                kwargs['queryset'] = User.objects.exclude(role=User.ROLE_ADMIN)
+        return super(UserAdmin, self).formfield_for_foreignkey(
+            db_field, request, **kwargs)
+
+    def get_form(self, request, *args, **kwargs):
+        """Return a ModelForm class with current user id for using in the
+        admin"""
+        form = super(UserAdmin, self).get_form(request, *args, **kwargs)
+        form.current_user = request.user
+        return form
+
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
-        (None, {
-            "fields": ("email", "name", "password1", "password2", "role")}
-         ),
+        (
+            None, {"fields": ("email", "name", "password1", "password2",
+                              "role", "parent")}
+        ),
     )
 
     actions = [delete_selected_users]
@@ -187,38 +207,43 @@ class RestaurantForm(forms.ModelForm):
         model = Restaurant
         fields = ("name", "logo", "location", "restaurant_type",
                   "tables_count", "description", "status",
-                  "manager", "parent_restaurant")
+                  "manager", "sub_manager")
 
     def __init__(self, *args, **kwargs):
         super(RestaurantForm, self).__init__(*args, **kwargs)
         users = User.objects.all()
-        restaurants = Restaurant.objects.all()
 
         manager_choices = [(None, "---------")]
 
-        for user in users:
-            if (user.status != User.STATUS_DELETED and
-                    user.role == User.ROLE_SUB_MANAGER):
-                manager_choices.append((user.pk, user.get_full_name()))
+        if self.current_user.role == User.ROLE_MANAGER:
+            for user in users:
+                if (user.status != User.STATUS_DELETED and
+                        user.id == self.current_user.id):
+                    manager_choices.append((user.pk, user.get_full_name()))
+        elif self.current_user.role == User.ROLE_ADMIN:
+            for user in users:
+                if (user.status != User.STATUS_DELETED and
+                        user.role == User.ROLE_MANAGER):
+                    manager_choices.append((user.pk, user.get_full_name()))
 
         self.fields["manager"].choices = manager_choices
 
-        parent_restaurant_choices = [(None, "---------")]
+        sub_manager_choices = [(None, "---------")]
 
-        if self.current_user.role != User.ROLE_ADMIN:
-            for restaurant in restaurants:
-                if (restaurant.status != User.STATUS_DELETED
-                        and restaurant.manager_id == self.current_user.id):
-                    parent_restaurant_choices.append(
-                        (restaurant.id, restaurant.name)
-                    )
-        else:
-            for restaurant in restaurants:
-                parent_restaurant_choices.append(
-                    (restaurant.id, restaurant.name)
-                )
+        if self.current_user.role == User.ROLE_MANAGER:
+            for user in users:
+                if (user.status != User.STATUS_DELETED and
+                        (user.id == self.current_user.id or
+                         user.parent == self.current_user)):
+                    sub_manager_choices.append((user.pk, user.get_full_name()))
+        elif self.current_user.role == User.ROLE_ADMIN:
+            for user in users:
+                if (user.status != User.STATUS_DELETED and
+                        (user.role == User.ROLE_MANAGER or
+                         user.role == User.ROLE_SUB_MANAGER)):
+                    sub_manager_choices.append((user.pk, user.get_full_name()))
 
-        self.fields["parent_restaurant"].choices = parent_restaurant_choices
+        self.fields["sub_manager"].choices = sub_manager_choices
 
     def save(self, commit=True):
         """Save the restaurant.
@@ -229,6 +254,9 @@ class RestaurantForm(forms.ModelForm):
 
         if restaurant.manager:
             restaurant.set_manager(restaurant.manager)
+
+        if restaurant.sub_manager:
+            restaurant.set_sub_manager(restaurant.sub_manager)
 
         if commit:
             restaurant.save()
