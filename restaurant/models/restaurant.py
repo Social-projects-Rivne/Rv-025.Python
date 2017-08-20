@@ -100,6 +100,8 @@ class Restaurant(models.Model):
                 role = User.ROLE_SUB_MANAGER
             else:
                 role = User.ROLE_ADMIN
+        elif user.role == User.ROLE_MANAGER:
+            role = user.role
         else:
             role = User.ROLE_SUB_MANAGER
         user.role = role
