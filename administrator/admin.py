@@ -288,8 +288,9 @@ class RestaurantAdmin(admin.ModelAdmin):
 
     form = RestaurantForm
     list_display = ("name", "restaurant_type", "status",
-                    "tables_count", "manager", "list_of_dishes")
-
+                    "tables_count", "manager", "sub_manager",
+                    "list_of_dishes")
+    
     list_per_page = 15
     actions = [soft_delete, clone]
     admin.site.disable_action('delete_selected')
