@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as Admin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
+from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
@@ -287,11 +288,21 @@ class RestaurantAdmin(admin.ModelAdmin):
 
     form = RestaurantForm
     list_display = ("name", "restaurant_type", "status",
-                    "tables_count", "manager")
+                    "tables_count", "manager", "list_of_dishes")
+
     list_per_page = 15
     actions = [soft_delete, clone]
     admin.site.disable_action('delete_selected')
     list_filter = [('status', ChoiceDropdownFilter)]
+
+    def list_of_dishes(self, obj):
+        """Forms link to list of dishes of each restaurant."""
+        url = urlresolvers.reverse("admin:restaurant_dish_changelist")
+        return u'<a href="%s?%s=%d">%s</a>' % (url, "restaurant__id__exact",
+                                               obj.pk, "View dish")
+
+    list_of_dishes.short_description = "Dish"
+    list_of_dishes.allow_tags = True
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         """View for the model instance editing page."""
@@ -333,6 +344,48 @@ class RestaurantAdmin(admin.ModelAdmin):
     _type_id.short_description = "restaurant type"
 
 
+class DishAdmin(admin.ModelAdmin):
+
+    """Custom display dishes list."""
+
+    list_display = ("name", "category", "price", "weight", "available",
+                    "restaurant")
+    ordering = ["name"]
+
+    def has_add_permission(self, request):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
+
+    def has_change_permission(self, request, obj=None):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
+
+    def has_delete_permission(self, request, obj=None):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER)
+
+    def get_model_perms(self, request):
+        """Return empty perms dict thus hiding the model from admin index."""
+        return {}
+
+    def parse_filter_in_request(self, request):
+        """Get id of restaurant"""
+        filters = request.GET.get('_changelist_filters')
+        var, value = filters.split('=')
+        return value
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Shows only parent restaurant in field "restaurant" when Admin or
+        Manager adds Dish.
+        """
+        if db_field.name == "restaurant":
+            restaurant_id = self.parse_filter_in_request(request)
+            kwargs['queryset'] = Restaurant.objects.filter(
+                id__exact=restaurant_id)
+        return super(DishAdmin, self).formfield_for_foreignkey(
+            db_field, request, **kwargs)
+
+
 class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
@@ -349,26 +402,6 @@ class DishCategoryAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return request.user.role == User.ROLE_ADMIN
-
-
-class DishAdmin(admin.ModelAdmin):
-
-    """Custom display dishes list."""
-
-    list_display = ("name", "category", "price", "weight", "available")
-    ordering = ["name"]
-
-    def has_add_permission(self, request):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_MANAGER)
-
-    def has_change_permission(self, request, obj=None):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_MANAGER)
-
-    def has_delete_permission(self, request, obj=None):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_MANAGER)
 
 
 admin.site.register(User, UserAdmin)

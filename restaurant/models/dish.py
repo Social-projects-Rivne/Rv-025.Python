@@ -3,6 +3,7 @@ Contain a model class for dishes.
 """
 from django.db import models
 
+import restaurant
 from administrator.models import dish_category
 
 
@@ -13,14 +14,15 @@ class Dish(models.Model):
     category = models.ForeignKey(dish_category.DishCategory,
                                  on_delete=models.SET_NULL,
                                  blank=True, null=True)
-    name = models.CharField(max_length=100, unique=True,
-                            error_messages={'unique': ('A dish with such name '
-                                                       'already exists.'), })
+    name = models.CharField(max_length=100, default='', null=False)
     photo = models.ImageField(upload_to='dish_images', blank=True, null=True)
     description = models.CharField(max_length=256, blank=True, null=True)
     price = models.FloatField(default=0, null=False)
-    weight = models.FloatField(default=0, null=False)
+    weight = models.IntegerField(default=0, null=False)
     available = models.BooleanField(default=True)
+    restaurant = models.ForeignKey(restaurant.Restaurant,
+                                   on_delete=models.CASCADE,
+                                   default=0, null=False)
 
     class Meta():
 
