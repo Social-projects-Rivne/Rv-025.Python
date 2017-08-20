@@ -171,7 +171,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         Argument:
         role - user's role
         """
-        self.is_staff != (role == User.ROLE_USER)
+        self.is_staff = (role != User.ROLE_USER)
 
     def get_short_name(self):
         """Return the user's email"""
