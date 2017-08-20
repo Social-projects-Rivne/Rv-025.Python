@@ -344,6 +344,24 @@ class RestaurantAdmin(admin.ModelAdmin):
     _type_id.short_description = "restaurant type"
 
 
+class DishCategoryAdmin(admin.ModelAdmin):
+
+    """Custom display dishes categories list."""
+
+    list_display = ("name", "id", "is_visible")
+    list_per_page = 20
+    ordering = ["name"]
+
+    def has_add_permission(self, request):
+        return request.user.role == User.ROLE_ADMIN
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.role == User.ROLE_ADMIN
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.role == User.ROLE_ADMIN
+
+
 class DishAdmin(admin.ModelAdmin):
 
     """Custom display dishes list."""
@@ -384,24 +402,6 @@ class DishAdmin(admin.ModelAdmin):
                 id__exact=restaurant_id)
         return super(DishAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs)
-
-
-class DishCategoryAdmin(admin.ModelAdmin):
-
-    """Custom display dishes categories list."""
-
-    list_display = ("name", "id", "is_visible")
-    list_per_page = 20
-    ordering = ["name"]
-
-    def has_add_permission(self, request):
-        return request.user.role == User.ROLE_ADMIN
-
-    def has_change_permission(self, request, obj=None):
-        return request.user.role == User.ROLE_ADMIN
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.role == User.ROLE_ADMIN
 
 
 admin.site.register(User, UserAdmin)
