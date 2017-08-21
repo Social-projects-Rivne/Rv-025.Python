@@ -34,6 +34,11 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = ("role",)
 
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        if self.current_user.role == User.ROLE_MANAGER:
+            self.fields['parent'].empty_label = None
+
     def save(self, commit=True):
         """Save a new user.
 
@@ -60,6 +65,11 @@ class UserChangeForm(forms.ModelForm):
 
         model = User
         fields = ("name", "email", "phone", "role", "status", "parent")
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        if self.current_user.role == User.ROLE_MANAGER:
+            self.fields['parent'].empty_label = None
 
     def save(self, commit=True):
         """Save the provided password in a hashed format and put
