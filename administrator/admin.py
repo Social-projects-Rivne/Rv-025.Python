@@ -138,7 +138,8 @@ class UserAdmin(Admin):
             if request.user.role == User.ROLE_MANAGER:
                 kwargs['queryset'] = User.objects.filter(id=request.user.id)
             if request.user.role == User.ROLE_ADMIN:
-                kwargs['queryset'] = User.objects.exclude(role=User.ROLE_ADMIN)
+                kwargs['queryset'] = User.objects.filter(
+                    role=User.ROLE_MANAGER)
         return super(UserAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs)
 
