@@ -277,6 +277,8 @@ class RestaurantAdmin(admin.ModelAdmin):
         qs = super(RestaurantAdmin, self).get_queryset(request)
         if request.user.role == User.ROLE_ADMIN:
             return qs
+        elif request.user.role == User.ROLE_SUB_MANAGER:
+            return qs.filter(sub_manager=request.user.id)
         return qs.filter(manager=request.user.id)
 
     def get_form(self, request, *args, **kwargs):
@@ -285,6 +287,10 @@ class RestaurantAdmin(admin.ModelAdmin):
         form = super(RestaurantAdmin, self).get_form(request, *args, **kwargs)
         form.current_user = request.user
         return form
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.has_perm('restaurant.read_restaurant'):
+            return True
 
     form = RestaurantForm
     list_display = ("name", "restaurant_type", "status",
@@ -374,8 +380,7 @@ class DishAdmin(admin.ModelAdmin):
                 request.user.role == User.ROLE_MANAGER)
 
     def has_change_permission(self, request, obj=None):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_MANAGER)
+        return request.user.role != User.ROLE_USER
 
     def has_delete_permission(self, request, obj=None):
         return (request.user.role == User.ROLE_ADMIN or
