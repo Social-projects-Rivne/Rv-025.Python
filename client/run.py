@@ -5,7 +5,8 @@ PSQL_PARAMS = db_config()
 app.config.from_object('config.DevelopmentConfig')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql://%(user)s:'
-                                         '%(password)s@%(host)s:%(port)s/%(name)s'
+                                         '%(password)s@%(host)s:'
+                                         '%(port)s/%(name)s'
                                          % PSQL_PARAMS)
 db.init_app(app)
 

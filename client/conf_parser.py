@@ -24,8 +24,6 @@ def config(filename='../config.ini', section='RDB'):
         for param in params:
             db[param[0]] = param[1]
     else:
-        raise Exception('Section %s not found in the %s' %(section, filename))
+        raise Exception('Section %s not found in the %s' % (section, filename))
 
     return db
-
-
