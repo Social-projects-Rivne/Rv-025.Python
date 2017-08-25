@@ -136,4 +136,4 @@ composer.lock
 
 # Project config files
 config.ini
-restaurant/local_settings.py
+backend/restaurant/local_settings.py

@@ -5,7 +5,7 @@ import os
 ALLOWED_HOSTS = []
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-CONF_FILE = (os.path.join(BASE_DIR, './config.ini'))
+CONF_FILE = (os.path.join(BASE_DIR, '../config.ini'))
 
 config = ConfigParser.ConfigParser()
 config.read(CONF_FILE)
