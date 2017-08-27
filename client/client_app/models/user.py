@@ -28,6 +28,7 @@ class User(db.Model):
     status = db.Column(db.Integer, default=STATUS_ACTIVE, nullable=False)
     is_staff = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
+    is_superuser = db.Column(db.Boolean, default=False)
     parent_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     parent = db.relationship('User', foreign_keys=parent_id)
@@ -44,4 +45,4 @@ class User(db.Model):
         return bcrypt.check_password_hash(self.password, password)
 
     def __str__(self):
-        return " ".join(self.name, self.email)
+        return " ".join([self.name, self.email])
