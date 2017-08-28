@@ -2,7 +2,9 @@
 Contain a model class for users.
 """
 
-from client_app import db, bcrypt
+from passlib.hash import pbkdf2_sha256
+
+from client_app import db
 
 
 class User(db.Model):
@@ -39,10 +41,10 @@ class User(db.Model):
         self.set_password(password)
 
     def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = pbkdf2_sha256.hash(password)
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+        return pbkdf2_sha256.verify(self.password, password)
 
     def __str__(self):
         return " ".join([self.name, self.email])
