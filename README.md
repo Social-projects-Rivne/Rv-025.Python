@@ -5,22 +5,22 @@
 
 ### Installation
 
-For installing required libs and frameworks execute next commands:
+1) For installing required libs and frameworks execute next commands:
 ```
 pip install -r requirements.txt
 ```
 
-Copy and rename file `backend/restaurant/local_settings.py.example` to `backend/restaurant/local_settings.py`.
+2) Copy and rename file `backend/restaurant/local_settings.py.example` to `backend/restaurant/local_settings.py`.
 
-Copy and rename file `config.ini.example` to `config.ini`. Write in `config.ini` your credentials.
+3) Copy and rename file `config.ini.example` to `config.ini`. Write in `config.ini` your credentials.
 
-Then you have to let Django make its migrations
+4) Then you have to let Django make its migrations
 ```
 python backend/manage.py makemigrations
 python backend/manage.py migrate
 ```
 
-Load fixtures data:
+5) Load fixtures data:
 ```
 python backend/manage.py loaddata backend/fixtures/**
 ```

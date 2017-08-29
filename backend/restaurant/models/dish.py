@@ -4,14 +4,14 @@ Contain a model class for dishes.
 from django.db import models
 
 import restaurant
-from administrator.models import dish_category
+from dish_category import DishCategory
 
 
 class Dish(models.Model):
 
     """Model of dish, creates from manager panel."""
 
-    category = models.ForeignKey(dish_category.DishCategory,
+    category = models.ForeignKey(DishCategory,
                                  on_delete=models.SET_NULL,
                                  blank=True, null=True)
     name = models.CharField(max_length=100, default='', null=False)
