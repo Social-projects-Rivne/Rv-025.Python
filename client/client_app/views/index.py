@@ -15,8 +15,8 @@ def show_list_of_restaurants():
     list_of_restaurants = Restaurant\
         .query\
         .join(Restaurant.restaurant_type)\
-        .filter(Restaurant.status==0)\
+        .filter(Restaurant.status == 0)\
         .order_by(Restaurant.name)\
         .all()
-    return render_template('list_of_restaurants.html',
-                           list_of_restaurants=list_of_restaurants)
+    return render_template(
+        'list_of_restaurants.html', list_of_restaurants=list_of_restaurants)
