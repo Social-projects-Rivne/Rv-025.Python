@@ -1,80 +1,79 @@
 [
-{
-
+  {
     "model": "restaurant.RestaurantType",
     "fields": {
       "restaurant_type":"Cafe",
       "is_deleted": "False"
-      }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Bar",
-    "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Hookah",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Bar",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Food Truck",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Hookah",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Taverna",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Food Truck",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Pub",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Taverna",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Coffeehouse",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Pub",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Cafeteria",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Coffeehouse",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Barbecue",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Cafeteria",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Fast food",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Barbecue",
+      "is_deleted": "False"
     }
-},
-{
-  "model": "restaurant.RestaurantType",
-  "fields": {
-    "restaurant_type":"Chineeze",
-    "is_deleted": "False"
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Fast food",
+      "is_deleted": "False"
     }
-}
+  },
+  {
+    "model": "restaurant.RestaurantType",
+    "fields": {
+      "restaurant_type":"Chineeze",
+      "is_deleted": "False"
+    }
+  }
 ]

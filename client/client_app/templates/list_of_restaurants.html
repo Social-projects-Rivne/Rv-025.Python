@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chewing - List of Restaurants
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Chose restaurant from a list:</h2>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rest in list_of_restaurants %}
+                <tr>
+                    <td><a href="/restaurant/{{ rest.id }}">{{ rest.name }}</a></td>
+                    <td>{{ rest.restaurant_type.restaurant_type }}</td>
+                    <td>{{ rest.location }}</td>
+                    <td>{{ rest.description }}</td>
+                <tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
