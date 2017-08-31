@@ -1,0 +1,82 @@
+[
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name":"Laguna",
+      "location": "Laguna street, 12",
+      "restaurant_type": 2,
+      "tables_count": 13,
+      "description": "Laguna description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name":"Laguna 1",
+      "location": "Laguna street, 1",
+      "restaurant_type": 3,
+      "tables_count": 3,
+      "description": "Laguna 1 description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Flamingo",
+      "location": "St. Bandera street, 62",
+      "restaurant_type": 4,
+      "tables_count": 10,
+      "description": "Flamingo description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Le Chalet",
+      "location": "Vidin street, 39",
+      "restaurant_type": 6,
+      "tables_count": 2,
+      "description": "Le Chalet description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Melange",
+      "location": "Kyivs'ka street, 36",
+      "restaurant_type": 3,
+      "tables_count": 23,
+      "description": "Melange description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Kant",
+      "location": "kopernika street, 9",
+      "restaurant_type": 2,
+      "tables_count": 15,
+      "description": "Kant description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Orlan",
+      "location": "Vidin street, 9",
+      "restaurant_type": 1,
+      "tables_count": 14,
+      "description": "Orlan description"
+    }
+  },
+  {
+    "model": "restaurant.Restaurant",
+    "fields": {
+      "name": "Pidkova",
+      "location": "Ivana Pidkivy street, 17",
+      "restaurant_type": 7,
+      "tables_count": 30,
+      "description": "Pidkova description"
+    }
+  }
+]

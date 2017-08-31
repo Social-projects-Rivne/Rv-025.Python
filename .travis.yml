@@ -9,7 +9,7 @@ install:
 jobs:
   include:
     - script: flake8 .
-    - script: python ./manage.py test
+    - script: python backend/manage.py test
 
 notifications:
     slack: rv-025lamp:t8bhwuryQcH8AdBDbDOoiwMQ
