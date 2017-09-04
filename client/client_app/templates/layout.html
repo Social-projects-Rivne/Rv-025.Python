@@ -1,5 +1,10 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}Chewing{% endblock %}
+{%- block styles %}
+<!-- Bootstrap -->
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+{%- endblock styles %}
 
 {% block navbar %}
     <nav class="navbar navbar-default">
@@ -18,26 +23,45 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/restaurant">List Of Restaurants</a></li>
-              <li><a href="#">Register in our system</a></li>
+            <li><a href="{{ url_for('show_list_of_restaurants') }}">List Of Restaurants</a></li>
+            <li><a href="/register">Register in our system</a></li>
 {#          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
           </ul>
-
-            <form class="form-inline navbar-form navbar-right">
+{% if not session.logged_in %}
+            <form class="form-inline navbar-form navbar-right" action="/login" method="POST" >
+              {{form.hidden_tag() }}
               <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                {{ form.email.label }}
+                {{ form.email(class_="form-control") }}
+                {{ form.password.label }}
+                {{ form.password(class_="form-control") }}
+                    		<!--<input type="text" class="form-control"  value="" required="" autofocus="" placeholder="Email" name="email">-->
               </div>
               <div class="form-group">
                 <label class="sr-only" for="exampleInputPassword3">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
               </div>
-              <button type="submit" class="btn btn-default">Sign in</button>
+                <button class="btn btn-primary"  name="Submit" value="Login" type="Submit">Login</button>
             </form>
+{% else %}
+ <a href="{{ url_for('profile') }}">{{ session.name }}</a>
+{% endif %}
 
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <!-- <strong>Title</strong> --> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
 {% endblock %}
 
 {% block content %}

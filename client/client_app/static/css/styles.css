@@ -1,0 +1,15 @@
+.well {
+	position: relative;
+}
+
+.logout {
+	position: absolute;
+	bottom: 5px;
+	right: 35px;
+}
+
+.alert {
+	position: absolute ;
+	right:0;
+	width:300px;
+}
