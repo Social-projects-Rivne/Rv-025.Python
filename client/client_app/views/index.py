@@ -20,3 +20,10 @@ def show_list_of_restaurants():
         .all()
     return render_template(
         'list_of_restaurants.html', list_of_restaurants=list_of_restaurants)
+
+
+@app.route('/restaurant/<int:restaurant_id>')
+def show_restaurant(restaurant_id):
+    restaurant_info = Restaurant\
+        .query.filter(Restaurant.id == restaurant_id).first()
+    return render_template('restaurant.html', restaurant_info=restaurant_info)
