@@ -17,7 +17,7 @@
     "model": "restaurant.RestaurantType",
     "fields": {
       "restaurant_type":"Hookah",
-      "is_deleted": "False"
+      "is_deleted": "True"
     }
   },
   {
@@ -52,7 +52,7 @@
     "model": "restaurant.RestaurantType",
     "fields": {
       "restaurant_type":"Cafeteria",
-      "is_deleted": "False"
+      "is_deleted": "True"
     }
   },
   {
