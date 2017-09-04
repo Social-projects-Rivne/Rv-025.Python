@@ -1,4 +1,5 @@
-from client_app import app
+from client_app import app, db
+from client_app.forms import registration_form
 
 from flask import flash, render_template, redirect, url_for, session, request
 from flask_wtf import FlaskForm
@@ -85,3 +86,17 @@ def do_admin_login():
 def logout():
     session['logged_in'] = False
     return redirect(url_for('index'))
+
+  
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = registration_form.RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        new_user = User(form.name.data, form.email.data,
+                        form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Thanks for registering', 'succes')
+        return redirect(url_for('index'))
+    return render_template('register.html', form=form)
+
