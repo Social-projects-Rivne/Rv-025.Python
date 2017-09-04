@@ -12,11 +12,11 @@ from client_app.models.user import User
 
 class LoginForm(FlaskForm):
     email = StringField(
-        'email',
+        'Email',
         validators=[InputRequired(), Email('Invalid Email')]
     )
     password = PasswordField(
-        'password',
+        'Password',
         validators=[InputRequired(), Length(min=8)]
     )
 
@@ -25,38 +25,6 @@ class LoginForm(FlaskForm):
 def index():
     form = LoginForm()
     return render_template('index.html', form=form)
-
-
-@app.route('/restaurant')
-def show_list_of_restaurants():
-    """ Generates list of restaurants
-    """
-
-    list_of_restaurants = Restaurant\
-        .query\
-        .join(Restaurant.restaurant_type)\
-        .filter(Restaurant.status == 0)\
-        .order_by(Restaurant.name)\
-        .all()
-    return render_template(
-        'list_of_restaurants.html', list_of_restaurants=list_of_restaurants)
-
-
-@app.route('/restaurant/<int:restaurant_id>')
-def show_restaurant(restaurant_id):
-    restaurant_info = Restaurant\
-        .query.filter(Restaurant.id == restaurant_id).first()
-    return render_template('restaurant.html', restaurant_info=restaurant_info)
-
-
-@app.route('/profile')
-def profile():
-    """ Get logged user from DB query
-    """
-
-    user_id = session['logged_in']
-    current_user = User.query.get(user_id)
-    return render_template('profile.html', current_user=current_user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -95,6 +63,16 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/profile')
+def profile():
+    """ Get logged user from DB query
+    """
+
+    user_id = session['logged_in']
+    current_user = User.query.get(user_id)
+    return render_template('profile.html', current_user=current_user)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = registration_form.RegistrationForm(request.form)
@@ -106,3 +84,33 @@ def register():
         flash('Thanks for registering', 'succes')
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
+
+
+@app.route('/restaurant')
+def show_list_of_restaurants():
+    """ Generates list of restaurants
+    """
+
+    form = registration_form.RegistrationForm(request.form)
+    list_of_restaurants = Restaurant\
+        .query\
+        .join(Restaurant.restaurant_type)\
+        .filter(Restaurant.status == 0)\
+        .order_by(Restaurant.name)\
+        .all()
+    return render_template('list_of_restaurants.html',
+                           list_of_restaurants=list_of_restaurants,
+                           form=form)
+
+
+@app.route('/restaurant/<int:restaurant_id>')
+def show_restaurant(restaurant_id):
+    """ Show restaurant info page
+    """
+
+    form = registration_form.RegistrationForm(request.form)
+    restaurant_info = Restaurant\
+        .query.filter(Restaurant.id == restaurant_id).first()
+    return render_template('restaurant.html',
+                           restaurant_info=restaurant_info,
+                           form=form)

@@ -22,7 +22,7 @@ class RestaurantType(models.Model):
 
         """Correct display of restaurant type in restaurant's list."""
 
-        verbose_name = u"Restaurant type"
+        verbose_name_plural = u"Restaurant Type"
 
         permissions = (
             ("read_restauranttype",

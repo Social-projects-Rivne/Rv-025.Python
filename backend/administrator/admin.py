@@ -193,7 +193,7 @@ clone.short_description = "Clone"
 
 class RestaurantTypeAdmin(admin.ModelAdmin):
 
-    list_display = ("restaurant_type", )
+    list_display = ("restaurant_type", "is_deleted")
 
     def has_add_permission(self, request):
         return (request.user.role == User.ROLE_ADMIN or
@@ -305,7 +305,7 @@ class RestaurantAdmin(admin.ModelAdmin):
 
     form = RestaurantForm
     list_display = ("name", "restaurant_type", "status",
-                    "tables_count", "manager", "sub_manager",
+                    "manager", "sub_manager",
                     "list_of_dishes")
     list_per_page = 15
     actions = [soft_delete, clone]
