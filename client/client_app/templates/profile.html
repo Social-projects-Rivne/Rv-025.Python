@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <h4>{{current_user.name}}</h4>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>{{current_user.email}}
+                            <br />
+                            <i class="glyphicon glyphicon-phone"></i>{{current_user.phone}}</p>
+                    </div>
+                    <div class="col-sm-3">
+                      <i class="glyphicon glyphicon-pencil"></i>  <a class="edit" href="">Edit profile</a>
+                    </div>
+                </div>
+                  <a class="logout" href={{ url_for('logout') }}>  <i class="glyphicon glyphicon-remove"></i>Logout</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
