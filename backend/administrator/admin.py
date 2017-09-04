@@ -217,7 +217,7 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ("name", "logo", "location", "restaurant_type",
+        fields = ("name", "logo", "location", "telephone", "restaurant_type",
                   "tables_count", "description", "status",
                   "manager", "sub_manager")
 
