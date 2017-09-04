@@ -4,9 +4,10 @@
     "fields": {
       "name":"Laguna",
       "location": "Laguna street, 12",
+      "telephone": "+38 095 873 33 12",
       "restaurant_type": 2,
       "tables_count": 13,
-      "description": "Laguna description"
+      "description": "Laguna description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -14,9 +15,10 @@
     "fields": {
       "name":"Laguna 1",
       "location": "Laguna street, 1",
+      "telephone": "+38 098 437 33 32",
       "restaurant_type": 3,
       "tables_count": 3,
-      "description": "Laguna 1 description"
+      "description": "Laguna 1 description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -24,9 +26,10 @@
     "fields": {
       "name": "Flamingo",
       "location": "St. Bandera street, 62",
+      "telephone": "+38 067 247 45 32",
       "restaurant_type": 4,
       "tables_count": 10,
-      "description": "Flamingo description"
+      "description": "Flamingo description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -34,9 +37,10 @@
     "fields": {
       "name": "Le Chalet",
       "location": "Vidin street, 39",
+      "telephone": "+38 098 866 13 32",
       "restaurant_type": 6,
       "tables_count": 2,
-      "description": "Le Chalet description"
+      "description": "Le Chalet description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -44,9 +48,10 @@
     "fields": {
       "name": "Melange",
       "location": "Kyivs'ka street, 36",
+      "telephone": "+38 063 777 44 32",
       "restaurant_type": 3,
       "tables_count": 23,
-      "description": "Melange description"
+      "description": "Melange description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -54,9 +59,10 @@
     "fields": {
       "name": "Kant",
       "location": "kopernika street, 9",
+      "telephone": "+38 094 837 33 34",
       "restaurant_type": 2,
       "tables_count": 15,
-      "description": "Kant description"
+      "description": "Kant description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -64,9 +70,10 @@
     "fields": {
       "name": "Orlan",
       "location": "Vidin street, 9",
+      "telephone": "+38 093 877 33 32",
       "restaurant_type": 1,
       "tables_count": 14,
-      "description": "Orlan description"
+      "description": "Orlan description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   },
   {
@@ -74,9 +81,10 @@
     "fields": {
       "name": "Pidkova",
       "location": "Ivana Pidkivy street, 17",
+      "telephone": "+38 096 847 33 32",
       "restaurant_type": 7,
       "tables_count": 30,
-      "description": "Pidkova description"
+      "description": "Pidkova description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat arcu, malesuada vel ullamcorper vitae, imperdiet ac ante. Etiam ipsum dui, consectetur id lectus id, faucibus imperdiet elit. Cras porttitor elit a enim accumsan sodales. Sed consectetur quam vitae sem cursus, ultricies imperdiet sapien interdum. Proin ac sodales dolor, et pulvinar turpis. Curabitur malesuada vulputate justo quis laoreet. Integer ac molestie mi. Aenean ligula justo, lobortis vitae nulla vitae, laoreet ultrices diam. Praesent vel tellus sit amet nisi rutrum aliquam. Phasellus efficitur fermentum massa at imperdiet. Sed a metus ac enim hendrerit dapibus fermentum nec nisl. Integer quam orci, condimentum sed convallis id, pharetra at purus. Pellentesque vestibulum vel nulla eget placerat. Ut lobortis mollis turpis, id placerat lacus euismod fermentum. Pellentesque finibus sem id felis tristique ullamcorper."
     }
   }
 ]
