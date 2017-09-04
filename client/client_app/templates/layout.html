@@ -1,6 +1,5 @@
 {% extends "bootstrap/base.html" %}
 {% block title %}Chewing{% endblock %}
-
 {%- block styles %}
 <!-- Bootstrap -->
 {{ super() }}
@@ -24,25 +23,27 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/restaurant">List Of Restaurants</a></li>
+            <li><a href="{{ url_for('show_list_of_restaurants') }}">List Of Restaurants</a></li>
               <li><a href="#">Register in our system</a></li>
 {#          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
           </ul>
 {% if not session.logged_in %}
             <form class="form-inline navbar-form navbar-right" action="/login" method="POST" >
+              {{form.hidden_tag() }}
               <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                				<input type="text" class="form-control"  value="" required="" autofocus="" placeholder="Email" name="email">
+                {{ form.email.label }}
+                {{ form.email(class_="form-control") }}
+                {{ form.password.label }}
+                {{ form.password(class_="form-control") }}
+                    		<!--<input type="text" class="form-control"  value="" required="" autofocus="" placeholder="Email" name="email">-->
               </div>
               <div class="form-group">
                 <label class="sr-only" for="exampleInputPassword3">Password</label>
-                <input type="password" class="form-control" value="" required="" placeholder="Password" name="password">
-
               </div>
                 <button class="btn btn-primary"  name="Submit" value="Login" type="Submit">Login</button>
             </form>
 {% else %}
- <a href="/profile">{{ session.name }}</a>
+ <a href="{{ url_for('profile') }}">{{ session.name }}</a>
 {% endif %}
 
         </div><!-- /.navbar-collapse -->
@@ -60,7 +61,7 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    
+
 {% endblock %}
 
 {% block content %}
