@@ -16,28 +16,36 @@
                 <p><strong>Address:</strong> {{ restaurant_info.location }}</p>
             </div>
         </div>
+        <br>
         <p>{{ restaurant_info.description }}</p>
-        <h2 class="text-center">Menu</h2>
 
-        <table class="table table-striped">
-            <tr>
-                <th>Name</th>
-                <th>Weight</th>
-                <th>Price</th>
-                <th>Dish Category</th>
-                <th>Restaurant</th>
-            </tr>
-        {% for item in menu %}
-            <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.weight }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.category_id__join.name }} (id in DB: {{ item.category_id }})</td>
-                <td>{{ item.restaurant_id__join.name }}</td>
-            </tr>
-        {% endfor %}
-        </table>
+        {% if menu %}
+            <h2 class="text-center">Menu</h2>
 
+            {# http://takwatanabe.me/snippets/cs-jinja.html#groupby-value-attribute #}
+            {% for group in menu|groupby('category_id__join.name') %}
+                <h3 class="text-center">{{ group.grouper }}</h3>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight</th>
+                        <th>Price</th>
+                        <th>Dish Category</th>
+                        <th>Restaurant</th>
+                    </tr>
+                    {% for item in group.list %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.weight }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.category_id__join.name }} (id in DB: {{ item.category_id }})</td>
+                            <td>{{ item.restaurant_id__join.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
 
-    </div>
+        {% endif %} {# END Menu #}
+
+    </div><!-- /.container -->
 {% endblock %}
