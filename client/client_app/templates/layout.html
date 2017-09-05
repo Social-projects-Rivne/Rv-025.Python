@@ -34,7 +34,6 @@
                 {{ form.email(class_="form-control") }}
                 {{ form.password.label }}
                 {{ form.password(class_="form-control") }}
-                    		<!--<input type="text" class="form-control"  value="" required="" autofocus="" placeholder="Email" name="email">-->
               </div>
               <div class="form-group">
                 <label class="sr-only" for="exampleInputPassword3">Password</label>
@@ -43,7 +42,7 @@
             </form>
 {% else %}
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('profile') }}">{{ session.name }}</a></li>
+        <li>Hello Friend! Your profile is <a href="{{ url_for('profile') }}">here</a></li>
         <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
 {% endif %}
