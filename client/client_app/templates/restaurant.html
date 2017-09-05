@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chewing - {{ restaurant_info.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="media">
+            <div class="media-left">
+                <img class="media-object img-rounded" src="http://via.placeholder.com/150x150" alt="">
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">{{ restaurant_info.name }}</h3>
+                <p><strong>Phone:</strong> {{ restaurant_info.telephone }}</p>
+                <p><strong>Address:</strong> {{ restaurant_info.location }}</p>
+            </div>
+        </div>
+        <p>{{ restaurant_info.description }}</p>
+        <h4 class="text-center">Menu</h4>
+    </div>
+{% endblock %}

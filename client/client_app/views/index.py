@@ -12,13 +12,13 @@ from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
 from client_app.models.user import User
 
+
 """
 Is Logged decorator. Put it in route you need to use only for logged user.
 Example:
     @app.route('/home')
     @is_logged
 """
-
 
 def is_logged(f):
     @wraps(f)
@@ -28,21 +28,32 @@ def is_logged(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
+  
 """
 Catch all 404 erorrs
 """
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+  
+  
+class LoginForm(FlaskForm):
+    email = StringField(
+        'Email',
+        validators=[InputRequired(), Email('Invalid Email')]
+    )
+    password = PasswordField(
+        'Password',
+        validators=[InputRequired(), Length(min=8)]
+    )
 
 
 @app.route('/')
 def index():
     form = LoginForm()
     return render_template('index.html', form=form)
+
 
 
 @app.route('/restaurant')
@@ -111,6 +122,16 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/profile')
+def profile():
+    """ Get logged user from DB query
+    """
+
+    user_id = session['logged_in']
+    current_user = User.query.get(user_id)
+    return render_template('profile.html', current_user=current_user)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = registration_form.RegistrationForm(request.form)
@@ -140,3 +161,33 @@ def edit():
         flash('Your changes have been saved.', 'success')
         return redirect(url_for('profile'))
     return render_template('edit_user.html', form=form)
+  
+  
+@app.route('/restaurant')
+def show_list_of_restaurants():
+    """ Generates list of restaurants
+    """
+
+    form = registration_form.RegistrationForm(request.form)
+    list_of_restaurants = Restaurant\
+        .query\
+        .join(Restaurant.restaurant_type)\
+        .filter(Restaurant.status == 0)\
+        .order_by(Restaurant.name)\
+        .all()
+    return render_template('list_of_restaurants.html',
+                           list_of_restaurants=list_of_restaurants,
+                           form=form)
+
+
+@app.route('/restaurant/<int:restaurant_id>')
+def show_restaurant(restaurant_id):
+    """ Show restaurant info page
+    """
+
+    form = registration_form.RegistrationForm(request.form)
+    restaurant_info = Restaurant\
+        .query.filter(Restaurant.id == restaurant_id).first()
+    return render_template('restaurant.html',
+                           restaurant_info=restaurant_info,
+                           form=form)

@@ -19,6 +19,7 @@ class Restaurant(db.Model):
     name = db.Column(db.String(256))
     logo = db.Column(db.String(256), default="Logo_added")
     location = db.Column(db.String(256))
+    telephone = db.Column(db.String(256))
     restaurant_type_id = db.Column(
         db.Integer, db.ForeignKey("restaurant_restauranttype.id"))
     status = db.Column(db.Integer, default=STATUS_ACTIVE, nullable=False)

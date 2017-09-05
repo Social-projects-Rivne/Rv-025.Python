@@ -12,8 +12,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Location</th>
-                    <th>Description</th>
+                    <th>Phone</th>
+                    <th>Address</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,8 +21,8 @@
                 <tr>
                     <td><a href="/restaurant/{{ rest.id }}">{{ rest.name }}</a></td>
                     <td>{{ rest.restaurant_type.restaurant_type }}</td>
+                    <td>{{ rest.telephone }}</td>
                     <td>{{ rest.location }}</td>
-                    <td>{{ rest.description }}</td>
                 <tr>
                 {% endfor %}
             </tbody>
