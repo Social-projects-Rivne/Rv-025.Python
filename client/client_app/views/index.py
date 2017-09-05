@@ -1,7 +1,3 @@
-from flask_wtf import FlaskForm
-
-from wtforms import StringField, PasswordField, validators
-from wtforms.validators import InputRequired, Email, Length
 from flask import flash, render_template, redirect, url_for, session, request
 
 from functools import wraps
@@ -17,14 +13,13 @@ from client_app.models.restaurant import Restaurant
 from client_app.models.user import User
 
 
-"""
-Is Logged decorator. Put it in route you need to use only for logged user.
-Example:
-    @app.route('/home')
-    @is_logged
-"""
-
 def is_logged(f):
+    """
+    Is_Logged decorator. Put it in route you need to use only for logged user.
+    Example:
+        @app.route('/home')
+        @is_logged
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
@@ -33,24 +28,12 @@ def is_logged(f):
     return decorated_function
 
 
-"""
-Catch all 404 erorrs
-"""
-
 @app.errorhandler(404)
 def page_not_found(e):
+    """
+    Catch all 404 erorrs
+    """
     return render_template('404.html'), 404
-
-
-class LoginForm(FlaskForm):
-    email = StringField(
-        'Email',
-        validators=[InputRequired(), Email('Invalid Email')]
-    )
-    password = PasswordField(
-        'Password',
-        validators=[InputRequired(), Length(min=8)]
-    )
 
 
 @app.route('/')
@@ -78,9 +61,6 @@ def do_admin_login():
                 and logged_user.status != STATUS_BANNED):
             session['logged_in'] = logged_user.id
             session['name'] = logged_user.name
-            session['email'] = logged_user.email
-            session['phone'] = logged_user.phone
-            session['password'] = logged_user.password
             redirect(url_for('profile'))
         elif logged_user and logged_user.status == STATUS_BANNED:
             flash('your account has been banned', 'danger')
