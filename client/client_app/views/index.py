@@ -1,3 +1,7 @@
+from flask_wtf import FlaskForm
+
+from wtforms import StringField, PasswordField, validators
+from wtforms.validators import InputRequired, Email, Length
 from flask import flash, render_template, redirect, url_for, session, request
 
 from functools import wraps
@@ -28,7 +32,7 @@ def is_logged(f):
         return f(*args, **kwargs)
     return decorated_function
 
-  
+
 """
 Catch all 404 erorrs
 """
@@ -36,8 +40,8 @@ Catch all 404 erorrs
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-  
-  
+
+
 class LoginForm(FlaskForm):
     email = StringField(
         'Email',
@@ -53,33 +57,6 @@ class LoginForm(FlaskForm):
 def index():
     form = LoginForm()
     return render_template('index.html', form=form)
-
-
-
-@app.route('/restaurant')
-def show_list_of_restaurants():
-    """ Generates list of restaurants
-    """
-
-    list_of_restaurants = Restaurant\
-        .query\
-        .join(Restaurant.restaurant_type)\
-        .filter(Restaurant.status == 0)\
-        .order_by(Restaurant.name)\
-        .all()
-    return render_template(
-        'list_of_restaurants.html', list_of_restaurants=list_of_restaurants)
-
-
-@app.route('/profile')
-@is_logged
-def profile():
-    """ Get logged user from DB query
-    """
-
-    user_id = session['logged_in']
-    current_user = User.query.get(user_id)
-    return render_template('profile.html', current_user=current_user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -161,8 +138,8 @@ def edit():
         flash('Your changes have been saved.', 'success')
         return redirect(url_for('profile'))
     return render_template('edit_user.html', form=form)
-  
-  
+
+
 @app.route('/restaurant')
 def show_list_of_restaurants():
     """ Generates list of restaurants
