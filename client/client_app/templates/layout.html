@@ -42,8 +42,8 @@
               </div>
                 <button class="btn btn-primary"  name="Submit" value="Login" type="Submit">Login</button>
             </form>
-{% else %}
- <a href="{{ url_for('profile') }}">{{ session.name }}</a>
+{% else %} <span> Hello Friend! Your profile is <a href="{{ url_for('profile') }}">here</a></span>
+
 {% endif %}
 
         </div><!-- /.navbar-collapse -->
