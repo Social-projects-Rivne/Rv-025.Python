@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, Length
 
+from client_app.models.dish import Dish, DishCategory
 from client_app.models.restaurant import Restaurant
 from client_app.models.user import User
 
@@ -94,7 +95,6 @@ def show_list_of_restaurants():
     form = registration_form.RegistrationForm(request.form)
     list_of_restaurants = Restaurant\
         .query\
-        .join(Restaurant.restaurant_type)\
         .filter(Restaurant.status == 0)\
         .order_by(Restaurant.name)\
         .all()
@@ -110,7 +110,18 @@ def show_restaurant(restaurant_id):
 
     form = registration_form.RegistrationForm(request.form)
     restaurant_info = Restaurant\
-        .query.filter(Restaurant.id == restaurant_id).first()
+        .query\
+        .filter(Restaurant.id == restaurant_id)\
+        .first()
+    menu = Dish\
+        .query\
+        .join(Dish.category_id__join)\
+        .filter(
+                Dish.available.is_(True),
+                Dish.restaurant_id == restaurant_info.id) \
+        .order_by(DishCategory.order)\
+        .all()
     return render_template('restaurant.html',
                            restaurant_info=restaurant_info,
+                           menu=menu,
                            form=form)

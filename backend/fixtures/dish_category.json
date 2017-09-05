@@ -3,168 +3,192 @@
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Breads",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 23
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Dairy products",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 68
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Eggs",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 89
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Meat",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 2341
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Seafood",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 2352
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Appetizers",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 2345
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Confectionery",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 3464
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Convenience foods",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 222
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Desserts",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 567
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Dips, pastes and spreads",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 659
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Dried foods",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 567
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Dumplings",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 695
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Fast food",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 58
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Soups",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 36
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Snack foods",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 63
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Tea",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 45
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Coffee",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 75
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Drinks",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 25
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Sauces",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 76
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Sandwiches",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 57
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Salads",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 23
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Pies",
-      "is_visible": "False"
+      "is_visible": "False",
+      "order": 38
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Noodles",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 7
     }
   },
   {
     "model": "restaurant.DishCategory",
     "fields": {
       "name": "Kosher food",
-      "is_visible": "True"
+      "is_visible": "True",
+      "order": 2
     }
   }
 ]

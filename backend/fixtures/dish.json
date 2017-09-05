@@ -1,0 +1,63 @@
+[
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Coca-Cola, 0.5L",
+      "price": 5.99,
+      "weight": 0.5,
+      "category": 18,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Coca-Cola, 1L",
+      "price": 9.99,
+      "weight": 1,
+      "category": 18,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Coca-Cola, 2L",
+      "price": 13.99,
+      "weight": 2,
+      "category": 18,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Late, 0.3L",
+      "price": 4,
+      "weight": 300,
+      "category": 17,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Late, 0.5L",
+      "price": 6.5,
+      "weight": 500,
+      "category": 17,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Late, 4L",
+      "price": 19.99,
+      "weight": 4,
+      "available": "False",
+      "category": 17,
+      "restaurant": 2
+    }
+  }
+]
