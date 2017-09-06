@@ -20,8 +20,8 @@
                 {% for rest in list_of_restaurants %}
                 <tr>
                     <td><a href="/restaurant/{{ rest.id }}">{{ rest.name }}</a></td>
-                    <td>{{ rest.restaurant_type.restaurant_type }}</td>
-                    <td>{{ rest.telephone }}</td>
+                    <td>{{ rest.restaurant_type_id__join.restaurant_type }}</td>
+                    <td>{{ rest.phone }}</td>
                     <td>{{ rest.location }}</td>
                 <tr>
                 {% endfor %}

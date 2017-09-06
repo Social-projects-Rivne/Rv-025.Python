@@ -12,6 +12,7 @@ class DishCategory(models.Model):
 
     name = models.CharField(max_length=256, blank=False)
     is_visible = models.BooleanField(default=True, blank=True)
+    order = models.IntegerField(default=0)
 
     class Meta(object):
 

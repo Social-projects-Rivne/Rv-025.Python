@@ -217,7 +217,7 @@ class RestaurantForm(forms.ModelForm):
         """Give some options (metadata) attached to the form."""
 
         model = Restaurant
-        fields = ("name", "logo", "location", "telephone", "restaurant_type",
+        fields = ("name", "logo", "location", "phone", "restaurant_type",
                   "tables_count", "description", "status",
                   "manager", "sub_manager")
 
@@ -365,7 +365,7 @@ class DishCategoryAdmin(admin.ModelAdmin):
 
     """Custom display dishes categories list."""
 
-    list_display = ("name", "id", "is_visible")
+    list_display = ("name", "is_visible", "id", "order")
     list_per_page = 20
     ordering = ["name"]
 

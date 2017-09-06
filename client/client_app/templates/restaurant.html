@@ -11,12 +11,43 @@
                 <img class="media-object img-rounded" src="http://via.placeholder.com/150x150" alt="">
             </div>
             <div class="media-body">
-                <h3 class="media-heading">{{ restaurant_info.name }}</h3>
-                <p><strong>Phone:</strong> {{ restaurant_info.telephone }}</p>
+                <h1 class="media-heading">{{ restaurant_info.name }}</h1>
+                <p><strong>Phone:</strong> {{ restaurant_info.phone }}</p>
                 <p><strong>Address:</strong> {{ restaurant_info.location }}</p>
             </div>
         </div>
+        <br>
         <p>{{ restaurant_info.description }}</p>
-        <h4 class="text-center">Menu</h4>
-    </div>
+
+        {% if menu %}
+            <h2 class="text-center">Menu</h2>
+
+            {# http://takwatanabe.me/snippets/cs-jinja.html#groupby-value-attribute #}
+            {% for group in menu|groupby('category_id__join.name') %}
+                <h3 class="text-center">{{ group.grouper }}</h3>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for item in group.list %}
+                        <tr>
+                            <td>
+                                <p>
+                                    <strong>{{ item.name }}</strong>
+                                    <br>
+                                    {{ item.description }}
+                                </p>
+                            </td>
+                            <td>{{ item.weight }}</td>
+                            <td>{{ item.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
+
+        {% endif %} {# END Menu #}
+
+    </div><!-- /.container -->
 {% endblock %}

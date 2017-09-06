@@ -21,15 +21,15 @@ class RegistrationForm(FlaskForm):
         validators.Length(max=50),
         validators.DataRequired()
     ])
-    email = StringField('Email Address', [
+    email = StringField('Email', [
         validators.Length(max=120),
         validators.Email('Enter correct email, please'),
         validators.DataRequired(),
         unique_email
     ])
-    password = PasswordField('New Password', [
+    password = PasswordField('Password', [
         validators.DataRequired(),
         validators.Length(min=8),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
-    confirm = PasswordField('Repeat Password', [validators.DataRequired()])
+    confirm = PasswordField('Password (again):', [validators.DataRequired()])
