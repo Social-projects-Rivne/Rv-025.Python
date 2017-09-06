@@ -4,7 +4,7 @@
     "fields": {
       "name": "Coca-Cola, 0.5L",
       "price": 5.99,
-      "weight": 0.5,
+      "weight": 500,
       "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
@@ -15,7 +15,7 @@
     "fields": {
       "name": "Coca-Cola, 1L",
       "price": 9.99,
-      "weight": 1,
+      "weight": 1000,
       "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
@@ -26,7 +26,7 @@
     "fields": {
       "name": "Coca-Cola, 2L",
       "price": 13.99,
-      "weight": 2,
+      "weight": 2000,
       "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
@@ -59,7 +59,7 @@
     "fields": {
       "name": "Late, 4L",
       "price": 19.99,
-      "weight": 4,
+      "weight": 4000,
       "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "available": "False",
       "category": 17,

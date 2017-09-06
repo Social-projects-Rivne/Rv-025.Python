@@ -8,11 +8,6 @@ from client_app import app, db
 from client_app.forms import registration_form
 from client_app.forms import edit_form
 
-from flask import flash, render_template, redirect, url_for, session, request
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
-from wtforms.validators import InputRequired, Email, Length
-
 from client_app.models.dish import Dish, DishCategory
 from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
@@ -21,7 +16,8 @@ from client_app.models.user import User
 
 def is_logged(f):
     """
-    Is_Logged decorator. Put it in route you need to use only for logged user.
+    Is_Logged decorator.
+    Put it in route you need to use only for logged user.
     Example:
         @app.route('/home')
         @is_logged
@@ -39,6 +35,7 @@ def page_not_found(e):
     """
     Catch all 404 erorrs
     """
+
     return render_template('404.html'), 404
 
 
