@@ -4,15 +4,15 @@ Contain a model class for user login.
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import InputRequired
 
 
 class LoginForm(FlaskForm):
     email = StringField(
         'email',
-        validators=[InputRequired(), Email('Invalid Email')]
+        validators=[InputRequired()]
     )
     password = PasswordField(
         'password',
-        validators=[InputRequired(), Length(min=8)]
+        validators=[InputRequired()]
     )
