@@ -30,16 +30,18 @@
                         <th>Name</th>
                         <th>Weight</th>
                         <th>Price</th>
-                        <th>Dish Category</th>
-                        <th>Restaurant</th>
                     </tr>
                     {% for item in group.list %}
                         <tr>
-                            <td>{{ item.name }}</td>
+                            <td>
+                                <p>
+                                    <strong>{{ item.name }}</strong>
+                                    <br>
+                                    {{ item.description }}
+                                </p>
+                            </td>
                             <td>{{ item.weight }}</td>
                             <td>{{ item.price }}</td>
-                            <td>{{ item.category_id__join.name }} (id in DB: {{ item.category_id }})</td>
-                            <td>{{ item.restaurant_id__join.name }}</td>
                         </tr>
                     {% endfor %}
                 </table>

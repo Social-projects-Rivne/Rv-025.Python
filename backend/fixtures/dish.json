@@ -5,6 +5,7 @@
       "name": "Coca-Cola, 0.5L",
       "price": 5.99,
       "weight": 0.5,
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
     }
@@ -15,6 +16,7 @@
       "name": "Coca-Cola, 1L",
       "price": 9.99,
       "weight": 1,
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
     }
@@ -25,6 +27,7 @@
       "name": "Coca-Cola, 2L",
       "price": 13.99,
       "weight": 2,
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 18,
       "restaurant": 2
     }
@@ -33,6 +36,7 @@
     "model": "restaurant.Dish",
     "fields": {
       "name": "Late, 0.3L",
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "price": 4,
       "weight": 300,
       "category": 17,
@@ -45,6 +49,7 @@
       "name": "Late, 0.5L",
       "price": 6.5,
       "weight": 500,
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "category": 17,
       "restaurant": 2
     }
@@ -55,6 +60,7 @@
       "name": "Late, 4L",
       "price": 19.99,
       "weight": 4,
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
       "available": "False",
       "category": 17,
       "restaurant": 2
