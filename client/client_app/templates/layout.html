@@ -23,7 +23,9 @@
         <div class="collapse navbar-collapse" id="menu">
           <ul class="nav navbar-nav">
             <li><a href="{{ url_for('show_list_of_restaurants') }}">List of Restaurants</a></li>
+            {% if not session.logged_in %}
             <li><a href="{{ url_for('register') }}">Registration</a></li>
+            {% endif %}
 {#          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
           </ul>
 {% if not session.logged_in %}
@@ -34,7 +36,6 @@
                 {{ form.email(class_="form-control") }}
                 {{ form.password.label }}
                 {{ form.password(class_="form-control") }}
-                    		<!--<input type="text" class="form-control"  value="" required="" autofocus="" placeholder="Email" name="email">-->
               </div>
               <div class="form-group">
                 <label class="sr-only" for="exampleInputPassword3">Password</label>
@@ -43,7 +44,7 @@
             </form>
 {% else %}
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('profile') }}">{{ session.name }}</a></li>
+        <li><div class="profile-link">Hello Friend! Your profile is <a href="{{ url_for('profile') }}">here</a></span></li>
         <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
 {% endif %}

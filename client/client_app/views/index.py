@@ -1,5 +1,12 @@
+from flask import flash, render_template, redirect, url_for, session, request
+
+from functools import wraps
+
+from passlib.hash import pbkdf2_sha256
+
 from client_app import app, db
 from client_app.forms import registration_form
+from client_app.forms import edit_form
 
 from flask import flash, render_template, redirect, url_for, session, request
 from flask_wtf import FlaskForm
@@ -7,19 +14,32 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, Length
 
 from client_app.models.dish import Dish, DishCategory
+from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
 from client_app.models.user import User
 
 
-class LoginForm(FlaskForm):
-    email = StringField(
-        'Email',
-        validators=[InputRequired(), Email('Invalid Email')]
-    )
-    password = PasswordField(
-        'Password',
-        validators=[InputRequired(), Length(min=8)]
-    )
+def is_logged(f):
+    """
+    Is_Logged decorator. Put it in route you need to use only for logged user.
+    Example:
+        @app.route('/home')
+        @is_logged
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """
+    Catch all 404 erorrs
+    """
+    return render_template('404.html'), 404
 
 
 @app.route('/')
@@ -59,6 +79,7 @@ def do_admin_login():
 
 
 @app.route("/logout")
+@is_logged
 def logout():
     session['logged_in'] = False
     return redirect(url_for('index'))
@@ -82,9 +103,27 @@ def register():
                         form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Thanks for registering', 'succes')
+        flash('Thanks for registering', 'success')
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
+
+
+@app.route('/edit', methods=['GET', 'POST'])
+@is_logged
+def edit():
+    user_id = session['logged_in']
+    current_user = User.query.get(user_id)
+    form = edit_form.EditForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        current_user.name = form.name.data
+        current_user.password = pbkdf2_sha256.hash(form.password.data)
+        current_user.phone = form.phone.data
+        db.session.add(current_user)
+        db.session.commit()
+        flash('Your changes have been saved.', 'success')
+        return redirect(url_for('profile'))
+    return render_template('edit_user.html', form=form)
 
 
 @app.route('/restaurant')
