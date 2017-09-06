@@ -5,7 +5,7 @@
       "name": "Coca-Cola, 0.5L",
       "price": 5.99,
       "weight": 500,
-      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.)",
       "category": 18,
       "restaurant": 2
     }
@@ -16,7 +16,7 @@
       "name": "Coca-Cola, 1L",
       "price": 9.99,
       "weight": 1000,
-      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
+      "description": "(Short description. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum.)",
       "category": 18,
       "restaurant": 2
     }
@@ -49,7 +49,7 @@
       "name": "Late, 0.5L",
       "price": 6.5,
       "weight": 500,
-      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
+      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam similique suscipit tempore vitae voluptatem!)",
       "category": 17,
       "restaurant": 2
     }
@@ -60,7 +60,7 @@
       "name": "Late, 4L",
       "price": 19.99,
       "weight": 4000,
-      "description": "(Short description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad culpa delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe similique suscipit tempore vitae voluptatem!)",
+      "description": "(Short description. Delectus eaque illo iste laborum magnam minus, mollitia nesciunt nulla odit perspiciatis rerum saepe.)",
       "available": "False",
       "category": 17,
       "restaurant": 2

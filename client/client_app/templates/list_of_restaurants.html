@@ -12,6 +12,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
+                    <th>Tables Count</th>
                     <th>Phone</th>
                     <th>Address</th>
                 </tr>
@@ -21,6 +22,7 @@
                 <tr>
                     <td><a href="/restaurant/{{ rest.id }}">{{ rest.name }}</a></td>
                     <td>{{ rest.restaurant_type_id__join.restaurant_type }}</td>
+                    <td>{{ rest.tables_count }}</td>
                     <td>{{ rest.phone }}</td>
                     <td>{{ rest.location }}</td>
                 <tr>

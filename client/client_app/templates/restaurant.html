@@ -17,7 +17,7 @@
             </div>
         </div>
         <br>
-        <p>{{ restaurant_info.description }}</p>
+        <p>{{ restaurant_info.description | safe }}</p>
 
         {% if menu %}
             <h2 class="text-center">Menu</h2>
