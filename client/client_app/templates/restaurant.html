@@ -14,10 +14,11 @@
                 <h1 class="media-heading">{{ restaurant_info.name }}</h1>
                 <p><strong>Phone:</strong> {{ restaurant_info.phone }}</p>
                 <p><strong>Address:</strong> {{ restaurant_info.location }}</p>
+                <p><strong>Tables Count:</strong> {{ restaurant_info.tables_count }}</p>
             </div>
         </div>
         <br>
-        <p>{{ restaurant_info.description }}</p>
+        <p>{{ restaurant_info.description | safe }}</p>
 
         {% if menu %}
             <h2 class="text-center">Menu</h2>
@@ -28,8 +29,8 @@
                 <table class="table table-striped">
                     <tr>
                         <th>Name</th>
-                        <th>Weight</th>
-                        <th>Price</th>
+                        <th>Weight, g</th>
+                        <th>Price, $</th>
                     </tr>
                     {% for item in group.list %}
                         <tr>

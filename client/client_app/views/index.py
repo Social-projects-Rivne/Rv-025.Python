@@ -8,11 +8,6 @@ from client_app import app, db
 from client_app.forms import registration_form
 from client_app.forms import edit_form
 
-from flask import flash, render_template, redirect, url_for, session, request
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
-from wtforms.validators import InputRequired, Email, Length
-
 from client_app.models.dish import Dish, DishCategory
 from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
@@ -21,7 +16,8 @@ from client_app.models.user import User
 
 def is_logged(f):
     """
-    Is_Logged decorator. Put it in route you need to use only for logged user.
+    Is_Logged decorator.
+    Put it in route you need to use only for logged user.
     Example:
         @app.route('/home')
         @is_logged
@@ -39,22 +35,24 @@ def page_not_found(e):
     """
     Catch all 404 erorrs
     """
+
     return render_template('404.html'), 404
 
 
 @app.route('/')
 def index():
-    form = LoginForm()
-    return render_template('index.html', form=form)
+    login_form = LoginForm()
+    return render_template('index.html', login_form=login_form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def do_admin_login():
+def login():
     """Get login credentials.
     STATUS_BANNED = 2: banned user
     ROLE_USER = 3: user role
     """
 
+    STATUS_DELETED = 1
     STATUS_BANNED = 2
     ROLE_USER = 3
 
@@ -64,7 +62,8 @@ def do_admin_login():
 
         if (logged_user
                 and logged_user.role == ROLE_USER
-                and logged_user.status != STATUS_BANNED):
+                and logged_user.status != STATUS_BANNED
+                and logged_user.status !=STATUS_DELETED):
             session['logged_in'] = logged_user.id
             session['name'] = logged_user.name
             redirect(url_for('profile'))
@@ -97,13 +96,16 @@ def profile():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = registration_form.RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
-        new_user = User(form.name.data, form.email.data,
-                        form.password.data)
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Thanks for registering', 'success')
+    if not session.get('logged_in'):
+        form = registration_form.RegistrationForm(request.form)
+        if request.method == 'POST' and form.validate():
+            new_user = User(form.name.data, form.email.data,
+                            form.password.data)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Thanks for registering', 'success')
+            return redirect(url_for('index'))
+    else:
         return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
@@ -113,17 +115,18 @@ def register():
 def edit():
     user_id = session['logged_in']
     current_user = User.query.get(user_id)
-    form = edit_form.EditForm(request.form)
+    edit_user = edit_form.EditForm(request.form)
 
-    if request.method == 'POST' and form.validate():
-        current_user.name = form.name.data
-        current_user.password = pbkdf2_sha256.hash(form.password.data)
-        current_user.phone = form.phone.data
+    if request.method == 'POST' and edit_user.validate():
+        print current_user.name
+        #current_user.name = form.name.data
+        current_user.password = pbkdf2_sha256.hash(edit_user.password.data)
+        current_user.phone = edit_user.phone.data
         db.session.add(current_user)
         db.session.commit()
         flash('Your changes have been saved.', 'success')
         return redirect(url_for('profile'))
-    return render_template('edit_user.html', form=form)
+    return render_template('edit_user.html', edit_user=edit_user)
 
 
 @app.route('/restaurant')
