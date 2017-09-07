@@ -23,8 +23,11 @@
         <div class="collapse navbar-collapse" id="menu">
           <ul class="nav navbar-nav">
             <li><a href="{{ url_for('show_list_of_restaurants') }}">List of Restaurants</a></li>
+            {% if session.logged_in %}
+              <li><a href="{{ url_for('booking_history') }}">Booking History</a></li>
+            {% endif %}
             {% if not session.logged_in %}
-            <li><a href="{{ url_for('register') }}">Registration</a></li>
+              <li><a href="{{ url_for('register') }}">Registration</a></li>
             {% endif %}
 {#          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
           </ul>

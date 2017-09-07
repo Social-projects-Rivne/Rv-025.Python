@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chewing - Booking - History
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if booked %}
+        <h2 class="text-center">All My Booking:</h2>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Reserve Date</th>
+                    <th>Status</th>
+                    <th>Restaurant</th>
+                    <th>Count Client</th>
+                    <th>Count Tables</th>
+                    <th>Comment Client</th>
+                    <th>Comment Restaurant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in booked %}
+                <tr>
+                    <td>{{ item.reserve_date }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.restaurant_id__join.name }}</td>
+                    <td>{{ item.client_id }}</td>
+                    <td>{{ item.count_tables }}</td>
+                    <td>{{ item.comment_client }}</td>
+                    <td>{{ item.comment_restaurant }}</td>
+                <tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <h3 class="text-center">Sorry, yours booking history is empty :-(</h3>
+        {% endif %}
+    </div>
+{% endblock %}

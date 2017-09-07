@@ -8,6 +8,7 @@ from client_app import app, db
 from client_app.forms import registration_form
 from client_app.forms import edit_form
 
+from client_app.models.booking import Booking
 from client_app.models.dish import Dish, DishCategory
 from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
@@ -43,6 +44,21 @@ def page_not_found(e):
 def index():
     form = LoginForm()
     return render_template('index.html', form=form)
+
+
+@app.route('/booking/history', methods=['GET'])
+@is_logged
+def booking_history():
+    form = registration_form.RegistrationForm(request.form)
+    user_id = session['logged_in']
+    booked = Booking\
+        .query\
+        .filter(Booking.client_id == user_id) \
+        .order_by(Booking.reserve_date)\
+        .all()
+    return render_template('booking_history.html',
+                           booked=booked,
+                           form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])

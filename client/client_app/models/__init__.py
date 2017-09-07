@@ -1,3 +1,4 @@
+from .booking import Booking
 from .dish import Dish
 from .dish import DishCategory
 from .restaurant import Restaurant
