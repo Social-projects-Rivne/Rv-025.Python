@@ -28,7 +28,6 @@ class Booking(models.Model):
     status = models.IntegerField(choices=BOOKING_STATUS, default=0)
     reserve_date = models.DateTimeField(blank=True)
     count_client = models.IntegerField(default=0)
-    count_tables = models.IntegerField(default=1, null=False)
     comment_client = models.TextField(blank=True)
     comment_restaurant = models.TextField(blank=True)
     client = models.ForeignKey(User, null=False)

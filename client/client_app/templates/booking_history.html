@@ -15,7 +15,6 @@
                     <th>Status</th>
                     <th>Restaurant</th>
                     <th>Count Client</th>
-                    <th>Count Tables</th>
                     <th>Comment Client</th>
                     <th>Comment Restaurant</th>
                 </tr>
@@ -25,9 +24,8 @@
                 <tr>
                     <td>{{ item.reserve_date }}</td>
                     <td>{{ item.status }}</td>
-                    <td>{{ item.restaurant_id__join.name }}</td>
+                    <td><a href="/restaurant/{{ item.restaurant_id }}">{{ item.restaurant_id__join.name }}</a></td>
                     <td>{{ item.client_id }}</td>
-                    <td>{{ item.count_tables }}</td>
                     <td>{{ item.comment_client }}</td>
                     <td>{{ item.comment_restaurant }}</td>
                 <tr>

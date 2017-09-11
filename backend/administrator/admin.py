@@ -424,8 +424,8 @@ class BookingAdmin(admin.ModelAdmin):
 
     """Custom Booking list."""
 
-    list_display = ("status", "reserve_date", "count_client", "count_tables",
-                    "comment_client", "comment_restaurant", "client", "restaurant")
+    list_display = ("status", "reserve_date", "count_client", "comment_client",
+                    "comment_restaurant", "client", "restaurant")
     ordering = ["reserve_date"]
 
     def has_add_permission(self, request):

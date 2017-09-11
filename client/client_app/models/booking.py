@@ -17,7 +17,6 @@ class Booking(db.Model):
     status = db.Column(db.Integer, default=0, nullable=False)
     reserve_date = db.Column(db.DateTime)
     count_client = db.Column(db.Integer, default=0)
-    count_tables = db.Column(db.Integer, default=1)
     comment_client = db.Column(db.Text)
     comment_restaurant = db.Column(db.Text)
     client_id = db.Column(
