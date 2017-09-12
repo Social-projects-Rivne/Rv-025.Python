@@ -6,24 +6,30 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 
 
+
+def password_check(form, field):
+    if field.data and len(field.data) < 7:
+        raise validators.ValidationError('Field must be more than 8 characters')
+
+
 class EditForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         kwargs['csrf_enabled'] = False
         super(EditForm, self).__init__(*args, **kwargs)
 
-    name = StringField('name', [
+    name = StringField('Name', [
         validators.DataRequired(),
         validators.Length(max=50)
     ])
-    phone = StringField('phone', [
+    phone = StringField('Phone', [
         validators.Length(max=12)
     ])
     password = PasswordField('New Password', [
-        validators.DataRequired(),
-        validators.Length(min=8),
-        validators.EqualTo('confirm', message='Passwords must match')
+        #validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match'),
+        password_check
     ])
     confirm = PasswordField('Repeat Password', [
-        validators.DataRequired()
+        #validators.DataRequired()
     ])

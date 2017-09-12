@@ -115,15 +115,24 @@ def register():
 def edit():
     user_id = session['logged_in']
     current_user = User.query.get(user_id)
-    edit_user = edit_form.EditForm(request.form)
+    edit_user = edit_form.EditForm(request.form, obj=current_user)
 
     if request.method == 'POST' and edit_user.validate():
-        print current_user.name
-        #current_user.name = form.name.data
-        current_user.password = pbkdf2_sha256.hash(edit_user.password.data)
+        if edit_user.password.data:
+            #validate pw:
+            current_user.password = pbkdf2_sha256.hash(edit_user.password.data)
+        #    del form.password
+        current_user.name = edit_user.name.data
         current_user.phone = edit_user.phone.data
+
+        #edit_user.populate_obj(current_user)
+        #password_validation(edit_user.password.data, current_user.password)
+        #print edit_user.password.data
+        print current_user.password
         db.session.add(current_user)
         db.session.commit()
+
+        session['name'] = current_user.name
         flash('Your changes have been saved.', 'success')
         return redirect(url_for('profile'))
     return render_template('edit_user.html', edit_user=edit_user)
