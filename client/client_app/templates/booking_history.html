@@ -17,17 +17,25 @@
                     <th>Count Client</th>
                     <th>Comment Client</th>
                     <th>Comment Restaurant</th>
+                    <th>Cancel</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in booked %}
                 <tr>
                     <td>{{ item.reserve_date }}</td>
-                    <td>{{ item.status }}</td>
+                    <td>{{ item.status_friendly() }}</td>
                     <td><a href="/restaurant/{{ item.restaurant_id }}">{{ item.restaurant_id__join.name }}</a></td>
                     <td>{{ item.client_id }}</td>
                     <td>{{ item.comment_client }}</td>
                     <td>{{ item.comment_restaurant }}</td>
+                    <td>
+                        {% if item.status == 4 %}
+                        Canceled
+                        {% else %}
+                        <a href="/booking/cancel/{{ item.id }}" class="btn btn-danger">Cancel</a>
+                        {% endif %}
+                    </td>
                 <tr>
                 {% endfor %}
             </tbody>

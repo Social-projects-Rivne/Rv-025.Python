@@ -46,10 +46,32 @@ def index():
     return render_template('index.html', form=form)
 
 
+@app.route('/booking/cancel/<int:booking_id>', methods=['GET'])
+@is_logged
+def booking_cancel(booking_id):
+    """Cancel booked record by User
+
+    BOOKING_STATUS:
+        0 = New
+        1 = Pending
+        2 = OK
+        3 = Canceled by Admin
+        4 = Canceled by User
+    """
+    user_id = session['logged_in']
+    booking_record = Booking.query.get(booking_id)
+    if user_id == booking_record.client_id:
+        booking_record.status = 4
+        db.session.commit()
+        flash('You canceled booking record.', 'success')
+    else:
+        flash('You have no permission.', 'danger')
+    return redirect(url_for('booking_history'))
+
+
 @app.route('/booking/history', methods=['GET'])
 @is_logged
 def booking_history():
-    form = registration_form.RegistrationForm(request.form)
     user_id = session['logged_in']
     booked = Booking\
         .query\
@@ -57,8 +79,7 @@ def booking_history():
         .order_by(Booking.reserve_date)\
         .all()
     return render_template('booking_history.html',
-                           booked=booked,
-                           form=form)
+                           booked=booked)
 
 
 @app.route('/login', methods=['GET', 'POST'])

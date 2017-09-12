@@ -9,6 +9,25 @@ from client_app import db
 class Booking(db.Model):
 
     """Model of booking
+
+    BOOKING_STATUS:
+        0 = New
+        1 = Pending
+        2 = OK
+        3 = Canceled by Admin
+        4 = Canceled by User
+
+    Arguments:
+        id = primary key of booking record
+        status = status of booked record, stored in DB
+        statuses = list of user-friendly statuses
+        status_friendly() = method that convert 'status id' into word
+        reserve_date = date of reservation
+        count_client = Clients count
+        comment_client = Client comment
+        comment_restaurant = Admin of Restaurant comment
+        client_id = User/Client id
+        restaurant_id = Restaurant id
     """
 
     __tablename__ = "booking"
@@ -29,9 +48,12 @@ class Booking(db.Model):
     restaurant_id__join = db.relationship(
         "Restaurant", foreign_keys="Booking.restaurant_id")
 
-    def __init__(self, status, count_client, reserve_date=None):
-        self.status = status
-        self.count_client = count_client
+    statuses = ['New', 'Pending', 'OK', 'Canceled by Admin', 'Canceled by User']
+
+    def __init__(self, reserve_date=None):
         if reserve_date is None:
             reserve_date = datetime.utcnow()
         self.reserve_date = reserve_date
+
+    def status_friendly(self):
+        return self.statuses[int(self.status)]
