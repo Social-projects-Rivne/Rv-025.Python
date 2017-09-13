@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .filters import ChoiceDropdownFilter
 from administrator.models import User
+from restaurant.models import Booking
 from restaurant.models import Dish
 from restaurant.models import DishCategory
 from restaurant.models import Restaurant
@@ -419,6 +420,28 @@ class DishAdmin(admin.ModelAdmin):
             db_field, request, **kwargs)
 
 
+class BookingAdmin(admin.ModelAdmin):
+
+    """Custom Booking list."""
+
+    list_display = ("status", "reserve_date", "count_client", "comment_client",
+                    "comment_restaurant", "client", "restaurant")
+    ordering = ["reserve_date"]
+
+    def has_add_permission(self, request):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_USER)
+
+    def has_change_permission(self, request, obj=None):
+        return (request.user.role == User.ROLE_ADMIN or
+                request.user.role == User.ROLE_MANAGER or
+                request.user.role == User.ROLE_SUB_MANAGER)
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.role == User.ROLE_ADMIN
+
+
+admin.site.register(Booking, BookingAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(RestaurantType, RestaurantTypeAdmin)

@@ -5,9 +5,11 @@ from functools import wraps
 from passlib.hash import pbkdf2_sha256
 
 from client_app import app, db
+from client_app.forms import booking_form
 from client_app.forms import registration_form
 from client_app.forms import edit_form
 
+from client_app.models.booking import Booking
 from client_app.models.dish import Dish, DishCategory
 from client_app.models.login import LoginForm
 from client_app.models.restaurant import Restaurant
@@ -43,6 +45,72 @@ def page_not_found(e):
 def index():
     login_form = LoginForm()
     return render_template('index.html', login_form=login_form)
+
+
+@app.route('/booking/<int:restaurant_id>', methods=['GET', 'POST'])
+@is_logged
+def booking(restaurant_id):
+    user_id = session['logged_in']
+    form = booking_form.BookingForm(request.form)
+    restaurant_info = Restaurant \
+        .query \
+        .filter(Restaurant.id == restaurant_id) \
+        .first()
+    restaurant_name = restaurant_info.name
+    # if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
+        new_booking = Booking.create(form.status.data,
+                                     form.reserve_date.data,
+                                     form.count_client.data,
+                                     form.comment_client.data,
+                                     form.client_id.data,
+                                     form.restaurant_id.data)
+        db.session.add(new_booking)
+        db.session.commit()
+        flash('Order Placed Successfully', 'success')
+        return redirect(url_for('booking_history'))
+    return render_template('booking.html',
+                           form=form,
+                           user_id=user_id,
+                           restaurant_id=restaurant_id,
+                           restaurant_name=restaurant_name
+                           )
+
+
+@app.route('/booking/cancel/<int:booking_id>', methods=['GET'])
+@is_logged
+def booking_cancel(booking_id):
+    """Cancel booked record by User
+
+    BOOKING_STATUS:
+        0 = New
+        1 = Pending
+        2 = OK
+        3 = Canceled by Admin
+        4 = Canceled by User
+    """
+    user_id = session['logged_in']
+    booking_record = Booking.query.get(booking_id)
+    if user_id == booking_record.client_id:
+        booking_record.status = 4
+        db.session.commit()
+        flash('You canceled booking record.', 'success')
+    else:
+        flash('You have no permission.', 'danger')
+    return redirect(url_for('booking_history'))
+
+
+@app.route('/booking/history', methods=['GET'])
+@is_logged
+def booking_history():
+    user_id = session['logged_in']
+    booked = Booking\
+        .query\
+        .filter(Booking.client_id == user_id) \
+        .order_by(Booking.reserve_date)\
+        .all()
+    return render_template('booking_history.html',
+                           booked=booked)
 
 
 @app.route('/login', methods=['GET', 'POST'])

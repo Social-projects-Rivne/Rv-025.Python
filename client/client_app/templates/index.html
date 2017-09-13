@@ -1,5 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h1 class="text-center">Welcome to Chewing service!</h1>
+    <div class="container text-center">
+        <h1>Welcome! Wanna Chew?</h1>
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="input-search">Search field: </label>
+            <input type="text" class="form-control" id="input-search" placeholder="Find your restaurant">
+            <button type="submit" class="btn btn-primary">Go!</button>
+          </div>
+        </form>
+    </div>
 {% endblock %}

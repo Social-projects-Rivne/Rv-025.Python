@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chewing - Booking
+{% endblock %}
+
+{% block content %}
+  <div class="col-md-6 col-md-offset-3">
+
+    <form method="POST" action="/booking/{{ restaurant_id }}" name="booking" class="form-horizontal">
+        {{ form.client_id(value=user_id) }}
+        {{ form.restaurant_id(value=restaurant_id) }}
+        {{ form.status }}
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="restaurant_name">Restaurant</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{ restaurant_name }}</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.reserve_date.label(class_="col-sm-4 control-label") }}
+            <div class="col-sm-8">
+                {{ form.reserve_date(class_="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.count_client.label(class_="col-sm-4 control-label") }}
+            <div class="col-sm-8">
+                {{ form.count_client(class_="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.comment_client.label(class_="col-sm-4 control-label") }}
+            <div class="col-sm-8">
+                {{ form.comment_client(class_="form-control") }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8">
+                {{ form.submit(class_="btn btn-primary") }}
+            </div>
+        </div>
+    </form>
+
+  </div>
+{% endblock %}
