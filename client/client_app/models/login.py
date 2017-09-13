@@ -13,6 +13,6 @@ class LoginForm(FlaskForm):
         validators=[InputRequired()]
     )
     password = PasswordField(
-        'password',id='login_password',
+        'password', id='login_password',
         validators=[InputRequired()]
     )
