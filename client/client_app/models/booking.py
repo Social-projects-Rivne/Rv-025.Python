@@ -48,7 +48,8 @@ class Booking(db.Model):
     restaurant_id__join = db.relationship(
         "Restaurant", foreign_keys="Booking.restaurant_id")
 
-    statuses = ['New', 'Pending', 'OK', 'Canceled by Admin', 'Canceled by User']
+    statuses = ['New', 'Pending', 'OK', 'Canceled by Admin',
+                'Canceled by User']
 
     def __init__(self, reserve_date=None):
         if reserve_date is None:

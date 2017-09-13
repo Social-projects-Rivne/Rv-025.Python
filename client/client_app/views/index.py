@@ -5,6 +5,7 @@ from functools import wraps
 from passlib.hash import pbkdf2_sha256
 
 from client_app import app, db
+from client_app.forms import booking_form
 from client_app.forms import registration_form
 from client_app.forms import edit_form
 
@@ -44,6 +45,35 @@ def page_not_found(e):
 def index():
     form = LoginForm()
     return render_template('index.html', form=form)
+
+
+@app.route('/booking/<int:restaurant_id>', methods=['GET', 'POST'])
+@is_logged
+def booking(restaurant_id):
+    user_id = session['logged_in']
+    form = booking_form.BookingForm(request.form)
+    restaurant_info = Restaurant \
+        .query \
+        .filter(Restaurant.id == restaurant_id) \
+        .first()
+    restaurant_name = restaurant_info.name
+    if request.method == 'POST' and form.validate():
+        new_booking = Booking(form.status.data,
+                              form.reserve_date.data,
+                              form.count_client.data,
+                              form.comment_client.data,
+                              form.client_id.data,
+                              form.restaurant_id.data)
+        db.session.add(new_booking)
+        db.session.commit()
+        flash('Order Placed Successfully', 'success')
+        return redirect(url_for('booking_history'))
+    return render_template('booking.html',
+                           form=form,
+                           user_id=user_id,
+                           restaurant_id=restaurant_id,
+                           restaurant_name=restaurant_name
+                           )
 
 
 @app.route('/booking/cancel/<int:booking_id>', methods=['GET'])
