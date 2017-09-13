@@ -60,11 +60,11 @@ def booking(restaurant_id):
     # if request.method == 'POST' and form.validate():
     if request.method == 'POST':
         new_booking = Booking.create(form.status.data,
-                              form.reserve_date.data,
-                              form.count_client.data,
-                              form.comment_client.data,
-                              form.client_id.data,
-                              form.restaurant_id.data)
+                                     form.reserve_date.data,
+                                     form.count_client.data,
+                                     form.comment_client.data,
+                                     form.client_id.data,
+                                     form.restaurant_id.data)
         db.session.add(new_booking)
         db.session.commit()
         flash('Order Placed Successfully', 'success')

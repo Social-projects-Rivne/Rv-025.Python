@@ -2,8 +2,8 @@
 """
 
 from flask_wtf import FlaskForm
-from wtforms import DateTimeField, IntegerField, HiddenField, \
-                    StringField, SubmitField, TextAreaField, validators
+from wtforms import IntegerField, HiddenField, StringField, \
+                    SubmitField, TextAreaField
 from wtforms.widgets.html5 import NumberInput
 
 
