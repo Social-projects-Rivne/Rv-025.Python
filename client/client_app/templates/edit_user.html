@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 
+{% from "_formhelpers.html" import render_field %}
+
 {% block content %}
 
   <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
-          <form action="/edit" method="POST" name="edit">
-            {{form.hidden_tag()}}
+          <form action="/edit" method="POST" name="edit" class="form-horizontal">
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
@@ -16,24 +17,11 @@
                           <i class="glyphicon glyphicon-envelope"></i>
                           {{session.email}}
                         </h4>
-                        <div>
-                          <i class="glyphicon glyphicon-user"></i>
-                          <span>Username</span>
-                          {{ form.name(class_="form-control") }}
-                        </div>
-                        <div>
-                          <i class="glyphicon glyphicon-phone"></i>
-                          <span>Phone</span>
-                          {{form.phone(class_="form-control")}}
-                        </div>
-                        <div>
-                          <i class="glyphicon glyphicon-lock"></i>
-                          {{form.password(class_="form-control")}}
-                        </div>
-                        <div>
-                          <i class="glyphicon glyphicon-lock"></i>
-                          {{form.confirm(class_="form-control")}}
-                        </div>
+                          {{ render_field(edit_user.name) }}
+                          {{ render_field(edit_user.phone) }}
+                          {{ render_field(edit_user.password) }}
+                          {{ render_field(edit_user.confirm) }}
+
                     </div>
                     <div class="col-sm-3">
                       <i class="glyphicon glyphicon-pencil"></i>  <a class="edit" href="{{ url_for('profile') }}">Cancel</a>
