@@ -16,8 +16,7 @@ class BookingForm(FlaskForm):
     status = HiddenField('status', default=1)
     restaurant_id = HiddenField('restaurant_id', default='')
 
-    restaurant_name = StringField('Restaurant')
-    reserve_date = DateTimeField('Date and Time', [validators.DataRequired()])
+    reserve_date = StringField('Date and Time')
     count_client = IntegerField('Count of Clients', widget=NumberInput())
     comment_client = TextAreaField("Comment")
     submit = SubmitField("Send")

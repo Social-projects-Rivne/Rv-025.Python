@@ -57,8 +57,9 @@ def booking(restaurant_id):
         .filter(Restaurant.id == restaurant_id) \
         .first()
     restaurant_name = restaurant_info.name
-    if request.method == 'POST' and form.validate():
-        new_booking = Booking(form.status.data,
+    # if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
+        new_booking = Booking.create(form.status.data,
                               form.reserve_date.data,
                               form.count_client.data,
                               form.comment_client.data,

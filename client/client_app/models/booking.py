@@ -1,8 +1,6 @@
 """Contain a model classes for Booking.
 """
 
-from datetime import datetime
-
 from client_app import db
 
 
@@ -34,10 +32,10 @@ class Booking(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Integer, default=0, nullable=False)
-    reserve_date = db.Column(db.DateTime)
+    reserve_date = db.Column(db.DateTime, nullable=True)
     count_client = db.Column(db.Integer, default=0)
-    comment_client = db.Column(db.Text)
-    comment_restaurant = db.Column(db.Text)
+    comment_client = db.Column(db.Text, nullable=True)
+    comment_restaurant = db.Column(db.Text, nullable=True)
     client_id = db.Column(
         db.Integer, db.ForeignKey("users.id"))
     restaurant_id = db.Column(
@@ -51,10 +49,17 @@ class Booking(db.Model):
     statuses = ['New', 'Pending', 'OK', 'Canceled by Admin',
                 'Canceled by User']
 
-    def __init__(self, reserve_date=None):
-        if reserve_date is None:
-            reserve_date = datetime.utcnow()
-        self.reserve_date = reserve_date
+    @classmethod
+    def create(cls, status, reserve_date, count_client, comment_client,
+               client_id, restaurant_id):
+        model = cls()
+        model.status = status
+        model.reserve_date = reserve_date
+        model.count_client = count_client
+        model.comment_client = comment_client
+        model.client_id = client_id
+        model.restaurant_id = restaurant_id
+        return model
 
     def status_friendly(self):
         return self.statuses[int(self.status)]

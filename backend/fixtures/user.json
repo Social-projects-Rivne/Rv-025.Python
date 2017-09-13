@@ -1,0 +1,77 @@
+[
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"admin",
+      "email": "admin@example.com",
+      "password": "pbkdf2_sha256$36000$0YmqmXYQSX91$5mprmEz95R0ZTVSnQAzJ4pxC69PlHlSl2P7DS5A4rys=",
+      "role": 0,
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"manager1",
+      "email": "manager1@example.com",
+      "password": "pbkdf2_sha256$36000$wPTZErgwJNBP$PtHAFkeicGHmFIVHM08lzVR5YLzyngp1Hj39aVmird0=",
+      "role": 1,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"manager2",
+      "email": "manager2@example.com",
+      "password": "pbkdf2_sha256$36000$wPTZErgwJNBP$PtHAFkeicGHmFIVHM08lzVR5YLzyngp1Hj39aVmird0=",
+      "role": 1,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"manager3",
+      "email": "manager3@example.com",
+      "password": "pbkdf2_sha256$36000$wPTZErgwJNBP$PtHAFkeicGHmFIVHM08lzVR5YLzyngp1Hj39aVmird0=",
+      "role": 1,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"user1",
+      "email": "user1@example.com",
+      "password": "$pbkdf2-sha256$29000$LAWgNMY4J2Qs5fz/PyfE.A$1LliIVUkriC3myHCmEZc29jqZzNZRaUh7meydHrmEoY",
+      "role": 3,
+      "is_active": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"user2",
+      "email": "user2@example.com",
+      "password": "$pbkdf2-sha256$29000$LAWgNMY4J2Qs5fz/PyfE.A$1LliIVUkriC3myHCmEZc29jqZzNZRaUh7meydHrmEoY",
+      "role": 3,
+      "is_active": true
+    }
+  },
+  {
+    "model": "administrator.User",
+    "fields": {
+      "name":"user3",
+      "email": "user3@example.com",
+      "password": "$pbkdf2-sha256$29000$LAWgNMY4J2Qs5fz/PyfE.A$1LliIVUkriC3myHCmEZc29jqZzNZRaUh7meydHrmEoY",
+      "role": 3,
+      "is_active": true
+    }
+  }
+]
