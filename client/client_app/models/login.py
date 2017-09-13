@@ -9,10 +9,10 @@ from wtforms.validators import InputRequired
 
 class LoginForm(FlaskForm):
     email = StringField(
-        'email',
+        'email', id='login_email',
         validators=[InputRequired()]
     )
     password = PasswordField(
-        'password',
+        'password',id='login_password',
         validators=[InputRequired()]
     )

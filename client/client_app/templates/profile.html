@@ -10,10 +10,12 @@
                     </div>
                     <div class="col-sm-5 col-md-5">
                         <h4><i class="glyphicon glyphicon-envelope"></i>{{current_user.email}}</h4>
-                        <p>
-                            <i class="glyphicon glyphicon-user"></i>{{current_user.name}}
-                            <br />
-                            <i class="glyphicon glyphicon-phone"></i>{{current_user.phone}}</p>
+                        <div class="form-group">
+                           <label class="control-label" for="name">Name</label>
+                            <p>{{ current_user.name }}</p>
+                        </div>
+                          <label class="control-label" for="phone">Phone</label>
+                          <p>{{ current_user.phone }}</p>
                     </div>
                     <div class="col-sm-3">
                       <i class="glyphicon glyphicon-pencil"></i>  <a class="edit" href="/edit">Edit profile</a>
