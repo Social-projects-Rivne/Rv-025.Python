@@ -63,7 +63,7 @@ def login():
         if (logged_user
                 and logged_user.role == ROLE_USER
                 and logged_user.status != STATUS_BANNED
-                and logged_user.status !=STATUS_DELETED):
+                and logged_user.status != STATUS_DELETED):
             session['logged_in'] = logged_user.id
             session['name'] = logged_user.name
             redirect(url_for('profile'))
@@ -119,19 +119,11 @@ def edit():
 
     if request.method == 'POST' and edit_user.validate():
         if edit_user.password.data:
-            #validate pw:
             current_user.password = pbkdf2_sha256.hash(edit_user.password.data)
-        #    del form.password
         current_user.name = edit_user.name.data
         current_user.phone = edit_user.phone.data
-
-        #edit_user.populate_obj(current_user)
-        #password_validation(edit_user.password.data, current_user.password)
-        #print edit_user.password.data
-        print current_user.password
         db.session.add(current_user)
         db.session.commit()
-
         session['name'] = current_user.name
         flash('Your changes have been saved.', 'success')
         return redirect(url_for('profile'))

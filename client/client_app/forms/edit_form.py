@@ -6,10 +6,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 
 
-
 def password_check(form, field):
     if field.data and len(field.data) < 7:
-        raise validators.ValidationError('Field must be more than 8 characters')
+        raise validators.\
+            ValidationError('Field must be more than 8 characters')
 
 
 class EditForm(FlaskForm):
@@ -26,10 +26,8 @@ class EditForm(FlaskForm):
         validators.Length(max=12)
     ])
     password = PasswordField('New Password', [
-        #validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords must match'),
         password_check
     ])
     confirm = PasswordField('Repeat Password', [
-        #validators.DataRequired()
     ])
