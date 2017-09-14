@@ -1,3 +1,7 @@
-def application(env, start_response):
+def application(environ, start_response):
+    host = environ.get('HTTP_HOST')
+    pathinfo = environ.get('PATH_INFO', '')
+    uri = environ.get('REQUEST_URI')
     start_response('200 OK', [('Content-Type', 'text/html')])
-    return ["Hello!"]
+    print host, uri, pathinfo
+    return client/run.py(environ, start_response)
