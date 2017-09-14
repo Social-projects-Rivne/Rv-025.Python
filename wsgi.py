@@ -1,4 +1,4 @@
-import backend.restaurant.wsgi as _my_example_1_wsgi
+import restaurant.wsgi as _my_example_1_wsgi
 import client.run as _my_example_2_wsgi
 
 
