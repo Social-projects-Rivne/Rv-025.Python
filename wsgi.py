@@ -5,7 +5,7 @@ import run as _client_wsgi
 def application(environ, start_response):
 
     pathinfo = environ.get('PATH_INFO', '')
-    print "Get Pathinfo:  ", pathinfo
+    print pathinfo
 
     if pathinfo == "/admin":
         selected_application = _backend_wsgi.application
