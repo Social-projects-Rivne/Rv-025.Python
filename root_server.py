@@ -5,6 +5,8 @@ import run as _client_wsgi
 def application(environ, start_response):
 
     pathinfo = environ.get('PATH_INFO', '')
+    if pathinfo:
+        print 'We have PathInfo'
     print pathinfo
 
     if pathinfo == "/admin":
