@@ -13,7 +13,7 @@ from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "restaurant.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.restaurant.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
