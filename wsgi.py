@@ -1,11 +1,17 @@
-# from backend/restaurant import wsgi as _my_example_1_wsgi
-# import my_example_2_wsgi as _my_example_2_wsgi
+import backend.restaurant.wsgi as _my_example_1_wsgi
+import client.run as _my_example_2_wsgi
 
 
 def application(environ, start_response):
-    host = environ.get('HTTP_HOST')
+
     pathinfo = environ.get('PATH_INFO', '')
-    uri = environ.get('REQUEST_URI')
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    print "host: %s, uri: %s, pathinfo: %s" % (host, uri, pathinfo)
-    return client.run(environ, start_response)
+    selected_application = _my_example_2_wsgi.application
+    # start_response('200 OK', [('Content-Type', 'text/html')])
+    print "\tGet Pathinfo: %s !!!\n" % pathinfo
+
+    if pathinfo == "/admin":
+        selected_application = _my_example_1_wsgi.application
+    else:
+        selected_application = _my_example_2_wsgi.app
+
+    return selected_application(environ, start_response)
