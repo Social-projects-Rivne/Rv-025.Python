@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath 'backend,client' root-server
+web: gunicorn --pythonpath 'backend,client' root_server
