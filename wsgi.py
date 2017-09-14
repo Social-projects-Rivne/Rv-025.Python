@@ -1,5 +1,5 @@
-import backend.restaurant.wsgi as _backend_wsgi
-import client.run as _client_wsgi
+import restaurant.wsgi as _backend_wsgi
+import run as _client_wsgi
 
 
 def application(environ, start_response):
