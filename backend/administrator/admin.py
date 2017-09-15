@@ -370,14 +370,9 @@ class DishCategoryAdmin(admin.ModelAdmin):
     list_per_page = 20
     ordering = ["name"]
 
-    def has_add_permission(self, request):
-        return request.user.role == User.ROLE_ADMIN
-
     def has_change_permission(self, request, obj=None):
-        return request.user.role == User.ROLE_ADMIN
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.role == User.ROLE_ADMIN
+        if request.user.has_perm('restaurant.read_dishcategory'):
+            return True
 
 
 class DishAdmin(admin.ModelAdmin):

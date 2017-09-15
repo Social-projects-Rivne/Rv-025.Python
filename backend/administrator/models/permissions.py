@@ -48,6 +48,10 @@ def admin_permissions():
         "change_booking",
         "delete_booking",
         "read_booking",
+        "add_dishcategory",
+        "change_dishcategory",
+        "delete_dishcategory",
+        "read_dishcategory",
     ]
     return [get_permission(item) for item in admin_permissions]
 
