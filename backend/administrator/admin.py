@@ -422,23 +422,28 @@ class DishAdmin(admin.ModelAdmin):
 
 class BookingAdmin(admin.ModelAdmin):
 
-    """Custom Booking list."""
+    """ Custom Booking list
+    """
 
     list_display = ("status", "reserve_date", "count_client", "comment_client",
                     "comment_restaurant", "client", "restaurant")
     ordering = ["reserve_date"]
 
-    def has_add_permission(self, request):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_USER)
+    def get_queryset(self, request):
+        """ Represent the objects
+            Return a QuerySet of all model instances that can be edited
+        """
+        qs = super(BookingAdmin, self).get_queryset(request)
+        if request.user.role == User.ROLE_ADMIN:
+            return qs
+        elif request.user.role == User.ROLE_MANAGER:
+            return qs.filter(restaurant__manager=request.user.id)
+        elif request.user.role == User.ROLE_SUB_MANAGER:
+            return qs.filter(restaurant__sub_manager=request.user.id)
 
     def has_change_permission(self, request, obj=None):
-        return (request.user.role == User.ROLE_ADMIN or
-                request.user.role == User.ROLE_MANAGER or
-                request.user.role == User.ROLE_SUB_MANAGER)
-
-    def has_delete_permission(self, request, obj=None):
-        return request.user.role == User.ROLE_ADMIN
+        if request.user.has_perm('restaurant.read_booking'):
+            return True
 
 
 admin.site.register(Booking, BookingAdmin)
