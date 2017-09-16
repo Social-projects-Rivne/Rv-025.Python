@@ -44,6 +44,14 @@ def admin_permissions():
         "add_session",
         "change_session",
         "delete_session",
+        "add_booking",
+        "change_booking",
+        "delete_booking",
+        "read_booking",
+        "add_dishcategory",
+        "change_dishcategory",
+        "delete_dishcategory",
+        "read_dishcategory",
     ]
     return [get_permission(item) for item in admin_permissions]
 
@@ -63,6 +71,8 @@ def manager_permissions():
         "change_restauranttype",
         "delete_restauranttype",
         "read_restauranttype",
+        "change_booking",
+        "read_booking",
     ]
     return [get_permission(item) for item in manager_permissions]
 
@@ -73,6 +83,8 @@ def sub_manager_permissions():
         "read_user",
         "read_restaurant",
         "read_restauranttype",
+        "change_booking",
+        "read_booking",
     ]
     return [get_permission(item) for item in sub_manager_permissions]
 
