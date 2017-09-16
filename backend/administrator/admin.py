@@ -415,11 +415,35 @@ class DishAdmin(admin.ModelAdmin):
             db_field, request, **kwargs)
 
 
+class BookingForm(forms.ModelForm):
+
+    """A form for Booking modifications
+    """
+
+    class Meta:
+
+        """Give some options (metadata) attached to the form."""
+
+        model = Booking
+        fields = ("status", "reserve_date", "count_client", "comment_client",
+                  "comment_restaurant", "client", "restaurant")
+
+    def __init__(self, *args, **kwargs):
+        super(BookingForm, self).__init__(*args, **kwargs)
+        if (self.current_user.role == User.ROLE_MANAGER or
+                    self.current_user.role == User.ROLE_SUB_MANAGER):
+            self.fields['status'].choices = (
+                ("1", "Pending"),
+                ("2", "OK"),
+                ("3", "Canceled by Admin"))
+
+
 class BookingAdmin(admin.ModelAdmin):
 
     """ Custom Booking list
     """
 
+    form = BookingForm
     list_display = ("status", "reserve_date", "count_client", "comment_client",
                     "comment_restaurant", "client", "restaurant")
     ordering = ["reserve_date"]
@@ -436,9 +460,24 @@ class BookingAdmin(admin.ModelAdmin):
         elif request.user.role == User.ROLE_SUB_MANAGER:
             return qs.filter(restaurant__sub_manager=request.user.id)
 
+    def get_readonly_fields(self, request, obj=None):
+        if (obj and request.user.role == User.ROLE_MANAGER or
+                    obj and request.user.role == User.ROLE_SUB_MANAGER):
+            return self.readonly_fields + ("reserve_date", "count_client",
+                                           "comment_client", "client",
+                                           "restaurant")
+        return self.readonly_fields
+
     def has_change_permission(self, request, obj=None):
         if request.user.has_perm('restaurant.read_booking'):
             return True
+
+    def get_form(self, request, *args, **kwargs):
+        """Return a ModelForm class with current user id for using in the
+        admin"""
+        form = super(BookingAdmin, self).get_form(request, *args, **kwargs)
+        form.current_user = request.user
+        return form
 
 
 admin.site.register(Booking, BookingAdmin)
