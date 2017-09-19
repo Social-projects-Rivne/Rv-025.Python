@@ -431,7 +431,7 @@ class BookingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BookingForm, self).__init__(*args, **kwargs)
         if (self.current_user.role == User.ROLE_MANAGER or
-                    self.current_user.role == User.ROLE_SUB_MANAGER):
+                self.current_user.role == User.ROLE_SUB_MANAGER):
             self.fields['status'].choices = (
                 ("1", "Pending"),
                 ("2", "OK"),
@@ -462,7 +462,7 @@ class BookingAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if (obj and request.user.role == User.ROLE_MANAGER or
-                    obj and request.user.role == User.ROLE_SUB_MANAGER):
+                obj and request.user.role == User.ROLE_SUB_MANAGER):
             return self.readonly_fields + ("reserve_date", "count_client",
                                            "comment_client", "client",
                                            "restaurant")

@@ -8,7 +8,15 @@
     <div class="container">
         <div class="media">
             <div class="media-left">
-                <img class="media-object img-rounded" src="http://via.placeholder.com/150x150" alt="">
+                {% if restaurant_info.logo %}
+                <img class="media-object img-rounded"
+                     src="{{ url_for('static', filename=restaurant_info.logo) }}"
+                     alt="{{ restaurant_info.name }}">
+                {% else %}
+                <img class="media-object img-rounded"
+                     src="http://via.placeholder.com/150x150"
+                     alt="{{ restaurant_info.name }}">
+                {% endif %}
             </div>
             <div class="media-body">
                 <h1 class="media-heading">{{ restaurant_info.name }}</h1>
@@ -24,7 +32,7 @@
             <h2 class="text-center">Menu</h2>
 
             {# http://takwatanabe.me/snippets/cs-jinja.html#groupby-value-attribute #}
-            {% for group in menu|groupby('category_id__join.name') %}
+            {% for group in menu|not_sorted_groupby('category_id__join.name') %}
                 <h3 class="text-center">{{ group.grouper }}</h3>
                 <table class="table table-striped">
                     <tr>

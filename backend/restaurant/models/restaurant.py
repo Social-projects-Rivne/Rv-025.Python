@@ -48,7 +48,7 @@ class Restaurant(models.Model):
     )
 
     name = models.CharField(max_length=256, blank=False)
-    logo = models.CharField(max_length=256, default="Logo_added")
+    logo = models.CharField(max_length=256, blank=True, null=True)
     location = models.CharField(max_length=256, blank=False)
     phone = models.CharField(max_length=256, blank=False)
     restaurant_type = models.ForeignKey(RestaurantType, blank=True, null=True)
