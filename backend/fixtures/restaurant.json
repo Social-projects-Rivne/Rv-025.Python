@@ -58,6 +58,7 @@
     "model": "restaurant.Restaurant",
     "fields": {
       "name": "Kant",
+      "logo": "img/restaurant_logo/kant.png",
       "location": "kopernika street, 9",
       "phone": "+38 094 837 33 34",
       "restaurant_type": 2,
@@ -69,6 +70,7 @@
     "model": "restaurant.Restaurant",
     "fields": {
       "name": "Orlan",
+      "logo": "img/restaurant_logo/orlan.png",
       "location": "Vidin street, 9",
       "phone": "(096) 90-64-711, (067) 116-37-01",
       "restaurant_type": 1,
@@ -80,6 +82,7 @@
     "model": "restaurant.Restaurant",
     "fields": {
       "name": "Pidkova",
+      "logo": "img/restaurant_logo/pidkova.png",
       "location": "Ivana Pidkovy street, 17a",
       "phone": "(067) 22-444-77, (0362) 453-453",
       "restaurant_type": 7,
@@ -91,6 +94,7 @@
     "model": "restaurant.Restaurant",
     "fields": {
       "name":"Istanbul",
+      "logo": "img/restaurant_logo/istanbul.png",
       "location": "St. Bandera street, 31a",
       "phone": "+38 (067) 362-14-38",
       "restaurant_type": 2,
