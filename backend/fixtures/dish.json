@@ -65,5 +65,29 @@
       "category": 17,
       "restaurant": 2
     }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "MAD Caesar",
+      "price": 15.00,
+      "weight": 350,
+      "description": "The Caesar is often called the Emperor of Salads, and while we may be MAD, we're not one to change an emperor. Our Caesar salad has traditional tomatoes, perfect Parmesan, crunchy croutons and delectable dressing. Thats it!",
+      "available": "True",
+      "category": 21,
+      "restaurant": 2
+    }
+  },
+  {
+    "model": "restaurant.Dish",
+    "fields": {
+      "name": "Pancho Villa",
+      "price": 13.00,
+      "weight": 400,
+      "description": "Corn is one of our favorite vegetables to eat...especially when prepared 'elote' style. Elote (literally 'corn cob' in Spanish) is a popular street food found throughout Mexico where corn is grilled and then slathered in cream, crumbly cheese and spices. But how do you harness that amazing Elote flavor with a salad? ",
+      "available": "True",
+      "category": 21,
+      "restaurant": 2
+    }
   }
 ]
